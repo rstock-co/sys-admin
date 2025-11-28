@@ -49,7 +49,8 @@ Custom workaround for animated border gradients using a bash script (`~/.config/
   - `core.sh` - PATH, environment variables, shell history
   - `nav.sh` - File listing and navigation aliases
   - `dotfiles.sh` - Bare git repository alias
-  - `pkg.sh` - Package manager aliases (pnpm, bun, npm)
+  - `pkg.sh` - JavaScript package manager aliases (pnpm, bun, npm)
+  - `pacman.sh` - System package management (pacman and AUR/paru aliases)
   - `agents.sh` - Agent shortcuts and PostgreSQL management
   - `hyprland.sh` - Hyprland control shortcuts
   - `internet.sh` - Chrome bookmarks/history browsing with fzf
