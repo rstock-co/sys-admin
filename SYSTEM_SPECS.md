@@ -28,6 +28,17 @@
 * PRE-INSTALLED FANS-Equipped with two 120mm Quiet Airflow fans—one in front, one in rear—for solid out-of-the-box performance.
 * SEAMLESS CABLE MANAGEMENT-Effortlessly route and conceal cables using the wide channels, hooks, and straps.
 
+**Keyboard**: YUNZII AL98 QMK/VIA Wireless Mechanical Gaming Keyboard
+* Layout: 1800 compact layout with number pad (98 keys)
+* Case: Full aluminum construction with gasket-mounted design, 5-layer cushioning
+* Switches: Factory pre-lubed Milk V2 linear switches, hot-swappable (3-pin/5-pin compatible)
+* Connectivity: Tri-mode (Bluetooth 5.0 / 2.4GHz wireless / USB-C wired), supports up to 5 devices
+* Battery: 8000mAh built-in battery for extended wireless use
+* Keycaps: PBT double-shot keycaps, south-facing RGB LEDs with 16.8M colors
+* Programmability: Full QMK/VIA firmware support for custom key mapping, macros, and layers
+* Features: N-key rollover, anti-ghosting, ultra-low latency
+* Compatibility: Windows, Mac, Linux, Android
+
 ## Case Specifications
 
 | Specification                         | Details                                          |
