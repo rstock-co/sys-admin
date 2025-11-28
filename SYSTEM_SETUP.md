@@ -49,6 +49,11 @@ Custom workaround for animated border gradients using a bash script (`~/.config/
   - `core.sh` - PATH, environment variables, shell history
   - `nav.sh` - File listing and navigation aliases
   - `dotfiles.sh` - Bare git repository alias
+  - `pkg.sh` - Package manager aliases (pnpm, bun, npm)
+  - `agents.sh` - Agent shortcuts and PostgreSQL management
+  - `hyprland.sh` - Hyprland control shortcuts
+  - `internet.sh` - Chrome bookmarks/history browsing with fzf
+  - `alias-management.sh` - Edit, source, and view aliases
 - **eza** - Modern `ls` replacement with icons, colors, and git integration (replaces unmaintained exa)
 
 ### Browser
@@ -161,14 +166,16 @@ Installed 67 Nerd Font packages (otf-* and ttf-*) for terminal icons and glyphs.
 
 ### Languages & Package Managers
 
-#### Node.js
-- **Version:** `v25.2.1` with **npm** `11.6.4`
-- **Direct install** via Arch repos (not using NVM)
+#### Node.js & JavaScript Runtime
+- **Node.js:** `v25.2.1` with **npm** `11.6.4` - Direct install via Arch repos (not using NVM)
+- **pnpm** `10.23.0-1` - Primary package manager (3x faster than npm, massive disk savings via hard links)
+- **bun-bin** `1.3.3-1` (AUR) - All-in-one JavaScript runtime (10-100x faster, includes bundler, test runner, package manager)
 
 **Why not NVM?**
 NVM (Node Version Manager) is useful for managing multiple Node.js versions but adds shell initialization overhead (several milliseconds delay). Since only one Node.js version is needed for this system, direct install from Arch repos is simpler and has zero performance overhead. If multiple versions were needed, FNM (Fast Node Manager, Rust-based) would be preferred over NVM for better performance.
 
-**Alternatives:** NVM (version management, slower shell init), FNM (Rust-based, faster), pnpm (can also manage Node versions)
+**Package Manager Strategy:**
+Use pnpm for all projects (proven, stable, massive performance gains). Keep npm as fallback. Use bun for fast script execution and experimentation. All three coexist without conflict.
 
 #### Python
 - **Python** `3.13.7-1` with **pip** and **uv** (fast Python package manager)
