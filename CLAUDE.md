@@ -211,6 +211,43 @@ Build working solutions. No placeholders, no TODOs without implementation.
 
 ---
 
+## Git & GitHub Operations
+
+### Creating New Repositories
+
+**Always use SSH remotes, never HTTPS.** The system uses SSH keys for authentication.
+
+**Creating a new GitHub repository:**
+```bash
+# Create private repo using gh CLI (automatically sets up SSH remote)
+gh repo create <repo-name> --private --source=. --remote=origin
+
+# If gh creates HTTPS remote by mistake, convert to SSH:
+git remote set-url origin git@github.com:<username>/<repo-name>.git
+
+# Push to remote
+git push -u origin main
+```
+
+**Why SSH over HTTPS:**
+- No credential helper issues
+- Uses existing SSH keys (~/.ssh/)
+- More reliable for automated operations
+- GitHub deprecating password auth for HTTPS
+
+### Standard Git Workflow (Non-Dotfiles)
+```bash
+git status                   # Check repository state
+git add <files>              # Stage changes
+git commit -m "message"      # Commit changes
+git push                     # Push to remote
+git pull                     # Pull from remote
+```
+
+**Note:** For dotfiles, use the `dotfiles` alias instead (see Dotfiles Management section).
+
+---
+
 ## Quick Reference
 
 ### Dotfiles Commands
