@@ -185,6 +185,7 @@ Use pnpm for all projects (proven, stable, massive performance gains). Keep npm 
 
 ### Utilities
 - **eza** - Modern `ls` replacement with icons, colors, and git integration. Active fork of unmaintained exa. Used for terminal file listing in modular zsh config.
+- **fzf** - Fuzzy finder for command-line. Used in zsh modules for alias searching (va), Chrome bookmarks/history browsing (ib/ih), and interactive selection workflows.
 - **jq** `1.8.1-1` - Command-line JSON processor. The de facto standard for parsing, filtering, and transforming JSON data in shell scripts and pipelines. Powerful query language for extracting specific fields, reshaping data, and formatting output. Industry-standard tool used in DevOps, API testing, and data processing workflows.
 - **glow** - Markdown renderer for terminal
 - **neovim** - Terminal editor
