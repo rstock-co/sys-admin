@@ -45,6 +45,11 @@ Custom workaround for animated border gradients using a bash script (`~/.config/
 
 ### Shell
 - **Zsh** with **Starship** prompt
+- **Modular configuration:** `~/.zshrc` sources all files from `~/zshrc/` directory
+  - `core.sh` - PATH, environment variables, shell history
+  - `nav.sh` - File listing and navigation aliases
+  - `dotfiles.sh` - Bare git repository alias
+- **eza** - Modern `ls` replacement with icons, colors, and git integration (replaces unmaintained exa)
 
 ### Browser
 - **Google Chrome** (stable) - Switched from Chromium
@@ -172,6 +177,7 @@ NVM (Node Version Manager) is useful for managing multiple Node.js versions but 
 - **Git** `2.52.0-2` with **GitHub CLI** (`gh`)
 
 ### Utilities
+- **eza** - Modern `ls` replacement with icons, colors, and git integration. Active fork of unmaintained exa. Used for terminal file listing in modular zsh config.
 - **jq** `1.8.1-1` - Command-line JSON processor. The de facto standard for parsing, filtering, and transforming JSON data in shell scripts and pipelines. Powerful query language for extracting specific fields, reshaping data, and formatting output. Industry-standard tool used in DevOps, API testing, and data processing workflows.
 - **glow** - Markdown renderer for terminal
 - **neovim** - Terminal editor
