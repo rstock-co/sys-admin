@@ -8,10 +8,10 @@
 ## Active Issues
 
 ### Audio
-- **[BLOCKED]** No sound from TV/monitors - DP-to-HDMI cable doesn't pass audio EDID → `audio/tv-audio-troubleshooting.md`
-  - **Status:** Audio worked with HDMI-HDMI cable, broke when switched to DP-HDMI (for 120Hz fix)
-  - **Cause:** Current DP-to-HDMI cable doesn't pass ELD/EDID audio metadata to GPU
-  - **Next:** Buy better DP-to-HDMI cable with audio support, or revert to native HDMI
+- **[WORKAROUND]** No sound from TV/monitors - Intel Arc xe driver DP audio bug → `audio/tv-audio-troubleshooting.md`
+  - **Status:** xe driver doesn't populate audio ELD for DisplayPort outputs (works on native HDMI)
+  - **Cause:** Driver issue - graphics and audio subsystems not communicating for DP
+  - **Workaround:** Using Bluetooth speaker for audio (bypasses GPU audio entirely)
 
 ---
 

@@ -153,10 +153,10 @@ The TV uses a DP-to-HDMI cable instead of native HDMI because the Intel Arc B580
 
 ## Status
 
-**Current State:** HDMI audio not working - DP-to-HDMI cable issue identified.
+**Current State:** HDMI audio not working - Intel Arc xe driver + DP-to-HDMI incompatibility.
 
-**Root Cause (Nov 30, 2025):**
-DisplayPort-to-HDMI cable not passing audio EDID to GPU:
+**Root Cause (Nov 30, 2025 - Deep Investigation):**
+Intel Arc B580 xe driver not populating audio ELD when using DisplayPort outputs:
 ```bash
 cat /proc/asound/card1/eld#* shows:
 monitor_present 0  (GPU doesn't detect monitor)
@@ -164,15 +164,26 @@ eld_valid 0        (No valid EDID audio data)
 ```
 
 **Timeline:**
-- ✅ Audio worked with native HDMI-to-HDMI cable
+- ✅ Audio worked with native HDMI-to-HDMI cable (Nov 29)
 - ❌ Audio broke when switched to DisplayPort-to-HDMI cable (for 120Hz fix)
-- Current cable doesn't pass ELD/EDID audio metadata to GPU
 
-**This affects ALL HDMI outputs** (TV on DP-2, both Samsung monitors). Software config is correct, but GPU audio codec isn't receiving audio capability info from displays due to cable.
+**Technical Analysis:**
+- **Cable:** UGREEN 8K@60Hz Active DP1.4 to HDMI2.1, supports Dolby 7.1 (high quality)
+- **Video EDID:** Working correctly (GPU sees display, video works fine)
+- **Audio EDID:** GPU receives it (`/sys/class/drm/card0-DP-2/edid` shows CEA-861 audio blocks)
+- **Problem:** xe driver not passing audio EDID to HDA codec to populate ELD
+- **GPU Layout:** Graphics at `0000:03:00.0`, Audio at `0000:04:00.0` (separate devices)
+- **Codec State:** All audio pins disabled (`Pin-ctls: 0x00`, `Devices: 0`, `Connection: 0`)
 
-**Solutions (in priority order):**
-1. **Buy better DP-to-HDMI cable** - Look for one that explicitly supports "audio passthrough" and "EDID support"
-2. **Revert to native HDMI** - Trade 120Hz for working audio, or try different HDMI cable for 120Hz
-3. **USB audio workaround** - USB DAC or Bluetooth transmitter (to JBL PartyBox, not TV)
+**Not the cable's fault** - Cable passes video EDID fine, supports audio. Issue is xe driver not bridging graphics→audio subsystems for DisplayPort outputs.
 
-**Bluetooth TV workaround tested and rejected:** TV Bluetooth only supports remote/accessories, not audio input. Takes over screen when connected.
+**Solutions:**
+1. **Bluetooth speaker workaround** - User's chosen solution (bypasses GPU audio)
+2. **Revert to native HDMI** - Trade 120Hz for working audio
+3. **Wait for kernel xe driver update** - DisplayPort audio support may be incomplete in current xe driver
+4. **Try linux-firmware-git** - Unlikely to help, but bleeding-edge firmware worth trying
+
+**Tested and rejected:**
+- ✗ Bluetooth to TV - TV only supports remote/accessories, not audio input
+- ✗ Different DP-to-HDMI cable - Not a cable quality issue, driver issue
+- ✗ Firmware update - Already on latest (20251111-1), issue is in kernel driver
