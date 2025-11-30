@@ -8,10 +8,10 @@
 ## Active Issues
 
 ### Audio
-- **[BLOCKED]** No sound from TV/monitors - Intel Arc B580 GPU HDMI audio issue → `audio/tv-audio-troubleshooting.md`
-  - **Status:** GPU audio codec not detecting displays (ELD invalid, monitor_present=0)
-  - **Cause:** Intel Arc + DP-to-HDMI adapters don't pass audio EDID correctly
-  - **Next:** Try different cable or wait for GPU driver update
+- **[BLOCKED]** No sound from TV/monitors - DP-to-HDMI cable doesn't pass audio EDID → `audio/tv-audio-troubleshooting.md`
+  - **Status:** Audio worked with HDMI-HDMI cable, broke when switched to DP-HDMI (for 120Hz fix)
+  - **Cause:** Current DP-to-HDMI cable doesn't pass ELD/EDID audio metadata to GPU
+  - **Next:** Buy better DP-to-HDMI cable with audio support, or revert to native HDMI
 
 ---
 

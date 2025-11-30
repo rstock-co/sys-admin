@@ -153,22 +153,26 @@ The TV uses a DP-to-HDMI cable instead of native HDMI because the Intel Arc B580
 
 ## Status
 
-**Current State:** HDMI audio not working - GPU hardware issue identified.
+**Current State:** HDMI audio not working - DP-to-HDMI cable issue identified.
 
 **Root Cause (Nov 30, 2025):**
-GPU HDMI audio codec not detecting monitors support audio:
+DisplayPort-to-HDMI cable not passing audio EDID to GPU:
 ```bash
 cat /proc/asound/card1/eld#* shows:
 monitor_present 0  (GPU doesn't detect monitor)
 eld_valid 0        (No valid EDID audio data)
 ```
 
-**This affects ALL HDMI outputs** (TV on DP-2, both Samsung monitors). Software config is correct, but Intel Arc B580 GPU audio codec isn't receiving ELD/EDID audio capability info from displays.
+**Timeline:**
+- ✅ Audio worked with native HDMI-to-HDMI cable
+- ❌ Audio broke when switched to DisplayPort-to-HDMI cable (for 120Hz fix)
+- Current cable doesn't pass ELD/EDID audio metadata to GPU
 
-**Known Issue:** Intel Arc GPUs + DisplayPort-to-HDMI adapters often fail to pass ELD/EDID audio metadata correctly.
+**This affects ALL HDMI outputs** (TV on DP-2, both Samsung monitors). Software config is correct, but GPU audio codec isn't receiving audio capability info from displays due to cable.
 
-**Possible Solutions:**
-1. Try different DP-to-HDMI cable (some pass ELD better than others)
-2. Update Intel GPU drivers when newer version available
-3. Try native HDMI port (but this broke 120Hz on TV previously)
-4. Use external USB DAC/audio interface instead of HDMI audio
+**Solutions (in priority order):**
+1. **Buy better DP-to-HDMI cable** - Look for one that explicitly supports "audio passthrough" and "EDID support"
+2. **Revert to native HDMI** - Trade 120Hz for working audio, or try different HDMI cable for 120Hz
+3. **USB audio workaround** - USB DAC or Bluetooth transmitter (to JBL PartyBox, not TV)
+
+**Bluetooth TV workaround tested and rejected:** TV Bluetooth only supports remote/accessories, not audio input. Takes over screen when connected.
