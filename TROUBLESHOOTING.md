@@ -8,10 +8,11 @@
 ## Active Issues
 
 ### Audio
-- **[WORKAROUND]** No sound from TV/monitors - Intel Arc xe driver DP audio bug → `audio/tv-audio-troubleshooting.md`
-  - **Status:** xe driver doesn't populate audio ELD for DisplayPort outputs (works on native HDMI)
-  - **Cause:** Driver issue - graphics and audio subsystems not communicating for DP
-  - **Workaround:** Using Bluetooth speaker for audio (bypasses GPU audio entirely)
+- **[RESOLVED - Workaround]** No sound from TV/monitors - Intel Arc xe driver DP audio bug → `audio/tv-audio-troubleshooting.md`
+  - **Root Cause:** Confirmed Linux kernel xe driver bug - fails to convert DP EDID→ELD for audio codec
+  - **Research:** Known issue with Arc B580 + DisplayPort, native HDMI works (GPU firmware handles conversion)
+  - **Solution:** JBL Flip 6 Bluetooth speaker paired, PipeWire config tuned (minor glitching remains)
+  - **Future:** Wait for kernel xe driver update or use USB DAC for zero-latency audio
 
 ---
 

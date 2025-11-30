@@ -175,15 +175,28 @@ eld_valid 0        (No valid EDID audio data)
 - **GPU Layout:** Graphics at `0000:03:00.0`, Audio at `0000:04:00.0` (separate devices)
 - **Codec State:** All audio pins disabled (`Pin-ctls: 0x00`, `Devices: 0`, `Connection: 0`)
 
-**Not the cable's fault** - Cable passes video EDID fine, supports audio. Issue is xe driver not bridging graphics→audio subsystems for DisplayPort outputs.
+**Confirmed: Intel xe kernel driver bug, not cable issue**
+- UGREEN cable is high-quality and works correctly (passes video EDID)
+- Research confirms: xe driver fails to convert DisplayPort EDID→ELD for audio codec
+- Known Linux kernel bug affecting Arc B580 + DisplayPort outputs
+- Native HDMI works because GPU firmware handles EDID→ELD directly
+- DisplayPort requires kernel driver conversion, which xe driver doesn't implement properly
 
-**Solutions:**
-1. **Bluetooth speaker workaround** - User's chosen solution (bypasses GPU audio)
-2. **Revert to native HDMI** - Trade 120Hz for working audio
-3. **Wait for kernel xe driver update** - DisplayPort audio support may be incomplete in current xe driver
-4. **Try linux-firmware-git** - Unlikely to help, but bleeding-edge firmware worth trying
+**Research Sources:**
+- [Arch Linux: xe driver audio regression kernel 6.17.8](https://bbs.archlinux.org/viewtopic.php?pid=2273908)
+- [Unix StackExchange: EDID-to-ELD conversion failure](https://unix.stackexchange.com/questions/391326/how-to-force-hdmi-audio-intel-card-to-be-enabled-despite-receiving-broken-edid)
+- [Intel Community: Arc B580 audio failures](https://community.intel.com/t5/Intel-ARC-Graphics/New-B580-graphics-card-and-now-no-audio-through-DP-or-HDMI/td-p/1680276)
+
+**Implemented Solution:**
+1. ✅ **JBL Flip 6 Bluetooth speaker** - Paired successfully, audio working (minor glitching)
+2. **PipeWire config tuning** - Created `~/.config/pipewire/pipewire.conf.d/99-bluetooth.conf` with increased buffer size (quantum 2048) to reduce Bluetooth glitches
+
+**Alternative Solutions:**
+- **USB DAC** ($30-50) - 3.5mm output to TV AUX, zero latency, no glitching
+- **Revert to native HDMI** - Trade 120Hz for working audio
+- **Wait for kernel update** - xe driver DP audio may be fixed in future kernel releases
 
 **Tested and rejected:**
 - ✗ Bluetooth to TV - TV only supports remote/accessories, not audio input
-- ✗ Different DP-to-HDMI cable - Not a cable quality issue, driver issue
-- ✗ Firmware update - Already on latest (20251111-1), issue is in kernel driver
+- ✗ Different DP-to-HDMI cable - Not a cable issue, confirmed kernel driver bug
+- ✗ Firmware update - Already on latest (20251111-1), issue is in kernel driver code
