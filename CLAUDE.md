@@ -24,19 +24,52 @@
 
 ---
 
+## Repository Structure
+
+**Two separate repositories:**
+
+### 1. Dotfiles Repository (Bare Git)
+**Location:** `~/.dotfiles/` (bare repo), working tree is `~/`
+**Command:** Use `dotfiles` alias (NOT `git`)
+**Purpose:** Track actual configuration files in home directory
+
+**What goes here:**
+- Config files: `.zshrc`, `.config/hypr/hyprland.conf`, etc.
+- Config directories: `.config/rofi/`, `.config/alacritty/`, etc.
+- Custom scripts: `.local/bin/`, `~/scripts/`
+
+### 2. Documentation Repository (Regular Git)
+**Location:** `/home/neo/agents/sys-admin/`
+**Command:** Use regular `git` commands
+**Purpose:** Track system documentation and agent instructions
+
+**What goes here:**
+- `CLAUDE.md` - Agent instructions
+- `SYSTEM_SETUP.md` - System configuration decisions
+- `SYSTEM_SPECS.md` - Hardware specifications
+- `bare-git-dotfiles-method.md` - Dotfiles method docs
+- `keyboard/` - Keyboard troubleshooting and manuals
+- Other documentation files
+
+---
+
 ## Dotfiles Management
 
 **Method:** Bare git repository (see `@bare-git-dotfiles-method.md` for complete details)
 
-**Critical:** Always use `dotfiles` alias (NOT `git`) for all version control operations.
+**Critical:** Always use `dotfiles` alias (NOT `git`) for dotfiles operations.
 
-**Workflow for changes:**
-1. Make the change (edit config, install package, etc.)
+**Workflow for config file changes:**
+1. Make the change (edit config file)
 2. Track: `dotfiles add <file>`
-3. Update `SYSTEM_SETUP.md` if decision/rationale needed
-4. Regenerate package lists if packages changed
-5. Commit: `dotfiles commit -m "descriptive message"`
-6. Push: `dotfiles push`
+3. Commit: `dotfiles commit -m "descriptive message"`
+4. Push: `dotfiles push`
+
+**Workflow for documentation changes:**
+1. Edit documentation file (in `/home/neo/agents/sys-admin/`)
+2. Track: `git add <file>`
+3. Commit: `git commit -m "descriptive message"`
+4. Push: `git push`
 
 **Package list updates:**
 ```bash
@@ -46,17 +79,14 @@ dotfiles add pkglist.txt aur-pkglist.txt
 
 ---
 
-## Key Files to Track
+## Key Files to Track in Dotfiles
 
-**Currently tracked:**
+**Currently tracked in dotfiles repo:**
 - `.zshrc` - Shell configuration
 - `.config/hypr/hyprland.conf` - Hyprland window manager config
 - `.config/hypr/rotate-border.sh` - Border animation script
-- `SYSTEM_SETUP.md` - System documentation
-- `bare-git-dotfiles-method.md` - Dotfiles method documentation
-- `SYSTEM_SPECS.md` - Hardware specifications
-- `pkglist.txt` - Explicit packages
-- `aur-pkglist.txt` - AUR packages
+- `pkglist.txt` - Explicit packages (regenerated, not manually edited)
+- `aur-pkglist.txt` - AUR packages (regenerated, not manually edited)
 
 **Should track when created:**
 - `.config/rofi/` - Rofi launcher config
