@@ -220,7 +220,7 @@ Now:
 - udev permissions configured
 - Chrome/Chromium/Edge browser
 
-**Steps:**
+**Initial Setup:**
 1. Switch keyboard to **Wired mode** (physical switch)
 2. Unplug 2.4GHz dongle
 3. Connect USB-C cable only
@@ -233,6 +233,34 @@ Now:
 10. Select keyboard from popup
 11. Layout appears - ready for remapping
 
+**⚠️ Important: Backup Custom Keybinds**
+
+VIA saves keybinds to the keyboard's EEPROM (firmware storage), but **factory reset (`Fn + Spacebar`) will erase all custom keybinds**. Always backup after customizing:
+
+**To Backup:**
+1. After configuring keybinds, go to **SAVE+LOAD** tab in usevia.app
+2. Click **"Save current layout"** - downloads JSON with your custom mappings
+3. Save to: `/home/neo/agents/sys-admin/keyboard/yunzii-al98-custom-layout.json`
+4. Commit to sys-admin repo: `git add keyboard/ && git commit -m "Backup YUNZII AL98 custom keybinds" && git push`
+
+**To Restore After Factory Reset:**
+1. Connect to VIA (load keyboard definition JSON first)
+2. Go to **SAVE+LOAD** tab
+3. Click **"Load saved layout"**
+4. Select your backup: `~/agents/sys-admin/keyboard/yunzii-al98-custom-layout.json`
+5. Custom keybinds restored to keyboard firmware
+
+**Lighting Control Note:**
+
+Don't use VIA for lighting changes - it triggers error state (red breathing cloud LED). Use Fn key combinations instead:
+- `Fn + Backspace` - Backlight ON/OFF
+- `Fn + \` - Change effect
+- `Fn + Enter` - Change color
+- `Fn + ↑/↓` - Brightness
+- `Fn + →/←` - Speed
+
+If cloud LED turns red and breathing, factory reset keyboard: `Fn + Spacebar` (then restore keybinds from backup).
+
 ## ❌ Method: Vial Desktop/Web - NOT COMPATIBLE
 
 - Vial desktop app: Requires Vial firmware (AL98 has VIA firmware)
@@ -243,7 +271,8 @@ Now:
 
 # Files & Paths
 
-- **JSON definition:** `~/Downloads/YUNZII_AL98_QMK_V0100_20250225/YUNZII_AL98_QMK_V0100_20250225.json`
+- **Keyboard definition JSON:** `~/Downloads/YUNZII_AL98_QMK_V0100_20250225/YUNZII_AL98_QMK_V0100_20250225.json`
+- **Custom keybinds backup:** `~/agents/sys-admin/keyboard/yunzii-al98-custom-layout.json` (save after customizing)
 - **VIA web app:** https://usevia.app/
 - **Hyprland config:** `~/.config/hypr/hyprland.conf` (line 244: `$mainMod = SUPER`)
 - **udev rule:** `/etc/udev/rules.d/50-yunzii-al98.rules`
