@@ -117,12 +117,11 @@ If audio still not working, **reboot** to fully reinitialize HDMI audio drivers.
 
 ## TV Settings Checklist
 
-Even with correct Linux config, check TV settings:
-1. **Audio Output:** Set to "Internal Speakers" or "TV Speakers"
-   - NOT "External Speakers", "HDMI ARC", "Optical", etc.
-2. **Volume:** Turned up (TV has separate volume from system)
-3. **Mute:** Off (TV has separate mute from system)
-4. **HDMI Audio:** Enabled for the specific HDMI input
+**VERIFIED (Nov 30, 2025):**
+1. ✅ **Audio Output:** Internal Speaker
+2. ✅ **Digital Audio Out:** PCM
+3. ✅ **Volume:** Turned up (confirmed)
+4. ✅ **Mute:** Off (confirmed)
 
 ---
 
@@ -154,8 +153,22 @@ The TV uses a DP-to-HDMI cable instead of native HDMI because the Intel Arc B580
 
 ## Status
 
-**Current State:** Config fixed, needs reboot to test.
+**Current State:** HDMI audio not working - GPU hardware issue identified.
 
-**Expected Outcome:** Audio should work through TV speakers after reboot.
+**Root Cause (Nov 30, 2025):**
+GPU HDMI audio codec not detecting monitors support audio:
+```bash
+cat /proc/asound/card1/eld#* shows:
+monitor_present 0  (GPU doesn't detect monitor)
+eld_valid 0        (No valid EDID audio data)
+```
 
-**If Still Broken:** Hardware issue (cable, TV HDMI input, GPU audio) rather than software config.
+**This affects ALL HDMI outputs** (TV on DP-2, both Samsung monitors). Software config is correct, but Intel Arc B580 GPU audio codec isn't receiving ELD/EDID audio capability info from displays.
+
+**Known Issue:** Intel Arc GPUs + DisplayPort-to-HDMI adapters often fail to pass ELD/EDID audio metadata correctly.
+
+**Possible Solutions:**
+1. Try different DP-to-HDMI cable (some pass ELD better than others)
+2. Update Intel GPU drivers when newer version available
+3. Try native HDMI port (but this broke 120Hz on TV previously)
+4. Use external USB DAC/audio interface instead of HDMI audio

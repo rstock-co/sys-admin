@@ -8,9 +8,10 @@
 ## Active Issues
 
 ### Audio
-- **[IN PROGRESS]** No sound from TV speakers → `audio/tv-audio-troubleshooting.md`
-  - **Status:** WirePlumber config fixed (wrong HDMI output), needs reboot to test
-  - **Next:** Reboot and verify audio works
+- **[BLOCKED]** No sound from TV/monitors - Intel Arc B580 GPU HDMI audio issue → `audio/tv-audio-troubleshooting.md`
+  - **Status:** GPU audio codec not detecting displays (ELD invalid, monitor_present=0)
+  - **Cause:** Intel Arc + DP-to-HDMI adapters don't pass audio EDID correctly
+  - **Next:** Try different cable or wait for GPU driver update
 
 ---
 
