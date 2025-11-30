@@ -44,12 +44,15 @@
 **Purpose:** Track system documentation and agent instructions
 
 **What goes here:**
-- `CLAUDE.md` - Agent instructions
+- `CLAUDE.md` - Agent instructions (this file)
 - `SYSTEM_SETUP.md` - System configuration decisions
 - `SYSTEM_SPECS.md` - Hardware specifications
+- `TROUBLESHOOTING.md` - Central tracker for active/resolved issues
 - `bare-git-dotfiles-method.md` - Dotfiles method docs
+- `audio/` - Audio troubleshooting docs
 - `keyboard/` - Keyboard troubleshooting and manuals
-- Other documentation files
+- `display/` - Display/monitor troubleshooting docs
+- Other domain-specific troubleshooting folders
 
 ---
 
@@ -121,6 +124,58 @@ This is the **single source of truth** for system configuration decisions.
 - Include package names and versions
 - Document **decisions and rationale**, not just what's installed
 - Future-you should understand WHY things are configured this way
+
+### TROUBLESHOOTING.md
+
+This is the **central tracker** for system issues and troubleshooting sessions.
+
+**Structure (Option 2):**
+- **Root file:** `TROUBLESHOOTING.md` - Master checklist of active/resolved issues
+- **Domain folders:** `audio/`, `keyboard/`, `display/`, etc. - Detailed troubleshooting docs
+- **Flexible naming:** Files in folders use descriptive names (e.g., `tv-audio-troubleshooting.md`)
+
+**When to update:**
+- New issue discovered → Add to "Active Issues" section with link to folder
+- Issue status changes → Update status tag (`[IN PROGRESS]`, `[RESOLVED]`, `[TODO]`, `[BLOCKED]`)
+- Issue resolved → Move to "Resolved Issues" section with date and solution summary
+- New troubleshooting session → Create descriptive file in appropriate folder
+
+**How it works with `/troubleshoot <folder>` slash command:**
+1. User runs: `/troubleshoot audio`
+2. Agent reads `TROUBLESHOOTING.md` first to see status of audio issues
+3. Agent reads ALL files in `audio/` folder for full context
+4. Agent asks user for current status update
+5. Agent continues troubleshooting from where previous session left off
+6. Agent updates `TROUBLESHOOTING.md` when status changes
+
+**Format example:**
+```markdown
+## Active Issues
+
+### Audio
+- **[IN PROGRESS]** No sound from TV speakers → `audio/tv-audio-troubleshooting.md`
+  - **Status:** WirePlumber config fixed, needs reboot to test
+  - **Next:** Reboot and verify audio works
+
+## Resolved Issues
+
+### Keyboard
+- **[RESOLVED - Nov 28, 2025]** VIA lighting resets → `keyboard/yunzii-al98-troubleshooting.md`
+  - **Solution:** Disabled VIA lighting, use hardware Fn keys only
+```
+
+**Why Option 2 (freeform folders):**
+- Multiple concurrent issues in same domain → Multiple descriptively-named files
+- Issues overlap and evolve → Flexibility to organize naturally
+- Historical reference → Files stay in place with searchable names
+- Root checklist provides structure → Quick status overview without constraining folder organization
+
+**Agent responsibilities:**
+- Read `TROUBLESHOOTING.md` FIRST when using `/troubleshoot` command
+- Update root file when issue status changes
+- Create new files in folders with descriptive names
+- Link new files from root tracker
+- Move issues to "Resolved" section when fixed (don't delete files, keep history)
 
 ---
 
@@ -309,4 +364,4 @@ paru -S <aur-pkg>            # Install AUR package
 
 ---
 
-**Last Updated:** 2025-11-28
+**Last Updated:** 2025-11-30
