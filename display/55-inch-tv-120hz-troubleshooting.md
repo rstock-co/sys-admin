@@ -1,30 +1,63 @@
 # TCL 55" QM7K 120Hz Troubleshooting Session
 
-**Date**: 2025-11-27
-**Issue**: TCL 55" TV (HDMI-A-3) not running at 120Hz on Intel Arc B580 GPU
-**Status**: **CRITICAL - PCIe x1 Bottleneck Discovered** (Must Fix BIOS First)
+**Date**: 2025-11-27 to 2025-11-30
+**Original Issue**: TCL 55" TV not running at 120Hz on Intel Arc B580 GPU
+**Status**: ✅ **RESOLVED** - Using DisplayPort to HDMI cable
 
-## 🚨 CURRENT STATUS - Session 4 (Post-BIOS Update + CMOS Reset)
+## ✅ FINAL RESOLUTION (2025-11-30)
 
-**BLOCKING ISSUE PERSISTS**: GPU still running at **PCIe x1 Gen 1.0** instead of **x8 Gen 4.0**
+**Solution**: Switched from GPU's native HDMI port to DisplayPort output with **DP-to-HDMI cable**.
 
-### Current State (2025-11-27 Late Evening)
+### Current Working Configuration (As of 2025-11-30 Evening)
+- ✅ **Display**: TCL 55" TV now on **DP-2** port
+- ✅ **Refresh Rate**: **3840x2160@120.00Hz** confirmed working
+- ✅ **Connection**: DisplayPort (GPU) → HDMI (TV) via active adapter cable
+- ✅ **Available Modes**: Full 120Hz mode list now exposed (3840x2160@120Hz, 2560x1440@120Hz, 1920x1080@120Hz)
+
+**Verification**:
+```bash
+hyprctl monitors | grep "DP-2"
+# Output: 3840x2160@120.00000 at 2160x840
+```
+
+The native HDMI port on the Arc B580 had driver/firmware issues preventing proper 120Hz negotiation. Using DisplayPort bypassed this completely.
+
+### Monitor Layout Changes (2025-11-30 Evening)
+
+**Issue Discovered**: After switching TV to DP-2, the monitor physical-to-logical mapping was incorrect:
+- Samsung monitors had wallpaper upside down (girl's head at bottom)
+- Mouse movement wrong: exiting TV right edge went to left monitor
+
+**Fix Applied** (in `~/.config/hypr/hyprland.conf`):
+- **DP-3** (physical left) → position 0x0, transform 1
+- **DP-2** (physical center TV) → position 2160x840, transform 0 (120Hz)
+- **DP-1** (physical right) → position 6000x0, transform 3
+
+**Current Status**:
+- ✅ Mouse movement correct (TV right edge → right monitor)
+- ⚠️ Wallpaper still upside down on portrait monitors (may require reboot or transform adjustment)
+
+**Next Step**: Reboot to see if wallpaper orientation fixes itself, otherwise need to add 180° flip to transforms.
+
+---
+
+## Historical Troubleshooting (2025-11-27)
+
+### Original Problem
+GPU's native HDMI port would only run TV at 60Hz despite:
+- TV supporting 120Hz (confirmed via EDID)
+- Cable being HDMI 2.1 certified
+- Same cable working at 120Hz on motherboard integrated graphics
+
+### PCIe x1 Bottleneck (Discovered but Not Display-Related)
+During troubleshooting, discovered GPU was stuck at **PCIe x1 Gen 1.0** instead of **x8 Gen 4.0**:
 - ✅ **BIOS Updated**: Version 2.A91 (September 9, 2025) - AGESA PI 1.2.0.3g
-- ⚠️ **CMOS Reset**: Used Clear CMOS button (15 seconds) - **INSUFFICIENT**
-  - Did NOT remove battery
-  - Did NOT wait 30-60 minutes for full capacitor discharge
-  - Arc B580 PCIe switch chip likely retained negotiation state
+- ⚠️ **CMOS Reset**: Used Clear CMOS button (15 seconds) - insufficient for Arc B580 PCIe switch chip
 - ✅ **BIOS Reconfigured**: Above 4G Decoding, Re-Size BAR, PCIe Gen settings verified
-- ✅ Kernel parameter applied: `video=HDMI-A-3:3840x2160@120`
-- ❌ **PCIe Link**: STILL x1 @ 2.5 GT/s (should be x8 @ 16 GT/s)
-- ❌ **Display**: Still 60Hz (4K@120Hz mode not available in driver)
+- ✅ Kernel parameter applied: `video=HDMI-A-3:3840x2160@120` (no longer needed)
+- ❌ **PCIe Link**: Was stuck at x1 @ 2.5 GT/s
 
-### Root Cause Analysis
-The GPU is stuck at **x1 PCIe 1.0** bandwidth (250 MB/s instead of 32 GB/s = **128x slower**). This catastrophic bottleneck is preventing:
-1. Proper GPU initialization
-2. Full EDID reading from the TV
-3. Driver from exposing 4K@120Hz modes
-4. Normal display functionality
+**Note**: The PCIe bottleneck issue may still exist but is **NOT related to the 120Hz display problem**. The DP-to-HDMI solution worked regardless of PCIe bandwidth issues.
 
 ### Evidence
 ```bash

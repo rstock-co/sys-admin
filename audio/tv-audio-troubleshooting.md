@@ -188,13 +188,23 @@ eld_valid 0        (No valid EDID audio data)
 - [Intel Community: Arc B580 audio failures](https://community.intel.com/t5/Intel-ARC-Graphics/New-B580-graphics-card-and-now-no-audio-through-DP-or-HDMI/td-p/1680276)
 
 **Implemented Solution:**
-1. ✅ **JBL Flip 6 Bluetooth speaker** - Paired successfully, audio working (minor glitching)
+1. ✅ **JBL Flip 6 Bluetooth speaker** - Paired successfully, audio working (minor glitching) - TEMPORARY WORKAROUND
 2. **PipeWire config tuning** - Created `~/.config/pipewire/pipewire.conf.d/99-bluetooth.conf` with increased buffer size (quantum 2048) to reduce Bluetooth glitches
+3. ✅ **Creative Pebble Pro USB speakers** - Ordered Nov 30, 2025 from Best Buy Canada (refurbished, $30 CAD) - PERMANENT SOLUTION
 
-**Alternative Solutions:**
-- **USB DAC** ($30-50) - 3.5mm output to TV AUX, zero latency, no glitching
-- **Revert to native HDMI** - Trade 120Hz for working audio
-- **Wait for kernel update** - xe driver DP audio may be fixed in future kernel releases
+**Creative Pebble Pro Specs:**
+- Model: 51MF1710AA001
+- Power: 10W RMS (20W peak), upgradeable to 30W RMS with USB-PD brick
+- Connectivity: USB-C powered, Bluetooth 5.3, 3.5mm AUX input
+- Features: Re-engineered 2.25" drivers, 3.5x better bass than V3, RGB lighting, BassFlex technology
+- Condition: Refurbished - Like New
+- Price: $30 CAD (50% off $60 new price)
+- Source: Best Buy Canada Black Friday 2025
+
+**Alternative Solutions (not pursued):**
+- **USB DAC** ($30-50) - 3.5mm output to TV AUX, zero latency, no glitching - NOT VIABLE (TCL QM7 3.5mm jack is output-only)
+- **Revert to native HDMI** - Trade 120Hz for working audio - Rejected, keeping 120Hz
+- **Wait for kernel update** - xe driver DP audio may be fixed in future kernel releases - Too uncertain
 
 **Tested and rejected:**
 - ✗ Bluetooth to TV - TV only supports remote/accessories, not audio input

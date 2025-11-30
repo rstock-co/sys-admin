@@ -1,5 +1,5 @@
 # Hyprland System Setup Guide
-**Last Updated:** November 28, 2025
+**Last Updated:** November 30, 2025
 **Purpose:** Personal reference for system configuration, packages, and decisions
 
 ---
@@ -20,9 +20,14 @@
 
 ### Monitors
 Triple 4K monitor configuration:
-- **Left:** Samsung 32" (DP-1) - Portrait mode, 90° rotation, 3840x2160@60Hz
-- **Center:** TV 55" (HDMI-A-3) - Landscape, 3840x2160@120Hz (VRR disabled), vertically centered
-- **Right:** Samsung 32" (DP-2) - Portrait mode, 270° rotation, 3840x2160@60Hz
+- **Left:** Samsung 32" (DP-3) - Portrait mode, transform 1, 3840x2160@60Hz
+- **Center:** TCL 55" TV (DP-2) - Landscape, 3840x2160@120Hz (VRR disabled), vertically centered
+- **Right:** Samsung 32" (DP-1) - Portrait mode, transform 3, 3840x2160@60Hz
+
+**Connection Notes:**
+- TV uses **DisplayPort to HDMI cable** (GPU's native HDMI port had 120Hz issues with Arc B580 driver)
+- Monitor mapping changed when TV moved from HDMI-A-3 to DP-2
+- Physical left monitor is DP-3, physical right monitor is DP-1
 
 ### Visual Style
 - **Gaps:** Inner 5px, Outer 20px
@@ -106,6 +111,14 @@ Custom workaround for animated border gradients using a bash script (`~/.config/
 - **pipewire-alsa** - ALSA compatibility
 - **pipewire-jack** - JACK compatibility
 - **Why:** Modern replacement for PulseAudio, better performance, lower latency, handles both audio and video
+
+### Desktop Speakers
+- **Creative Pebble Pro** `51MF1710AA001` - USB-C powered desktop speakers
+- **Purchased:** Nov 30, 2025 - Best Buy Canada (refurbished, $30 CAD)
+- **Power:** 10W RMS (20W peak), upgradeable to 30W RMS with USB-PD brick
+- **Connectivity:** USB-C powered, Bluetooth 5.3, 3.5mm AUX input
+- **Features:** Re-engineered 2.25" drivers, 3.5x better bass, RGB lighting, BassFlex technology
+- **Why:** Workaround for Intel Arc B580 xe driver DisplayPort audio bug (DP-to-HDMI doesn't work for audio)
 
 ### Video/Camera
 - **v4l-utils** `1.32.0-1` - Video4Linux utilities

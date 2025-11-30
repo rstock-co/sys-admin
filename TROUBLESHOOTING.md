@@ -11,8 +11,8 @@
 - **[RESOLVED - Workaround]** No sound from TV/monitors - Intel Arc xe driver DP audio bug → `audio/tv-audio-troubleshooting.md`
   - **Root Cause:** Confirmed Linux kernel xe driver bug - fails to convert DP EDID→ELD for audio codec
   - **Research:** Known issue with Arc B580 + DisplayPort, native HDMI works (GPU firmware handles conversion)
-  - **Solution:** JBL Flip 6 Bluetooth speaker paired, PipeWire config tuned (minor glitching remains)
-  - **Future:** Wait for kernel xe driver update or use USB DAC for zero-latency audio
+  - **Current Solution:** JBL Flip 6 Bluetooth speaker (temporary, minor glitching)
+  - **Permanent Solution:** Creative Pebble Pro USB speakers ordered Nov 30, 2025 ($30 CAD refurbished, Best Buy Canada)
 
 ---
 
