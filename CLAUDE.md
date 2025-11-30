@@ -275,6 +275,57 @@ Always consider these constraints when making suggestions.
 
 ---
 
+## Alias Management
+
+### Modular Shell Configuration
+
+**Structure:** `.zshrc` sources all files from `~/zshrc/` directory automatically.
+
+**Current modules:**
+- `core.sh` - PATH, environment, shell history
+- `dotfiles.sh` - Bare git alias
+- `nav.sh` - File listing (eza), directory navigation
+- `pkg.sh` - Package manager shortcuts (pnpm, bun, npm)
+- `pacman.sh` - System packages (pacman, paru)
+- `agents.sh` - Agent shortcuts, PostgreSQL
+- `hyprland.sh` - Hyprland controls
+- `internet.sh` - Chrome bookmarks/history with fzf
+- `alias-management.sh` - Edit/reload/search aliases
+
+### Creating New Aliases
+
+**Method 1: Add to existing module**
+```bash
+vim ~/zshrc/<module>.sh
+# Add: alias name='command'
+dotfiles add ~/zshrc/<module>.sh
+dotfiles commit -m "Add <name> alias"
+dotfiles push
+source ~/.zshrc  # Reload
+```
+
+**Method 2: Create new module**
+```bash
+vim ~/zshrc/<new-module>.sh
+# Add aliases/functions
+dotfiles add ~/zshrc/<new-module>.sh
+dotfiles commit -m "Add <new-module> aliases"
+dotfiles push
+source ~/.zshrc  # Auto-sourced by .zshrc loop
+```
+
+**Alias format standards:**
+- Simple aliases: `alias name='command'`
+- With comments: Section header `# ▓▓▒░ description ░▒▓▓`, then aliases
+- Functions: Use `function name() { ... }` for complex logic (see `internet.sh`)
+
+**Built-in tools:**
+- `ea` - Edit aliases (opens `~/zshrc/` in VS Code)
+- `sa` - Source aliases (reloads `.zshrc`)
+- `va` - View aliases (fzf search all aliases)
+
+---
+
 ## Critical Rules
 
 From the user's agent guidelines:
