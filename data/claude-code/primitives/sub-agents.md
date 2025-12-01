@@ -84,7 +84,7 @@ When subagent names conflict, project-level subagents take precedence over user-
 
 ### Plugin agents
 
-[Plugins](/en/docs/claude-code/plugins) can provide custom subagents that integrate seamlessly with Claude Code. Plugin agents work identically to user-defined agents and appear in the `/agents` interface.
+[Plugins](/en/plugins) can provide custom subagents that integrate seamlessly with Claude Code. Plugin agents work identically to user-defined agents and appear in the `/agents` interface.
 
 **Plugin agent locations**: Plugins include agents in their `agents/` directory (or custom paths specified in the plugin manifest).
 
@@ -95,7 +95,7 @@ When subagent names conflict, project-level subagents take precedence over user-
 * Can be invoked automatically by Claude when appropriate
 * Can be managed (viewed, inspected) through `/agents` interface
 
-See the [plugin components reference](/en/docs/claude-code/plugins-reference#agents) for details on creating plugin agents.
+See the [plugin components reference](/en/plugins-reference#agents) for details on creating plugin agents.
 
 ### CLI-based configuration
 
@@ -121,7 +121,7 @@ claude --agents '{
 * Automation scripts that need custom subagents
 * Sharing subagent definitions in documentation or scripts
 
-For detailed information about the JSON format and all available options, see the [CLI reference documentation](/en/docs/claude-code/cli-reference#agents-flag-format).
+For detailed information about the JSON format and all available options, see the [CLI reference documentation](/en/cli-reference#agents-flag-format).
 
 ### File format
 
@@ -133,8 +133,8 @@ name: your-sub-agent-name
 description: Description of when this subagent should be invoked
 tools: tool1, tool2, tool3  # Optional - inherits all tools if omitted
 model: sonnet  # Optional - specify model alias or 'inherit'
-permissionMode: plan  # Optional - permission mode for this subagent
-skills: primitive-builder, backend-docs  # Optional - auto-load these skills
+permissionMode: default  # Optional - permission mode for the subagent
+skills: skill1, skill2  # Optional - skills to auto-load
 ---
 
 Your subagent's system prompt goes here. This can be multiple paragraphs
@@ -147,19 +147,18 @@ the subagent should follow.
 
 #### Configuration fields
 
-| Field              | Required | Description                                                                                                                                                                                                                      |
-| :----------------- | :------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `name`             | Yes      | Unique identifier using lowercase letters and hyphens                                                                                                                                                                            |
-| `description`      | Yes      | Natural language description of the subagent's purpose                                                                                                                                                                           |
-| `tools`            | No       | Comma-separated list of specific tools to allow. If omitted, inherits all tools from the main thread                                                                                                                              |
-| `disallowedTools`  | No       | Comma-separated list of tools to explicitly block. Use when you want to inherit most tools but block specific ones                                                                                                    |
-| `model`            | No       | Model to use for this subagent. Can be a model alias (`sonnet`, `opus`, `haiku`) or `'inherit'` to use the main conversation's model. If omitted, defaults to the [configured subagent model](/en/docs/claude-code/model-config) |
-| `permissionMode`   | No       | Permission mode for the subagent. Can be `"default"`, `"plan"`, `"acceptEdits"`, or `"bypassPermissions"`. If omitted, inherits from parent context                                                                              |
-| `skills`           | No       | Comma-separated list of skills to auto-load when the subagent starts. These skills will be automatically invoked before the subagent begins its task                                                                             |
+| Field            | Required | Description                                                                                                                                                                                                     |
+| :--------------- | :------- | :-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `name`           | Yes      | Unique identifier using lowercase letters and hyphens                                                                                                                                                           |
+| `description`    | Yes      | Natural language description of the subagent's purpose                                                                                                                                                          |
+| `tools`          | No       | Comma-separated list of specific tools. If omitted, inherits all tools from the main thread                                                                                                                     |
+| `model`          | No       | Model to use for this subagent. Can be a model alias (`sonnet`, `opus`, `haiku`) or `'inherit'` to use the main conversation's model. If omitted, defaults to the [configured subagent model](/en/model-config) |
+| `permissionMode` | No       | Permission mode for the subagent. Valid values: `default`, `acceptEdits`, `bypassPermissions`, `plan`, `ignore`. Controls how the subagent handles permission requests                                          |
+| `skills`         | No       | Comma-separated list of skill names to auto-load when the subagent starts. Skills are loaded into the subagent's context automatically                                                                          |
 
 ### Model selection
 
-The `model` field allows you to control which [AI model](/en/docs/claude-code/model-config) the subagent uses:
+The `model` field allows you to control which [AI model](/en/model-config) the subagent uses:
 
 * **Model alias**: Use one of the available aliases: `sonnet`, `opus`, or `haiku`
 * **`'inherit'`**: Use the same model as the main conversation (useful for consistency)
@@ -171,28 +170,16 @@ The `model` field allows you to control which [AI model](/en/docs/claude-code/mo
 
 ### Available tools
 
-Subagents can be granted access to any of Claude Code's internal tools. See the [tools documentation](/en/docs/claude-code/settings#tools-available-to-claude) for a complete list of available tools.
-
-**Complete tool list**: See [tools-reference.md](tools-reference.md) for all available tools, including orchestration capabilities.
-
-**Orchestration tools**: When `tools` field is omitted (default), subagents inherit Task, Skill, and SlashCommand tools, enabling them to:
-- Invoke other subagents (via Task tool)
-- Invoke skills (via Skill tool)
-- Invoke slash commands (via SlashCommand tool)
-
-This enables powerful composition patterns where one subagent can coordinate multiple specialist subagents. See [selecting-primitives.md](selecting-primitives.md) for orchestration examples.
+Subagents can be granted access to any of Claude Code's internal tools. See the [tools documentation](/en/settings#tools-available-to-claude) for a complete list of available tools.
 
 <Tip>
   **Recommended:** Use the `/agents` command to modify tool access - it provides an interactive interface that lists all available tools, including any connected MCP server tools, making it easier to select the ones you need.
 </Tip>
 
-You have three options for configuring tools:
+You have two options for configuring tools:
 
-* **Omit both fields** to inherit all tools from the main thread (default), including MCP tools
-* **Specify `tools`** as a comma-separated list for explicit allow-list control
-* **Specify `disallowedTools`** to inherit all tools EXCEPT specific ones you want to block (v2.0.30+)
-
-**Use `disallowedTools` when**: You want most tools but need to restrict a few (e.g., analysis agent that shouldn't write code, read-only agent that shouldn't Edit/Write).
+* **Omit the `tools` field** to inherit all tools from the main thread (default), including MCP tools
+* **Specify individual tools** as a comma-separated list for more granular control (can be edited manually or via `/agents`)
 
 **MCP Tools**: Subagents can access MCP tools from configured MCP servers. When the `tools` field is omitted, subagents inherit all MCP tools available to the main thread.
 
@@ -256,6 +243,117 @@ Request a specific subagent by mentioning it in your command:
 > Use the test-runner subagent to fix failing tests
 > Have the code-reviewer subagent look at my recent changes
 > Ask the debugger subagent to investigate this error
+```
+
+## Built-in subagents
+
+Claude Code includes built-in subagents that are available out of the box:
+
+### General-purpose subagent
+
+The general-purpose subagent is a capable agent for complex, multi-step tasks that require both exploration and action. Unlike the Explore subagent, it can modify files and execute a wider range of operations.
+
+**Key characteristics:**
+
+* **Model**: Uses Sonnet for more capable reasoning
+* **Tools**: Has access to all tools
+* **Mode**: Can read and write files, execute commands, make changes
+* **Purpose**: Complex research tasks, multi-step operations, code modifications
+
+**When Claude uses it:**
+
+Claude delegates to the general-purpose subagent when:
+
+* The task requires both exploration and modification
+* Complex reasoning is needed to interpret search results
+* Multiple strategies may be needed if initial searches fail
+* The task has multiple steps that depend on each other
+
+**Example scenario:**
+
+```
+User: Find all the places where we handle authentication and update them to use the new token format
+
+Claude: [Invokes general-purpose subagent]
+[Agent searches for auth-related code across codebase]
+[Agent reads and analyzes multiple files]
+[Agent makes necessary edits]
+[Returns detailed writeup of changes made]
+```
+
+### Plan subagent
+
+The Plan subagent is a specialized built-in agent designed for use during plan mode. When Claude is operating in plan mode (non-execution mode), it uses the Plan subagent to conduct research and gather information about your codebase before presenting a plan.
+
+**Key characteristics:**
+
+* **Model**: Uses Sonnet for more capable analysis
+* **Tools**: Has access to Read, Glob, Grep, and Bash tools for codebase exploration
+* **Purpose**: Searches files, analyzes code structure, and gathers context
+* **Automatic invocation**: Claude automatically uses this agent when in plan mode and needs to research the codebase
+
+**How it works:**
+When you're in plan mode and Claude needs to understand your codebase to create a plan, it delegates research tasks to the Plan subagent. This prevents infinite nesting of agents (subagents cannot spawn other subagents) while still allowing Claude to gather the necessary context.
+
+**Example scenario:**
+
+```
+User: [In plan mode] Help me refactor the authentication module
+
+Claude: Let me research your authentication implementation first...
+[Internally invokes Plan subagent to explore auth-related files]
+[Plan subagent searches codebase and returns findings]
+Claude: Based on my research, here's my proposed plan...
+```
+
+<Tip>
+  The Plan subagent is only used in plan mode. In normal execution mode, Claude uses the general-purpose agent or other custom subagents you've created.
+</Tip>
+
+### Explore subagent
+
+The Explore subagent is a fast, lightweight agent optimized for searching and analyzing codebases. It operates in strict read-only mode and is designed for rapid file discovery and code exploration.
+
+**Key characteristics:**
+
+* **Model**: Uses Haiku for fast, low-latency searches
+* **Mode**: Strictly read-only - cannot create, modify, or delete files
+* **Tools available**:
+  * Glob - File pattern matching
+  * Grep - Content searching with regex
+  * Read - Reading file contents
+  * Bash - Read-only commands only (ls, git status, git log, git diff, find, cat, head, tail)
+
+**When Claude uses it:**
+
+Claude will delegate to the Explore subagent when it needs to search or understand a codebase but doesn't need to make changes. This is more efficient than the main agent running multiple search commands directly, as content found during the exploration process doesn't bloat the main conversation.
+
+**Thoroughness levels:**
+
+When invoking the Explore subagent, Claude specifies a thoroughness level:
+
+* **Quick** - Basic searches, fastest results. Good for simple lookups.
+* **Medium** - Moderate exploration. Balances speed and thoroughness.
+* **Very thorough** - Comprehensive analysis across multiple locations and naming conventions. Used when the target might be in unexpected places.
+
+**Example scenarios:**
+
+```
+User: Where are errors from the client handled?
+
+Claude: [Invokes Explore subagent with "medium" thoroughness]
+[Explore uses Grep to search for error handling patterns]
+[Explore uses Read to examine promising files]
+[Returns findings with absolute file paths]
+Claude: Client errors are handled in src/services/process.ts:712...
+```
+
+```
+User: What's the codebase structure?
+
+Claude: [Invokes Explore subagent with "quick" thoroughness]
+[Explore uses Glob and ls to map directory structure]
+[Returns overview of key directories and their purposes]
 ```
 
 ## Example subagents
@@ -365,56 +463,6 @@ For each analysis:
 Always ensure queries are efficient and cost-effective.
 ```
 
-## Designing effective subagents
-
-### When to create a subagent
-
-Evaluate whether a new subagent adds value:
-
-* **Task complexity**: Requires specialized knowledge or multi-step workflows
-* **Frequency**: Task recurs often enough to justify dedicated tooling
-* **Reusability**: Can be applied across different contexts/projects
-* **Specialization**: Existing agents can't adequately handle the task
-
-### When NOT to create a subagent
-
-* One-off tasks (solve directly instead)
-* Tasks already covered by existing agents (check `/agents` first)
-* Simple tasks that don't need specialized context
-* Tasks better solved by a skill or slash command (lighter-weight primitives)
-
-### Quality criteria
-
-Effective subagents have:
-
-* **Clear boundaries**: Well-defined scope, not trying to do everything
-* **Expert persona**: Specific domain expertise and methodologies
-* **Self-contained prompts**: Complete instructions without external dependencies
-* **Error handling**: Guidance for edge cases and failures
-* **Verification mechanisms**: Built-in quality control and self-checking
-* **Proactive clarification**: Asks questions when context is insufficient
-
-### Design checklist
-
-When designing a subagent:
-
-1. **Define core purpose**: Extract single, clear responsibility
-2. **Craft expert persona**: Establish relevant domain expertise
-3. **Set behavioral boundaries**: What the agent should/shouldn't do
-4. **Write in second person**: "You are...", "You will..." (not "The agent...")
-5. **Be specific**: Concrete instructions over generic guidance
-6. **Include examples**: Show expected behavior for clarity
-7. **Plan tool access**: Grant only necessary tools
-8. **Consider integration**: How it works with existing agents
-
-### Common pitfalls
-
-* **Scope creep**: Agent tries to do too much (split into multiple agents)
-* **Vague prompts**: Generic instructions lead to unpredictable behavior
-* **Tool overload**: Granting unnecessary tools creates confusion
-* **Missing error handling**: Agent fails ungracefully on edge cases
-* **Duplicate functionality**: Creating agents that overlap with existing ones
-
 ## Best practices
 
 * **Start with Claude-generated agents**: We highly recommend generating your initial subagent with Claude and then iterating on it to make it personally yours. This approach gives you the best results - a solid foundation that you can customize to your specific needs.
@@ -441,7 +489,78 @@ For complex workflows, you can chain multiple subagents:
 
 Claude Code intelligently selects subagents based on context. Make your `description` fields specific and action-oriented for best results.
 
+### Resumable subagents
+
+Subagents can be resumed to continue previous conversations, which is particularly useful for long-running research or analysis tasks that need to be continued across multiple invocations.
+
+**How it works:**
+
+* Each subagent execution is assigned a unique `agentId`
+* The agent's conversation is stored in a separate transcript file: `agent-{agentId}.jsonl`
+* You can resume a previous agent by providing its `agentId` via the `resume` parameter
+* When resumed, the agent continues with full context from its previous conversation
+
+**Example workflow:**
+
+Initial invocation:
+
+```
+> Use the code-analyzer agent to start reviewing the authentication module
+
+[Agent completes initial analysis and returns agentId: "abc123"]
+```
+
+Resume the agent:
+
+```
+> Resume agent abc123 and now analyze the authorization logic as well
+
+[Agent continues with full context from previous conversation]
+```
+
+**Use cases:**
+
+* **Long-running research**: Break down large codebase analysis into multiple sessions
+* **Iterative refinement**: Continue refining a subagent's work without losing context
+* **Multi-step workflows**: Have a subagent work on related tasks sequentially while maintaining context
+
+**Technical details:**
+
+* Agent transcripts are stored in your project directory
+* Recording is disabled during resume to avoid duplicating messages
+* Both synchronous and asynchronous agents can be resumed
+* The `resume` parameter accepts the agent ID from a previous execution
+
+**Programmatic usage:**
+
+If you're using the Agent SDK or interacting with the AgentTool directly, you can pass the `resume` parameter:
+
+```typescript  theme={null}
+{
+  "description": "Continue analysis",
+  "prompt": "Now examine the error handling patterns",
+  "subagent_type": "code-analyzer",
+  "resume": "abc123"  // Agent ID from previous execution
+}
+```
+
+<Tip>
+  Keep track of agent IDs for tasks you may want to resume later. Claude Code displays the agent ID when a subagent completes its work.
+</Tip>
+
 ## Performance considerations
 
 * **Context efficiency**: Agents help preserve main context, enabling longer overall sessions
 * **Latency**: Subagents start off with a clean slate each time they are invoked and may add latency as they gather context that they require to do their job effectively.
+
+## Related documentation
+
+* [Plugins](/en/plugins) - Extend Claude Code with custom agents through plugins
+* [Slash commands](/en/slash-commands) - Learn about other built-in commands
+* [Settings](/en/settings) - Configure Claude Code behavior
+* [Hooks](/en/hooks) - Automate workflows with event handlers
+
+
+---
+
+> To find navigation and other pages in this documentation, fetch the llms.txt file at: https://code.claude.com/docs/llms.txt

@@ -179,7 +179,6 @@ Instead of executing a bash command, prompt-based hooks:
 * `prompt`: The prompt text to send to the LLM
   * Use `$ARGUMENTS` as a placeholder for the hook input JSON
   * If `$ARGUMENTS` is not present, input JSON is appended to the prompt
-* `model`: (Optional) Specify a custom model for hook evaluation (e.g., "haiku", "sonnet", "opus")
 * `timeout`: (Optional) Timeout in seconds (default: 30 seconds)
 
 ### Response schema
@@ -359,17 +358,9 @@ block certain types of prompts.
 Runs when the main Claude Code agent has finished responding. Does not run if
 the stoppage occurred due to a user interrupt.
 
-### SubagentStart
-
-Runs when a Claude Code subagent (Task tool call) starts executing.
-
 ### SubagentStop
 
 Runs when a Claude Code subagent (Task tool call) has finished responding.
-
-**Available fields:**
-* `agent_id` - The ID of the subagent that completed
-* `agent_transcript_path` - Path to the subagent's conversation transcript
 
 ### PreCompact
 
@@ -1136,3 +1127,8 @@ Progress messages appear in verbose mode (ctrl+o) showing:
 * Command being executed
 * Success/failure status
 * Output or error messages
+
+
+---
+
+> To find navigation and other pages in this documentation, fetch the llms.txt file at: https://code.claude.com/docs/llms.txt
