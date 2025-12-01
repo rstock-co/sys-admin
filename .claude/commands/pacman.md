@@ -8,37 +8,47 @@ You are the sys-admin agent reviewing package installation status.
    ```bash
    pacman -Qqe > ~/agents/sys-admin/package-management/pkglist.txt
    pacman -Qqm > ~/agents/sys-admin/package-management/aur-pkglist.txt
+   ls /usr/lib/node_modules/ | grep -v npm | grep -v node-gyp | grep -v nopt | grep -v semver | grep -v pnpm > ~/agents/sys-admin/package-management/npm/npm-global.txt
    ```
    This ensures the lists reflect what's ACTUALLY installed right now.
 
 2. **Read package lists:**
    - `@package-management/pkglist.txt` - Official repo packages (explicit)
    - `@package-management/aur-pkglist.txt` - AUR packages
+   - `@package-management/npm/npm-global.txt` - Global npm packages
 
-3. **Read tracking file:**
+3. **Read tracking files:**
    - `@package-management/PACKAGE_INSTALL_TRACKING.md`
+   - `@package-management/npm/NPM_INSTALL_TRACKING.md`
 
-4. **Cross-reference and update:**
+4. **Cross-reference and update (System Packages):**
    - Compare actual installed packages against the "✅ Installed Packages" section
    - Identify packages that are installed but NOT listed in the tracking file
    - Add any missing packages to the appropriate subsection in "✅ Installed Packages"
    - Move any packages from "📋 Not Yet Installed" to "✅ Installed Packages" if they're already installed
 
-5. **Recommend next installations:**
-   - Review the "📋 Not Yet Installed" section
+5. **Cross-reference and update (NPM Packages):**
+   - Compare `npm-global.txt` against `NPM_INSTALL_TRACKING.md`
+   - Identify npm packages that are installed but NOT tracked
+   - Check if any tracked packages are no longer installed
+   - Note: Empty file or "# No global npm packages installed yet" means zero globals (clean state)
+
+6. **Recommend next installations:**
+   - Review both "📋 Not Yet Installed" sections (system + npm)
    - Prioritize "High Priority" items
-   - Recommend 3-5 packages to install next
-   - Provide installation commands (separate official repos from AUR)
+   - Recommend 3-5 system packages AND 2-3 npm packages to install next
+   - Provide installation commands (separate official repos, AUR, and npm)
    - Explain benefits for this system (Ryzen 9 7950X + Arc B580)
 
-6. **Update tracking file:**
-   - If you found installed packages missing from tracking, update the file
+7. **Update tracking files:**
+   - If you found installed packages missing from tracking, update the files
    - Commit changes to git with descriptive message
 
-7. **Commit updated package lists to sys-admin repo:**
+8. **Commit updated package lists to sys-admin repo:**
    - If package lists were regenerated and differ from what's tracked:
    ```bash
-   git add package-management/pkglist.txt package-management/aur-pkglist.txt
+   cd ~/agents/sys-admin
+   git add package-management/pkglist.txt package-management/aur-pkglist.txt package-management/npm/npm-global.txt
    git commit -m "Update package lists to reflect current system state"
    git push
    ```
@@ -48,25 +58,42 @@ You are the sys-admin agent reviewing package installation status.
 ```
 📦 Package Status Report
 
-TRACKING FILE UPDATES:
+SYSTEM PACKAGE UPDATES:
 - Added X packages to "Installed" section
 - Moved Y packages from "Not Yet Installed"
 
+NPM PACKAGE STATUS:
+- Global packages installed: N
+- Tracked in NPM_INSTALL_TRACKING.md: M
+- Discrepancies: [list any]
+
 RECOMMENDED NEXT INSTALLS:
+
+System Packages:
 1. package-name (category) - Why it's useful
 2. package-name (category) - Why it's useful
 ...
 
+NPM Packages:
+1. package-name - Why it's useful
+2. package-name - Why it's useful
+
 INSTALL COMMANDS:
-# Official repos
+
+# System - Official repos
 sudo pacman -S package1 package2
 pacman -Qqe > ~/agents/sys-admin/package-management/pkglist.txt
-git add package-management/pkglist.txt && git commit -m "Install packages" && git push
+cd ~/agents/sys-admin && git add package-management/pkglist.txt && git commit -m "Install packages" && git push
 
-# AUR
+# System - AUR
 paru -S aur-package1
 pacman -Qqm > ~/agents/sys-admin/package-management/aur-pkglist.txt
-git add package-management/aur-pkglist.txt && git commit -m "Install AUR packages" && git push
+cd ~/agents/sys-admin && git add package-management/aur-pkglist.txt && git commit -m "Install AUR packages" && git push
+
+# NPM - Global
+npm install -g package1 package2
+ls /usr/lib/node_modules/ | grep -v npm | grep -v node-gyp | grep -v nopt | grep -v semver | grep -v pnpm > ~/agents/sys-admin/package-management/npm/npm-global.txt
+cd ~/agents/sys-admin && git add package-management/npm/npm-global.txt && git commit -m "Install npm: package1, package2" && git push
 ```
 
 Be concise and actionable.
