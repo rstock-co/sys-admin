@@ -1,0 +1,241 @@
+{
+  "last_scan": "2025-11-02T00:00:00Z",
+  "scan_range": {
+    "from": "2025-10-03",
+    "to": "2025-11-02"
+  },
+  "summary": {
+    "total_entries": 21,
+    "relevant_count": 9,
+    "irrelevant_count": 12,
+    "breaking_changes": 1,
+    "beta_features": 1
+  },
+  "relevant_entries": [
+    {
+      "version": "v2.0.30",
+      "title": "Subagent disallowedTools field",
+      "date": "2025-10-31",
+      "impact_level": "MEDIUM",
+      "reason": "New capability for subagent definitions",
+      "keywords_matched": ["subagent", "agent"],
+      "affected_files": [
+        ".claude/agents/zen-architect/CLAUDE.md",
+        ".claude/agents/modular-builder/CLAUDE.md",
+        "docs/agent_hub/architecture/integration.md",
+        ".claude/skills/claude-code-docs/docs/primitives/sub-agents.md"
+      ],
+      "action_taken": true,
+      "beta": false,
+      "completion_notes": "Documented disallowedTools in sub-agents.md and integration.md"
+    },
+    {
+      "version": "v2.0.30",
+      "title": "PreToolUse hooks can modify tool inputs",
+      "date": "2025-10-31",
+      "impact_level": "HIGH",
+      "reason": "Breaking change - hook behavior expanded",
+      "keywords_matched": ["hook"],
+      "affected_files": [
+        ".claude/hooks/agent_knowledge_sync.py",
+        ".claude/skills/claude-code-docs/docs/primitives/hooks-guide.md",
+        ".claude/skills/claude-code-docs/docs/primitives/hooks-reference.md",
+        "DISCOVERIES.md"
+      ],
+      "action_taken": true,
+      "beta": false,
+      "breaking_change": true,
+      "completion_notes": "Updated hooks documentation and added DISCOVERIES.md entry"
+    },
+    {
+      "version": "v2.0.28",
+      "title": "Plan subagent introduced",
+      "date": "2025-10-27",
+      "impact_level": "MEDIUM",
+      "reason": "New primitive, potentially useful for Agent Hub",
+      "keywords_matched": ["subagent", "agent"],
+      "affected_files": [
+        "docs/agent_hub/architecture/integration.md",
+        ".claude/skills/claude-code-docs/docs/primitives/sub-agents.md"
+      ],
+      "action_taken": true,
+      "beta": false,
+      "completion_notes": "Documented Plan subagent in AGENTS.md and integration.md"
+    },
+    {
+      "version": "v2.0.24",
+      "title": "Sandbox mode for BashTool",
+      "date": "2025-10-21",
+      "impact_level": "LOW",
+      "reason": "Informational, potentially useful for security-conscious IDAs",
+      "keywords_matched": [],
+      "affected_files": [
+        "docs/agent_hub/guides/creating-agents.md"
+      ],
+      "action_taken": true,
+      "beta": true,
+      "completion_notes": "Added DISCOVERIES.md entry to track beta feature for graduation"
+    },
+    {
+      "version": "v2.0.21",
+      "title": "Interactive question tool added",
+      "date": "2025-10-18",
+      "impact_level": "MEDIUM",
+      "reason": "New capability for IDA user interaction",
+      "keywords_matched": [],
+      "affected_files": [
+        "docs/agent_hub/guides/creating-agents.md",
+        ".claude/agents/zen-architect/CLAUDE.md"
+      ],
+      "action_taken": true,
+      "beta": false,
+      "completion_notes": "Already documented in enhanced creation workflow"
+    },
+    {
+      "version": "v2.0.20",
+      "title": "Support for Claude Skills",
+      "date": "2025-10-17",
+      "impact_level": "HIGH",
+      "reason": "Foundational feature for Agent Hub",
+      "keywords_matched": ["skill"],
+      "affected_files": [
+        "docs/agent_hub/reference/skills.md",
+        "docs/agent_hub/architecture/integration.md"
+      ],
+      "action_taken": true,
+      "beta": false,
+      "completion_notes": "Added allowed-tools to all SKILL.md files and linked to local Claude Code docs"
+    },
+    {
+      "version": "v2.0.17",
+      "title": "Explore subagent introduced",
+      "date": "2025-10-15",
+      "impact_level": "HIGH",
+      "reason": "Agent Hub already uses Explore agent heavily",
+      "keywords_matched": ["subagent", "agent"],
+      "affected_files": [
+        "CLAUDE.md",
+        "AGENTS.md",
+        "docs/agent_hub/guides/querying-knowledge.md"
+      ],
+      "action_taken": true,
+      "beta": false,
+      "completion_notes": "Documented Explore subagent in CLAUDE.md and AGENTS.md"
+    },
+    {
+      "version": "v2.0.12",
+      "title": "Plugin System released",
+      "date": "2025-10-09",
+      "impact_level": "MEDIUM",
+      "reason": "New primitive, potential for Agent Hub extensions",
+      "keywords_matched": ["agent", "hook", "MCP"],
+      "affected_files": [
+        ".claude/skills/claude-code-docs/docs/primitives/plugins-guide.md",
+        ".claude/skills/claude-code-docs/docs/primitives/plugins-reference.md",
+        "docs/agent_hub/architecture/integration.md"
+      ],
+      "action_taken": true,
+      "beta": false,
+      "completion_notes": "Added plugin distribution section to integration.md"
+    },
+    {
+      "version": "v2.0.10",
+      "title": "PreToolUse hooks can modify tool inputs",
+      "date": "2025-10-08",
+      "impact_level": "HIGH",
+      "reason": "Hook behavior expanded (duplicate of v2.0.30)",
+      "keywords_matched": ["hook", "MCP"],
+      "affected_files": [],
+      "action_taken": true,
+      "beta": false,
+      "note": "Duplicate entry - covered in v2.0.30",
+      "completion_notes": "Addressed in v2.0.30 updates"
+    }
+  ],
+  "irrelevant_entries": [
+    {
+      "version": "v2.0.31",
+      "title": "Windows shift+tab mode switching, respectGitIgnore config",
+      "date": "2025-11-01",
+      "reason_filtered": "Platform-specific UI change, config option not critical to Agent Hub"
+    },
+    {
+      "version": "v2.0.27",
+      "title": "Permission UI improvements, session resume enhancements",
+      "date": "2025-10-24",
+      "reason_filtered": "UI improvements, no documentation impact"
+    },
+    {
+      "version": "v2.0.25",
+      "title": "Legacy SDK entrypoint removed",
+      "date": "2025-10-22",
+      "reason_filtered": "Agent Hub doesn't use SDK"
+    },
+    {
+      "version": "v2.0.22",
+      "title": "Content layout fixes, thinking toggle, duplicate permission fix",
+      "date": "2025-10-18",
+      "reason_filtered": "UI/UX improvements only"
+    },
+    {
+      "version": "v2.0.19",
+      "title": "Bash auto-background for long commands",
+      "date": "2025-10-16",
+      "reason_filtered": "Bash tool improvement, not Agent Hub specific"
+    },
+    {
+      "version": "v2.0.15",
+      "title": "Resume bug fixes for file creation",
+      "date": "2025-10-14",
+      "reason_filtered": "Bug fix, no doc updates needed"
+    },
+    {
+      "version": "v2.0.14",
+      "title": "MCP @-mention toggle, bash permission improvements",
+      "date": "2025-10-11",
+      "reason_filtered": "Minor improvements, already documented"
+    },
+    {
+      "version": "v2.0.13",
+      "title": "Plugin command fix on native build",
+      "date": "2025-10-09",
+      "reason_filtered": "Bug fix only"
+    },
+    {
+      "version": "v2.0.11",
+      "title": "System prompt token reduction, IDE fixes",
+      "date": "2025-10-08",
+      "reason_filtered": "Performance improvement, no action needed"
+    },
+    {
+      "version": "v2.0.9",
+      "title": "Bash backgrounding regression fix",
+      "date": "2025-10-06",
+      "reason_filtered": "Bug fix only"
+    },
+    {
+      "version": "v2.0.8",
+      "title": "Bedrock model update, IDE drag-and-drop",
+      "date": "2025-10-05",
+      "reason_filtered": "Model updates automatic, UI improvement not relevant"
+    },
+    {
+      "version": "v2.0.5",
+      "title": "IDE fixes, SDK replay flag",
+      "date": "2025-10-04",
+      "reason_filtered": "Bug fixes, not using SDK"
+    }
+  ],
+  "pending_actions": {
+    "breaking_changes": [],
+    "high_impact": [],
+    "medium_impact": [],
+    "beta_monitoring": [
+      {
+        "version": "v2.0.24",
+        "title": "Sandbox mode for BashTool",
+        "note": "Tracked in DISCOVERIES.md - monitor for graduation to stable"
+      }
+    ]
+  }
+}
