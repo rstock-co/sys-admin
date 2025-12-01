@@ -1,17 +1,125 @@
 {
-  "last_scan": "2025-11-02T00:00:00Z",
+  "last_scan": "2025-11-20T12:49:54Z",
   "scan_range": {
-    "from": "2025-10-03",
-    "to": "2025-11-02"
+    "from": "2025-11-03",
+    "to": "2025-11-20"
   },
   "summary": {
-    "total_entries": 21,
-    "relevant_count": 9,
+    "total_entries": 25,
+    "relevant_count": 13,
     "irrelevant_count": 12,
-    "breaking_changes": 1,
+    "breaking_changes": 4,
     "beta_features": 1
   },
   "relevant_entries": [
+    {
+      "version": "v2.0.45",
+      "title": "PermissionRequest hook event",
+      "date": "2025-11-19",
+      "impact_level": "HIGH",
+      "reason": "New hook event for auto-approving tool permissions",
+      "keywords_matched": ["hook"],
+      "affected_files": [
+        "data/claude-code/primitives/hooks-reference.md",
+        "data/claude-code/primitives/hooks-guide.md"
+      ],
+      "action_taken": true,
+      "beta": false,
+      "breaking_change": true,
+      "completion_notes": "Documented in Nov 20 sync (symbiont c6a43a7)"
+    },
+    {
+      "version": "v2.0.43",
+      "title": "Subagent permissionMode + skills frontmatter",
+      "date": "2025-11-18",
+      "impact_level": "HIGH",
+      "reason": "New fields for subagent configuration",
+      "keywords_matched": ["subagent", "agent", "skill"],
+      "affected_files": [
+        "data/claude-code/primitives/sub-agents.md",
+        "data/claude-code/primitives/hooks-reference.md",
+        "data/claude-code/primitives/skills.md"
+      ],
+      "action_taken": true,
+      "beta": false,
+      "breaking_change": true,
+      "completion_notes": "Documented in Nov 20 sync (symbiont c6a43a7)"
+    },
+    {
+      "version": "v2.0.42",
+      "title": "SubagentStop hook fields",
+      "date": "2025-11-17",
+      "impact_level": "MEDIUM",
+      "reason": "Added agent_id and agent_transcript_path fields",
+      "keywords_matched": ["subagent", "hook"],
+      "affected_files": [
+        "data/claude-code/primitives/hooks-reference.md"
+      ],
+      "action_taken": true,
+      "beta": false,
+      "completion_notes": "Documented in Nov 20 sync (symbiont c6a43a7)"
+    },
+    {
+      "version": "v2.0.41",
+      "title": "Hook improvements + slash command env vars",
+      "date": "2025-11-14",
+      "impact_level": "MEDIUM",
+      "reason": "Model parameter for stop hooks, new env vars for slash commands",
+      "keywords_matched": ["hook", "command"],
+      "affected_files": [
+        "data/claude-code/primitives/hooks-reference.md",
+        "data/claude-code/primitives/slash-commands.md",
+        "data/claude-code/primitives/plugins-reference.md"
+      ],
+      "action_taken": true,
+      "beta": false,
+      "completion_notes": "Documented in Nov 20 sync (symbiont c6a43a7)"
+    },
+    {
+      "version": "v2.0.37",
+      "title": "Notification hook matchers + output styles option",
+      "date": "2025-11-11",
+      "impact_level": "LOW",
+      "reason": "Matcher values for Notification hooks",
+      "keywords_matched": ["hook"],
+      "affected_files": [
+        "data/claude-code/primitives/hooks-reference.md",
+        "data/claude-code/usage/configuration/output-styles.md"
+      ],
+      "action_taken": true,
+      "beta": false,
+      "completion_notes": "Documented in Nov 20 sync (symbiont c6a43a7)"
+    },
+    {
+      "version": "v2.0.35",
+      "title": "ignorePatterns migration to deny permissions",
+      "date": "2025-11-07",
+      "impact_level": "MEDIUM",
+      "reason": "Config migration from project to localSettings",
+      "keywords_matched": [],
+      "affected_files": [
+        "data/claude-code/usage/configuration/settings.md"
+      ],
+      "action_taken": true,
+      "beta": false,
+      "breaking_change": true,
+      "completion_notes": "Documented in Nov 20 sync (symbiont c6a43a7)"
+    },
+    {
+      "version": "v2.0.32",
+      "title": "Output styles un-deprecated",
+      "date": "2025-11-04",
+      "impact_level": "MEDIUM",
+      "reason": "Community feedback reversed deprecation",
+      "keywords_matched": [],
+      "affected_files": [
+        "data/claude-code/usage/configuration/output-styles.md",
+        "data/claude-code/usage/configuration/settings.md"
+      ],
+      "action_taken": true,
+      "beta": false,
+      "completion_notes": "Documented in Nov 20 sync (symbiont c6a43a7)"
+    },
     {
       "version": "v2.0.30",
       "title": "Subagent disallowedTools field",
@@ -105,51 +213,6 @@
       "action_taken": true,
       "beta": false,
       "completion_notes": "Added allowed-tools to all SKILL.md files and linked to local Claude Code docs"
-    },
-    {
-      "version": "v2.0.17",
-      "title": "Explore subagent introduced",
-      "date": "2025-10-15",
-      "impact_level": "HIGH",
-      "reason": "Agent Hub already uses Explore agent heavily",
-      "keywords_matched": ["subagent", "agent"],
-      "affected_files": [
-        "CLAUDE.md",
-        "AGENTS.md",
-        "docs/agent_hub/guides/querying-knowledge.md"
-      ],
-      "action_taken": true,
-      "beta": false,
-      "completion_notes": "Documented Explore subagent in CLAUDE.md and AGENTS.md"
-    },
-    {
-      "version": "v2.0.12",
-      "title": "Plugin System released",
-      "date": "2025-10-09",
-      "impact_level": "MEDIUM",
-      "reason": "New primitive, potential for Agent Hub extensions",
-      "keywords_matched": ["agent", "hook", "MCP"],
-      "affected_files": [
-        ".claude/skills/claude-code-docs/docs/primitives/plugins-guide.md",
-        ".claude/skills/claude-code-docs/docs/primitives/plugins-reference.md",
-        "docs/agent_hub/architecture/integration.md"
-      ],
-      "action_taken": true,
-      "beta": false,
-      "completion_notes": "Added plugin distribution section to integration.md"
-    },
-    {
-      "version": "v2.0.10",
-      "title": "PreToolUse hooks can modify tool inputs",
-      "date": "2025-10-08",
-      "impact_level": "HIGH",
-      "reason": "Hook behavior expanded (duplicate of v2.0.30)",
-      "keywords_matched": ["hook", "MCP"],
-      "affected_files": [],
-      "action_taken": true,
-      "beta": false,
-      "note": "Duplicate entry - covered in v2.0.30",
-      "completion_notes": "Addressed in v2.0.30 updates"
     }
   ],
   "irrelevant_entries": [
@@ -157,7 +220,25 @@
       "version": "v2.0.31",
       "title": "Windows shift+tab mode switching, respectGitIgnore config",
       "date": "2025-11-01",
-      "reason_filtered": "Platform-specific UI change, config option not critical to Agent Hub"
+      "reason_filtered": "Platform-specific UI change, config option not critical"
+    },
+    {
+      "version": "v2.0.36",
+      "title": "DISABLE_AUTOUPDATER, queued messages fix",
+      "date": "2025-11-08",
+      "reason_filtered": "Bug fixes only"
+    },
+    {
+      "version": "v2.0.34",
+      "title": "VSCode permission mode setting, fuzzy finder perf",
+      "date": "2025-11-06",
+      "reason_filtered": "VSCode-specific, performance improvements"
+    },
+    {
+      "version": "v2.0.33",
+      "title": "Binary launch speed, doctor command",
+      "date": "2025-11-05",
+      "reason_filtered": "Bug fixes and performance"
     },
     {
       "version": "v2.0.27",
@@ -206,30 +287,29 @@
       "title": "System prompt token reduction, IDE fixes",
       "date": "2025-10-08",
       "reason_filtered": "Performance improvement, no action needed"
-    },
-    {
-      "version": "v2.0.9",
-      "title": "Bash backgrounding regression fix",
-      "date": "2025-10-06",
-      "reason_filtered": "Bug fix only"
-    },
-    {
-      "version": "v2.0.8",
-      "title": "Bedrock model update, IDE drag-and-drop",
-      "date": "2025-10-05",
-      "reason_filtered": "Model updates automatic, UI improvement not relevant"
-    },
-    {
-      "version": "v2.0.5",
-      "title": "IDE fixes, SDK replay flag",
-      "date": "2025-10-04",
-      "reason_filtered": "Bug fixes, not using SDK"
     }
   ],
   "pending_actions": {
     "breaking_changes": [],
     "high_impact": [],
     "medium_impact": [],
+    "low_impact": [
+      {
+        "version": "v2.0.52",
+        "title": "Usage display + Wayland image paste",
+        "note": "Minor UX improvements for /usage and Wayland support"
+      },
+      {
+        "version": "v2.0.51",
+        "title": "Claude Opus 4.5 + Desktop App",
+        "note": "Document new model and Desktop app option"
+      },
+      {
+        "version": "v2.0.54",
+        "title": "Hooks permission processing enhancement",
+        "note": "Document 'always allow' processing"
+      }
+    ],
     "beta_monitoring": [
       {
         "version": "v2.0.24",
