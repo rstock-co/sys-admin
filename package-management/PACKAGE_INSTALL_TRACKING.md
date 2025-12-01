@@ -23,6 +23,7 @@
 - [x] `github-cli` - GitHub CLI (`gh`)
 - [x] `docker` - Container platform
 - [x] `pnpm` - Fast Node.js package manager
+- [x] `bun-bin` (AUR) - All-in-one JavaScript runtime (10-100x faster)
 - [x] `nodejs` - Node.js runtime
 - [x] `npm` - Node package manager
 - [x] `neovim` - Terminal editor
@@ -34,6 +35,15 @@
 - [x] `paru-bin` - Modern AUR helper
 - [x] `zram-generator` - Memory compression
 - [x] `unzip` - Archive extraction
+- [x] `btop` - Modern resource monitor with GPU support
+- [x] `nvtop` - GPU monitoring for Arc B580
+- [x] `less` - Terminal pager
+- [x] `dosfstools` - FAT filesystem utilities
+- [x] `sudo` - Privilege escalation
+- [x] `base` - Arch Linux base meta package
+- [x] `base-devel` - Development meta package (make, gcc, etc.)
+- [x] `wget` - File download utility
+- [x] `usbutils` - USB device utilities
 
 ### Audio & Video
 - [x] `pipewire` - Modern audio server
@@ -48,6 +58,10 @@
 - [x] `hyprland` - Wayland compositor
 - [x] `rofi` - App launcher (Wayland version)
 - [x] `sddm` - Display manager
+- [x] `qt5-wayland` - Qt5 Wayland platform plugin
+- [x] `qt6-wayland` - Qt6 Wayland platform plugin
+- [x] `xdg-desktop-portal-hyprland` - Hyprland-specific portal
+- [x] `xdg-desktop-portal-gtk` - GTK portal for file dialogs
 
 ### Fonts
 - [x] `ttf-jetbrains-mono-nerd` - JetBrains Mono Nerd Font
@@ -62,14 +76,31 @@
 
 ### Utilities
 - [x] `via` (AUR) - QMK/VIA keyboard configurator
+- [x] `evtest` - Input device event testing tool
+
+### Network & Connectivity
+- [x] `networkmanager` - Network connection manager
+
+### Bluetooth
+- [x] `bluez` - Bluetooth protocol stack
+- [x] `bluez-utils` - Bluetooth utilities
+- [x] `bluetui` - TUI for Bluetooth management
+
+### Applications
+- [x] `code` - VS Code (OSS version)
+- [x] `google-chrome` (AUR) - Google Chrome browser
+- [x] `spotify-launcher` - Spotify client
+- [x] `spicetify-cli` (AUR) - Spotify customization
+
+### Linux Kernel & Firmware
+- [x] `linux` - Linux kernel (6.17.9-arch1-1)
+- [x] `linux-firmware` - Hardware firmware files
 
 ---
 
 ## 📋 Not Yet Installed
 
 ### System Monitoring (High Priority)
-- [ ] `btop` - Modern resource monitor with GPU support (replaces htop)
-- [ ] `nvtop` - GPU monitoring for Arc B580
 - [ ] `bottom` - Alternative resource monitor
 - [ ] `procs` - Modern ps replacement
 
@@ -109,8 +140,11 @@
 - [ ] `fastfetch` - Fast system info display
 
 ### GPU & Performance
-- [ ] `intel-gpu-tools` - Intel GPU debugging tools
-- [ ] `vulkan-tools` - Vulkan utilities (vulkaninfo)
+- [x] `intel-gpu-tools` - Intel GPU debugging tools
+- [x] `vulkan-tools` - Vulkan utilities (vulkaninfo)
+- [x] `libva-utils` - VA-API utilities for hardware acceleration
+- [x] `mesa-utils` - Mesa utilities (glxinfo, glxgears)
+- [x] `glmark2` - OpenGL benchmark
 - [ ] `intel-compute-runtime` - OpenCL/Level Zero for Intel GPU
 - [ ] `level-zero-loader` - Level Zero API loader
 - [ ] `ocl-icd` - OpenCL ICD loader
