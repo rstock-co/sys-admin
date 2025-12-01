@@ -6,14 +6,14 @@ You are the sys-admin agent reviewing package installation status.
 
 1. **Regenerate package lists from actual system state:**
    ```bash
-   pacman -Qqe > ~/pkglist.txt
-   pacman -Qqm > ~/aur-pkglist.txt
+   pacman -Qqe > ~/agents/sys-admin/package-management/pkglist.txt
+   pacman -Qqm > ~/agents/sys-admin/package-management/aur-pkglist.txt
    ```
    This ensures the lists reflect what's ACTUALLY installed right now.
 
 2. **Read package lists:**
-   - `~/pkglist.txt` - Official repo packages (explicit)
-   - `~/aur-pkglist.txt` - AUR packages
+   - `@package-management/pkglist.txt` - Official repo packages (explicit)
+   - `@package-management/aur-pkglist.txt` - AUR packages
 
 3. **Read tracking file:**
    - `@package-management/PACKAGE_INSTALL_TRACKING.md`
@@ -35,12 +35,12 @@ You are the sys-admin agent reviewing package installation status.
    - If you found installed packages missing from tracking, update the file
    - Commit changes to git with descriptive message
 
-7. **Commit updated package lists to dotfiles:**
+7. **Commit updated package lists to sys-admin repo:**
    - If package lists were regenerated and differ from what's tracked:
    ```bash
-   dotfiles add pkglist.txt aur-pkglist.txt
-   dotfiles commit -m "Update package lists to reflect current system state"
-   dotfiles push
+   git add package-management/pkglist.txt package-management/aur-pkglist.txt
+   git commit -m "Update package lists to reflect current system state"
+   git push
    ```
 
 ## Output Format
@@ -60,13 +60,13 @@ RECOMMENDED NEXT INSTALLS:
 INSTALL COMMANDS:
 # Official repos
 sudo pacman -S package1 package2
-pacman -Qqe > ~/pkglist.txt
-dotfiles add pkglist.txt && dotfiles commit -m "Install packages" && dotfiles push
+pacman -Qqe > ~/agents/sys-admin/package-management/pkglist.txt
+git add package-management/pkglist.txt && git commit -m "Install packages" && git push
 
 # AUR
 paru -S aur-package1
-pacman -Qqm > ~/aur-pkglist.txt
-dotfiles add aur-pkglist.txt && dotfiles commit -m "Install AUR packages" && dotfiles push
+pacman -Qqm > ~/agents/sys-admin/package-management/aur-pkglist.txt
+git add package-management/aur-pkglist.txt && git commit -m "Install AUR packages" && git push
 ```
 
 Be concise and actionable.

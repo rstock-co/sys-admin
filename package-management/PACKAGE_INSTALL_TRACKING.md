@@ -212,36 +212,37 @@ pacman -Q <package>
 ### Install from Official Repos
 ```bash
 sudo pacman -S <package>
-pacman -Qqe > ~/pkglist.txt
-dotfiles add pkglist.txt && dotfiles commit -m "Install <package>" && dotfiles push
+pacman -Qqe > ~/agents/sys-admin/package-management/pkglist.txt
+git add package-management/pkglist.txt && git commit -m "Install <package>" && git push
 ```
 
 ### Install from AUR
 ```bash
 paru -S <package>
-pacman -Qqm > ~/aur-pkglist.txt
-dotfiles add aur-pkglist.txt && dotfiles commit -m "Install <package>" && dotfiles push
+pacman -Qqm > ~/agents/sys-admin/package-management/aur-pkglist.txt
+git add package-management/aur-pkglist.txt && git commit -m "Install <package>" && git push
 ```
 
 ### Batch Install (Official Repos)
 ```bash
 sudo pacman -S package1 package2 package3
-pacman -Qqe > ~/pkglist.txt
-dotfiles add pkglist.txt && dotfiles commit -m "Install multiple packages" && dotfiles push
+pacman -Qqe > ~/agents/sys-admin/package-management/pkglist.txt
+git add package-management/pkglist.txt && git commit -m "Install multiple packages" && git push
 ```
 
 ### Batch Install (AUR)
 ```bash
 paru -S package1 package2 package3
-pacman -Qqm > ~/aur-pkglist.txt
-dotfiles add aur-pkglist.txt && dotfiles commit -m "Install AUR packages" && dotfiles push
+pacman -Qqm > ~/agents/sys-admin/package-management/aur-pkglist.txt
+git add package-management/aur-pkglist.txt && git commit -m "Install AUR packages" && git push
 ```
 
 ### Remove Package
 ```bash
 sudo pacman -Rns <package>
-pacman -Qqe > ~/pkglist.txt && pacman -Qqm > ~/aur-pkglist.txt
-dotfiles add pkglist.txt aur-pkglist.txt && dotfiles commit -m "Remove <package>" && dotfiles push
+pacman -Qqe > ~/agents/sys-admin/package-management/pkglist.txt
+pacman -Qqm > ~/agents/sys-admin/package-management/aur-pkglist.txt
+git add package-management/pkglist.txt package-management/aur-pkglist.txt && git commit -m "Remove <package>" && git push
 ```
 
 ---
