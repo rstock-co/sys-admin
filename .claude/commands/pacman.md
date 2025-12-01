@@ -8,9 +8,11 @@ You are the sys-admin agent reviewing package installation status.
    ```bash
    pacman -Qqe > ~/agents/sys-admin/package-management/pkglist.txt
    pacman -Qqm > ~/agents/sys-admin/package-management/aur-pkglist.txt
-   ls /usr/lib/node_modules/ | grep -v npm | grep -v node-gyp | grep -v nopt | grep -v semver | grep -v pnpm > ~/agents/sys-admin/package-management/npm/npm-global.txt
+   ls -1 /usr/lib/node_modules/ | while read pkg; do pacman -Qo "/usr/lib/node_modules/$pkg" >/dev/null 2>&1 || echo "$pkg"; done > ~/agents/sys-admin/package-management/npm/npm-global.txt
    ```
    This ensures the lists reflect what's ACTUALLY installed right now.
+
+   **How npm detection works:** Lists packages in `/usr/lib/node_modules/` that are NOT owned by any pacman package. System packages (npm, pnpm, node-gyp, etc.) are owned by pacman and automatically excluded.
 
 2. **Read package lists:**
    - `@package-management/pkglist.txt` - Official repo packages (explicit)
@@ -92,7 +94,7 @@ cd ~/agents/sys-admin && git add package-management/aur-pkglist.txt && git commi
 
 # NPM - Global
 npm install -g package1 package2
-ls /usr/lib/node_modules/ | grep -v npm | grep -v node-gyp | grep -v nopt | grep -v semver | grep -v pnpm > ~/agents/sys-admin/package-management/npm/npm-global.txt
+ls -1 /usr/lib/node_modules/ | while read pkg; do pacman -Qo "/usr/lib/node_modules/$pkg" >/dev/null 2>&1 || echo "$pkg"; done > ~/agents/sys-admin/package-management/npm/npm-global.txt
 cd ~/agents/sys-admin && git add package-management/npm/npm-global.txt && git commit -m "Install npm: package1, package2" && git push
 ```
 

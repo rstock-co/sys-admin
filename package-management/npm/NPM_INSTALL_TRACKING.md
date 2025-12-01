@@ -70,25 +70,25 @@
 ### Install Global + Track
 ```bash
 npm install -g <package>
-ls /usr/lib/node_modules/ | grep -v npm | grep -v node-gyp | grep -v nopt | grep -v semver | grep -v pnpm > ~/agents/sys-admin/package-management/npm/npm-global.txt
+ls -1 /usr/lib/node_modules/ | while read pkg; do pacman -Qo "/usr/lib/node_modules/$pkg" >/dev/null 2>&1 || echo "$pkg"; done > ~/agents/sys-admin/package-management/npm/npm-global.txt
 cd ~/agents/sys-admin && git add package-management/npm/npm-global.txt && git commit -m "Install npm: <package>" && git push
 ```
 
 ### Uninstall Global + Track
 ```bash
 npm uninstall -g <package>
-ls /usr/lib/node_modules/ | grep -v npm | grep -v node-gyp | grep -v nopt | grep -v semver | grep -v pnpm > ~/agents/sys-admin/package-management/npm/npm-global.txt
+ls -1 /usr/lib/node_modules/ | while read pkg; do pacman -Qo "/usr/lib/node_modules/$pkg" >/dev/null 2>&1 || echo "$pkg"; done > ~/agents/sys-admin/package-management/npm/npm-global.txt
 cd ~/agents/sys-admin && git add package-management/npm/npm-global.txt && git commit -m "Remove npm: <package>" && git push
 ```
 
-### List All Global Packages
+### List All Global Packages (User-installed Only)
 ```bash
-ls /usr/lib/node_modules/
+ls -1 /usr/lib/node_modules/ | while read pkg; do pacman -Qo "/usr/lib/node_modules/$pkg" >/dev/null 2>&1 || echo "$pkg"; done
 ```
 
 ### Check If Package Is Global
 ```bash
-npm list -g <package> 2>&1 | grep -v error || echo "Not installed globally"
+ls /usr/lib/node_modules/ | grep -w <package>
 ```
 
 ---
@@ -97,5 +97,6 @@ npm list -g <package> 2>&1 | grep -v error || echo "Not installed globally"
 
 - **pnpm** is installed via AUR (system package), not npm global
 - **npm** itself is installed via pacman (Arch repos)
-- Using `ls /usr/lib/node_modules/` instead of `npm list -g` due to npm config quirks
-- Filter out npm's own dependencies: npm, node-gyp, nopt, semver, pnpm
+- **Scalable detection:** Uses `pacman -Qo` to automatically filter out system packages
+- System packages (npm, pnpm, node-gyp, etc.) are owned by pacman and excluded automatically
+- Only user-installed npm global packages appear in tracking list
