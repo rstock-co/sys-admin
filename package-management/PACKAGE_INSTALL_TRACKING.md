@@ -28,6 +28,9 @@
 - [x] `npm` - Node package manager
 - [x] `neovim` - Terminal editor
 - [x] `openssh` - SSH client/server
+- [x] `python` - Python 3.13.7
+- [x] `python-pip` - Python package installer
+- [x] `claude-code` (AUR) - Claude Code CLI agent
 
 ### System Tools
 - [x] `alacritty` - GPU-accelerated terminal
@@ -139,13 +142,13 @@
 - [ ] `hwinfo` - Comprehensive hardware detection
 - [ ] `fastfetch` - Fast system info display
 
-### GPU & Performance
+### GPU & Performance (High Priority)
 - [x] `intel-gpu-tools` - Intel GPU debugging tools
 - [x] `vulkan-tools` - Vulkan utilities (vulkaninfo)
 - [x] `libva-utils` - VA-API utilities for hardware acceleration
 - [x] `mesa-utils` - Mesa utilities (glxinfo, glxgears)
 - [x] `glmark2` - OpenGL benchmark
-- [ ] `intel-compute-runtime` - OpenCL/Level Zero for Intel GPU
+- [ ] `intel-compute-runtime` - OpenCL/Level Zero for Intel GPU compute
 - [ ] `level-zero-loader` - Level Zero API loader
 - [ ] `ocl-icd` - OpenCL ICD loader
 - [ ] `opencl-headers` - OpenCL headers
