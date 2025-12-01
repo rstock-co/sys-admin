@@ -33,11 +33,11 @@ Monitors Claude Code changelog and maps updates to affected documentation files.
 
 ### File Discovery
 
-Use Glob:
-- `docs/**/*.md`
-- `.claude/skills/**/*.md`
-- `.claude/commands/**/*.md`
-- `CLAUDE.md`, `AGENTS.md`
+Use Glob to find Claude Code documentation files:
+- `data/claude-code/usage/**/*.md` - How to USE Claude Code docs
+- `data/claude-code/primitives/**/*.md` - How to BUILD Claude Code docs
+- `.claude/skills/**/*.md` - Skill definitions
+- `.claude/commands/**/*.md` - Command definitions
 
 ### Output Format
 
@@ -82,10 +82,11 @@ Scanning: {since_date} to {today}
 {🔴 Breaking changes}{⚠️  BETA features}
 
 Next Steps:
-1. Visit Anthropic docs, use "Copy to markdown"
-2. Update affected files
-3. Test changes
-4. Use /claude-research for complex features
+1. Visit https://docs.claude.ai/claude-code/[page]
+2. Click "Copy to markdown" button
+3. Update affected files in ~/agents/sys-admin/data/claude-code/
+4. Commit changes to sys-admin repo
+5. Use /claude-research for complex features
 
 ✓ Last scan updated
 
