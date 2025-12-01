@@ -150,6 +150,49 @@ Edit `NPM_INSTALL_TRACKING.md` to move package from "Installed" to "Removed" sec
 
 ---
 
+## Updating Global Packages
+
+### Check for Outdated Packages (like pacman -Qu)
+```bash
+npm outdated -g
+```
+
+**Output example:**
+```
+Package       Current  Wanted  Latest  Location
+typescript    5.2.2    5.2.2   5.3.3   global
+tsx           3.12.7   3.12.7  4.0.0   global
+```
+
+### Update All Global Packages (like pacman -Syu)
+```bash
+# Update everything
+npm update -g
+
+# Regenerate tracking list
+ls -1 /usr/lib/node_modules/ | while read pkg; do pacman -Qo "/usr/lib/node_modules/$pkg" >/dev/null 2>&1 || echo "$pkg"; done > ~/agents/sys-admin/package-management/npm/npm-global.txt
+
+# Commit changes
+cd ~/agents/sys-admin
+git add package-management/npm/npm-global.txt
+git commit -m "Update all npm global packages"
+git push
+```
+
+**Note:** Package list doesn't change (same packages, newer versions). Regenerating verifies packages still exist.
+
+### Update Single Package
+```bash
+npm update -g <package>
+```
+
+### Update to Specific Version
+```bash
+npm install -g typescript@5.3.3
+```
+
+---
+
 ## Avoiding npm Bloat
 
 ### Use pnpm/bun Instead of npm
@@ -254,6 +297,27 @@ ls -1 /usr/lib/node_modules/ | while read pkg; do pacman -Qo "/usr/lib/node_modu
 cd ~/agents/sys-admin && git add package-management/npm/npm-global.txt && git commit -m "Remove npm: <package>" && git push
 ```
 
+### Update Single Global Package
+```bash
+npm update -g <package>
+```
+
+### Update ALL Global Packages (like pacman -Syu)
+```bash
+npm update -g
+ls -1 /usr/lib/node_modules/ | while read pkg; do pacman -Qo "/usr/lib/node_modules/$pkg" >/dev/null 2>&1 || echo "$pkg"; done > ~/agents/sys-admin/package-management/npm/npm-global.txt
+cd ~/agents/sys-admin && git add package-management/npm/npm-global.txt && git commit -m "Update all npm global packages" && git push
+```
+
+**Note:** The tracking list doesn't change (same packages), but good practice to regenerate after updates to verify all packages still exist.
+
+### Check Which Packages Need Updates
+```bash
+npm outdated -g
+```
+
+Shows a table of outdated global packages with current/wanted/latest versions.
+
 ### Clear npm Cache
 ```bash
 npm cache clean --force
@@ -345,7 +409,30 @@ npm uninstall -g create-vite
 npx create-vite my-app
 ```
 
-### Example 3: Auditing Globals
+### Example 3: Updating All Global Packages
+```bash
+# Check what's outdated
+npm outdated -g
+
+# Output shows:
+# Package       Current  Wanted  Latest  Location
+# typescript    5.2.2    5.2.2   5.3.3   global
+# tsx           3.12.7   3.12.7  4.0.0   global
+
+# Update all at once (like pacman -Syu)
+npm update -g
+
+# Regenerate tracking list
+ls -1 /usr/lib/node_modules/ | while read pkg; do pacman -Qo "/usr/lib/node_modules/$pkg" >/dev/null 2>&1 || echo "$pkg"; done > ~/agents/sys-admin/package-management/npm/npm-global.txt
+
+# Commit
+cd ~/agents/sys-admin
+git add package-management/npm/npm-global.txt
+git commit -m "Update all npm global packages"
+git push
+```
+
+### Example 4: Auditing Globals
 ```bash
 # List all global packages
 ls -1 /usr/lib/node_modules/ | while read pkg; do pacman -Qo "/usr/lib/node_modules/$pkg" >/dev/null 2>&1 || echo "$pkg"; done
