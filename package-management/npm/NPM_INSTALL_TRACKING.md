@@ -96,12 +96,15 @@ ls /usr/lib/node_modules/ | grep -w <package>
 npm outdated -g
 ```
 
-### Update All Global Packages (like pacman -Syu)
+### Update Global Packages (RECOMMENDED: Individual Updates)
 ```bash
-npm update -g
+# Update packages individually after reading changelogs
+npm install -g typescript@latest tsx@latest
 ls -1 /usr/lib/node_modules/ | while read pkg; do pacman -Qo "/usr/lib/node_modules/$pkg" >/dev/null 2>&1 || echo "$pkg"; done > ~/agents/sys-admin/package-management/npm/npm-global.txt
-cd ~/agents/sys-admin && git add package-management/npm/npm-global.txt && git commit -m "Update all npm global packages" && git push
+cd ~/agents/sys-admin && git add package-management/npm/npm-global.txt && git commit -m "Update npm globals: typescript, tsx" && git push
 ```
+
+**⚠️ NOTE:** `npm update -g` (batch update) is NOT recommended. See `NPM_UPDATE_BEST_PRACTICES.md`.
 
 ---
 

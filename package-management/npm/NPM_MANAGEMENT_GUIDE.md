@@ -164,25 +164,47 @@ typescript    5.2.2    5.2.2   5.3.3   global
 tsx           3.12.7   3.12.7  4.0.0   global
 ```
 
-### Update All Global Packages (like pacman -Syu)
-```bash
-# Update everything
-npm update -g
+### Update All Global Packages
 
-# Regenerate tracking list
+**⚠️ WARNING:** Unlike `pacman -Syu`, batch updating with `npm update -g` is **NOT recommended**.
+
+**Why?**
+- Only updates to "wanted" version (not "latest")
+- Global packages installed at exact versions won't update
+- No protection against breaking changes
+- Silent failures common
+
+**Recommended approach:** Update individually after reading changelogs.
+
+```bash
+# Check what needs updating
+npm outdated -g
+
+# Update each package individually (RECOMMENDED)
+npm install -g typescript@latest
+npm install -g tsx@latest
+
+# Batch update (NOT RECOMMENDED - often does nothing)
+# npm update -g
+
+# After individual updates, regenerate tracking list
 ls -1 /usr/lib/node_modules/ | while read pkg; do pacman -Qo "/usr/lib/node_modules/$pkg" >/dev/null 2>&1 || echo "$pkg"; done > ~/agents/sys-admin/package-management/npm/npm-global.txt
 
 # Commit changes
 cd ~/agents/sys-admin
 git add package-management/npm/npm-global.txt
-git commit -m "Update all npm global packages"
+git commit -m "Update npm globals: typescript@5.3.3, tsx@4.0.0"
 git push
 ```
 
-**Note:** Package list doesn't change (same packages, newer versions). Regenerating verifies packages still exist.
+**See `NPM_UPDATE_BEST_PRACTICES.md` for detailed explanation.**
 
-### Update Single Package
+### Update Single Package (Recommended Method)
 ```bash
+# Preferred: Install latest explicitly
+npm install -g <package>@latest
+
+# Also works but may not get latest
 npm update -g <package>
 ```
 
@@ -297,26 +319,34 @@ ls -1 /usr/lib/node_modules/ | while read pkg; do pacman -Qo "/usr/lib/node_modu
 cd ~/agents/sys-admin && git add package-management/npm/npm-global.txt && git commit -m "Remove npm: <package>" && git push
 ```
 
-### Update Single Global Package
-```bash
-npm update -g <package>
-```
-
-### Update ALL Global Packages (like pacman -Syu)
-```bash
-npm update -g
-ls -1 /usr/lib/node_modules/ | while read pkg; do pacman -Qo "/usr/lib/node_modules/$pkg" >/dev/null 2>&1 || echo "$pkg"; done > ~/agents/sys-admin/package-management/npm/npm-global.txt
-cd ~/agents/sys-admin && git add package-management/npm/npm-global.txt && git commit -m "Update all npm global packages" && git push
-```
-
-**Note:** The tracking list doesn't change (same packages), but good practice to regenerate after updates to verify all packages still exist.
-
 ### Check Which Packages Need Updates
 ```bash
 npm outdated -g
 ```
 
 Shows a table of outdated global packages with current/wanted/latest versions.
+
+### Update Single Global Package (RECOMMENDED)
+```bash
+npm install -g <package>@latest
+ls -1 /usr/lib/node_modules/ | while read pkg; do pacman -Qo "/usr/lib/node_modules/$pkg" >/dev/null 2>&1 || echo "$pkg"; done > ~/agents/sys-admin/package-management/npm/npm-global.txt
+cd ~/agents/sys-admin && git add package-management/npm/npm-global.txt && git commit -m "Update npm: <package>@<version>" && git push
+```
+
+### Update Multiple Packages Individually (RECOMMENDED)
+```bash
+# Update each one after reading changelogs
+npm install -g typescript@latest tsx@latest npm-check-updates@latest
+ls -1 /usr/lib/node_modules/ | while read pkg; do pacman -Qo "/usr/lib/node_modules/$pkg" >/dev/null 2>&1 || echo "$pkg"; done > ~/agents/sys-admin/package-management/npm/npm-global.txt
+cd ~/agents/sys-admin && git add package-management/npm/npm-global.txt && git commit -m "Update npm globals: typescript, tsx, ncu" && git push
+```
+
+### Batch Update (NOT RECOMMENDED)
+```bash
+# ⚠️ WARNING: npm update -g often does nothing and is NOT like pacman -Syu
+# See NPM_UPDATE_BEST_PRACTICES.md for why
+# npm update -g
+```
 
 ### Clear npm Cache
 ```bash
@@ -409,7 +439,7 @@ npm uninstall -g create-vite
 npx create-vite my-app
 ```
 
-### Example 3: Updating All Global Packages
+### Example 3: Updating Global Packages (Individual Updates - Recommended)
 ```bash
 # Check what's outdated
 npm outdated -g
@@ -419,18 +449,28 @@ npm outdated -g
 # typescript    5.2.2    5.2.2   5.3.3   global
 # tsx           3.12.7   3.12.7  4.0.0   global
 
-# Update all at once (like pacman -Syu)
-npm update -g
+# Minor update (safe) - update immediately
+npm install -g typescript@latest
+
+# Major update (tsx 3.x → 4.x) - read changelog first!
+npm view tsx@4.0.0  # Check release notes
+# Visit https://github.com/privatenumber/tsx/releases/tag/v4.0.0
+# If safe, update:
+npm install -g tsx@latest
 
 # Regenerate tracking list
 ls -1 /usr/lib/node_modules/ | while read pkg; do pacman -Qo "/usr/lib/node_modules/$pkg" >/dev/null 2>&1 || echo "$pkg"; done > ~/agents/sys-admin/package-management/npm/npm-global.txt
 
-# Commit
+# Commit with specific versions
 cd ~/agents/sys-admin
 git add package-management/npm/npm-global.txt
-git commit -m "Update all npm global packages"
+git commit -m "Update npm globals: typescript@5.3.3, tsx@4.0.0"
 git push
 ```
+
+**Why not `npm update -g`?**
+- It won't update these packages (they're at exact versions, not ranges)
+- See `NPM_UPDATE_BEST_PRACTICES.md` for full explanation
 
 ### Example 4: Auditing Globals
 ```bash
