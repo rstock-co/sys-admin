@@ -19,7 +19,7 @@ Allows Claude Code to interact with Google Workspace via natural language:
 ## Configuration
 
 ### Global MCP Config
-**Location:** `~/.claude/.mcp.json`
+**Location:** `~/.claude.json`
 
 ```json
 {
@@ -58,7 +58,7 @@ Allows Claude Code to interact with Google Workspace via natural language:
 
 | Purpose | Location |
 |---------|----------|
-| OAuth client credentials | `~/.claude/.mcp.json` (env vars) |
+| OAuth client credentials | `~/.claude.json` (env vars) |
 | User tokens (per-account) | `~/.credentials/` |
 | Old Gmail MCP credentials | `~/.gmail-mcp/` (can delete) |
 
@@ -123,7 +123,7 @@ The server has three tool tiers configured via `--tool-tier`:
 | `extended` | Core + management (labels, folders, batch operations) |
 | `complete` | Full API access (comments, publishing, admin functions) |
 
-To change tier, edit `~/.claude/.mcp.json` and modify the args:
+To change tier, edit `~/.claude.json` and modify the args:
 ```json
 "args": ["workspace-mcp", "--tool-tier", "extended"]
 ```
