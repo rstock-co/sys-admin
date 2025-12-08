@@ -1,3 +1,4 @@
+1password
 alacritty
 base
 base-devel
@@ -9,8 +10,10 @@ bun-bin
 claude-code
 code
 dosfstools
+ethtool
 evtest
 eza
+ffmpeg
 fzf
 git
 github-cli
@@ -18,6 +21,7 @@ glmark2
 glow
 google-chrome
 grim
+himalaya
 hyprland
 intel-gpu-tools
 jq
@@ -118,10 +122,13 @@ unzip
 usbutils
 uv
 v4l-utils
+vercel
 vulkan-tools
 wget
 wireplumber
 wl-clipboard
 xdg-desktop-portal-gtk
 xdg-desktop-portal-hyprland
+yt-dlp
+zoom
 zsh

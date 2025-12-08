@@ -31,6 +31,7 @@
 - [x] `python` - Python 3.13.7
 - [x] `python-pip` - Python package installer
 - [x] `claude-code` (AUR) - Claude Code CLI agent
+- [x] `vercel` (AUR) - Vercel CLI for deployments
 
 ### System Tools
 - [x] `alacritty` - GPU-accelerated terminal
@@ -56,6 +57,7 @@
 - [x] `wireplumber` - PipeWire session manager
 - [x] `v4l-utils` - Video4Linux utilities
 - [x] `ffmpeg` - Video/audio processing
+- [x] `yt-dlp` - Video/audio downloader (YouTube, Vimeo, etc.)
 
 ### Window Manager & Desktop
 - [x] `hyprland` - Wayland compositor
@@ -83,6 +85,8 @@
 
 ### Network & Connectivity
 - [x] `networkmanager` - Network connection manager
+- [x] `ethtool` - Ethernet device configuration
+- [x] `himalaya` - CLI email client
 
 ### Bluetooth
 - [x] `bluez` - Bluetooth protocol stack
@@ -94,6 +98,8 @@
 - [x] `google-chrome` (AUR) - Google Chrome browser
 - [x] `spotify-launcher` - Spotify client
 - [x] `spicetify-cli` (AUR) - Spotify customization
+- [x] `zoom` (AUR) - Video conferencing
+- [x] `1password` (AUR) - Password manager
 
 ### Linux Kernel & Firmware
 - [x] `linux` - Linux kernel (6.17.9-arch1-1)

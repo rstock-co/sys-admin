@@ -1,6 +1,9 @@
+1password
 bun-bin
 claude-code
 google-chrome
 paru
 rofi-themes-collection-git
 spicetify-cli
+vercel
+zoom
