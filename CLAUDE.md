@@ -275,6 +275,30 @@ Always consider these constraints when making suggestions.
 
 ---
 
+## Email Management
+
+**CRITICAL:** Whenever the user mentions "email" or asks you to do anything email-related (search, delete, read, organize, etc.), you **MUST** invoke the `email-management` skill FIRST.
+
+**Examples of email-related requests:**
+- "Delete all emails from LinkedIn"
+- "Clean up my inbox"
+- "Find emails from sender X"
+- "Move spam to trash"
+- "Export emails as markdown"
+
+**How to invoke:**
+Use the Skill tool with `skill: "email-management"` before attempting any email operations.
+
+**Why:** The email-management skill contains critical documentation about:
+- Which tools to use (Himalaya CLI vs Google Workspace MCP)
+- Message ID incompatibilities between tools
+- Correct folder names for Gmail
+- Batch operation patterns that actually work
+
+**Never** attempt email operations directly with MCP tools without first loading the skill.
+
+---
+
 ## Alias Management
 
 ### Modular Shell Configuration
@@ -323,6 +347,60 @@ source ~/.zshrc  # Auto-sourced by .zshrc loop
 - `ea` - Edit aliases (opens `~/zshrc/` in VS Code)
 - `sa` - Source aliases (reloads `.zshrc`)
 - `va` - View aliases (fzf search all aliases)
+- `vh` - View hotkeys (fzf search Hyprland keybindings)
+
+---
+
+## Hyprland Hotkey Management
+
+**System:** Hotkeys are documented inline in `~/.config/hypr/hyprland.conf` using `@hotkey:` comments.
+
+**Format:**
+```
+bind = $mainMod, End, exec, systemctl poweroff # @hotkey: Shutdown System
+```
+
+**The `vh` command** parses these comments and displays them in fzf for quick searching:
+```
+Shutdown System                           Super + End
+Move Window to Workspace 5                Super + SHIFT + 5
+Screenshot Area to Clipboard              Print
+```
+
+### When Editing Hyprland Keybindings
+
+**CRITICAL:** Whenever you add, modify, or remove a keybinding in `hyprland.conf`, you **MUST** also update the `# @hotkey:` comment.
+
+**Adding a new bind:**
+```bash
+# Add the bind with @hotkey comment
+bind = $mainMod, G, exec, gimp # @hotkey: Open GIMP
+```
+
+**Modifying a bind:**
+```bash
+# Update both the bind AND the description if the action changes
+bind = $mainMod, G, exec, krita # @hotkey: Open Krita
+```
+
+**Removing a bind:**
+Simply delete the entire line (bind + comment).
+
+### Hotkey Comment Guidelines
+
+- Keep descriptions short (2-4 words)
+- Use Title Case
+- Describe the action, not the key (e.g., "Open Terminal" not "Super Return")
+- For resize mode binds, prefix with `[Resize]` (e.g., `[Resize] Grow Right`)
+- For media key binds, suffix with `(Media Key)` (e.g., `Volume Up (Media Key)`)
+
+### Verify After Changes
+
+After editing keybindings:
+```bash
+source ~/.zshrc  # If not already sourced
+vh               # Search and verify your changes appear
+```
 
 ---
 
