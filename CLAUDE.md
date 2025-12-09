@@ -303,8 +303,8 @@ Use the Skill tool with `skill: "email-wizard"` before attempting any email oper
 3. **Maintains persistent data** in `.claude/skills/email-wizard/data/`:
    - `registry.json` - Last run timestamp
    - `legitimate-entities.json` - Trusted senders
-   - `routing-rules.json` - Label routing
    - `exceptions.json` - Newsletters to keep
+   - `automatic-routing.md` - Filters that skip inbox
 
 ### Tool Selection
 
