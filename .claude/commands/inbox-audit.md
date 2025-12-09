@@ -1,5 +1,5 @@
 ---
-argument-hint: "[--resume] [--phase=1|2|3]"
+argument-hint: "[--fresh] [--phase=1|2|3]"
 description: Deep audit of inbox to identify and filter all spam
 ---
 
@@ -26,8 +26,8 @@ This command scans thousands of emails. You MUST:
 ## Usage
 
 ```bash
-/inbox-audit              # Start new audit or continue from last progress
-/inbox-audit --resume     # Explicitly continue from last progress
+/inbox-audit              # Auto-resumes if incomplete, starts fresh if done
+/inbox-audit --fresh      # Force start over (resets progress files)
 /inbox-audit --phase=2    # Jump to specific phase
 ```
 
