@@ -1,0 +1,51 @@
+{
+  "started": null,
+  "last_updated": null,
+  "status": "not_started",
+  "current_phase": 0,
+  "account": "richard.stock@gmail.com",
+
+  "phase1": {
+    "searches_completed": [],
+    "searches_pending": [
+      "in:inbox list:*",
+      "in:inbox unsubscribe",
+      "in:inbox from:noreply@",
+      "in:inbox from:no-reply@",
+      "in:inbox from:newsletter@",
+      "in:inbox from:promo@",
+      "in:inbox from:marketing@",
+      "in:inbox from:deals@",
+      "in:inbox from:offers@",
+      "in:inbox from:info@",
+      "in:inbox from:hello@"
+    ],
+    "emails_found": 0,
+    "domains_found": []
+  },
+
+  "phase2": {
+    "domains_processed": 0,
+    "spam_domains": [],
+    "keep_domains": [],
+    "pending_review": []
+  },
+
+  "phase3": {
+    "ranges_completed": [],
+    "ranges_pending": [
+      "in:inbox after:2025/01/01",
+      "in:inbox after:2024/07/01 before:2025/01/01",
+      "in:inbox after:2024/01/01 before:2024/07/01",
+      "in:inbox after:2023/07/01 before:2024/01/01",
+      "in:inbox after:2023/01/01 before:2023/07/01"
+    ],
+    "new_domains_found": []
+  },
+
+  "totals": {
+    "unique_domains": 0,
+    "spam_identified": 0,
+    "to_keep": 0
+  }
+}

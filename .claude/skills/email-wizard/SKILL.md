@@ -489,6 +489,52 @@ Edit `data/exceptions.json`:
 
 ---
 
+## Inbox Audit Mode
+
+For deep inbox cleaning (thousands of emails), use `/inbox-audit` command.
+
+### Key Differences from Regular Wizard
+
+| Feature | /email-wizard | /inbox-audit |
+|---------|---------------|--------------|
+| Scope | Since last run | Entire inbox |
+| Token usage | ~5-10k | Managed across sessions |
+| Progress | Single run | Resumable via file |
+| Output | In context | Written to files |
+| User control | Automated categories | Manual approval per domain |
+
+### Three-Phase Approach
+
+1. **Phase 1: Quick Win Scans** - Search spam patterns (unsubscribe, noreply, etc.)
+2. **Phase 2: Domain Analysis** - Group and categorize domains for review
+3. **Phase 3: Time-Based Sweep** - Date range scans to catch stragglers
+
+### Token Management
+
+Inbox audit processes thousands of emails. To avoid context explosion:
+
+1. **Batch size:** 100 emails searched, 25 fetched at a time
+2. **Immediate persistence:** Write to file after each batch
+3. **Progress tracking:** JSON file enables resume
+4. **Session breaks:** Pauses after each phase for user approval
+
+### Files Created
+
+| File | Purpose |
+|------|---------|
+| `data/inbox-audit-results.md` | Findings and recommendations |
+| `data/inbox-audit-progress.json` | Resume state |
+
+### Conservative Mode (Default)
+
+The audit runs in **conservative mode**:
+- NO auto-filtering - all domains presented for review
+- User makes final decision on every domain
+- Only creates filters after explicit approval
+- Checks `exceptions.json` to skip known-good senders
+
+---
+
 ## Tips
 
 1. **First run takes longer** - No history, scans 7 days
