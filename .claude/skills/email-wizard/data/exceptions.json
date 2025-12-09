@@ -1,4 +1,9 @@
 {
   "_description": "Newsletters and senders that look like spam but you want to keep. These will be excluded from spam detection.",
-  "keep": []
+  "keep": [
+    "@digital.costco.ca",
+    "@promo.timhortons.ca",
+    "@i.wix.com",
+    "@tommyguns.com"
+  ]
 }

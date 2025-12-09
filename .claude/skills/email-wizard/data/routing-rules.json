@@ -1,8 +1,0 @@
-{
-  "_description": "Label routing rules. Key is the Gmail label, value is list of sender addresses/domains to route to that label.",
-  "_example": {
-    "Finance/Banking": ["@td.com", "@scotiabank.com", "@rbc.com"],
-    "Shopping/Orders": ["auto-confirm@amazon.ca", "@bestbuy.ca"]
-  },
-  "rules": {}
-}

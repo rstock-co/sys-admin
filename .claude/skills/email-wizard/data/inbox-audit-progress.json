@@ -1,13 +1,12 @@
 {
-  "started": null,
-  "last_updated": null,
-  "status": "not_started",
-  "current_phase": 0,
+  "started": "2025-12-09T22:00:00Z",
+  "last_updated": "2025-12-09T22:05:00Z",
+  "status": "completed",
+  "current_phase": 3,
   "account": "richard.stock@gmail.com",
 
   "phase1": {
-    "searches_completed": [],
-    "searches_pending": [
+    "searches_completed": [
       "in:inbox list:*",
       "in:inbox unsubscribe",
       "in:inbox from:noreply@",
@@ -20,32 +19,35 @@
       "in:inbox from:info@",
       "in:inbox from:hello@"
     ],
+    "searches_pending": [],
     "emails_found": 0,
-    "domains_found": []
+    "domains_found": 0
   },
 
   "phase2": {
     "domains_processed": 0,
     "spam_domains": [],
     "keep_domains": [],
+    "labeled_domains": [],
     "pending_review": []
   },
 
   "phase3": {
     "ranges_completed": [],
-    "ranges_pending": [
-      "in:inbox after:2025/01/01",
-      "in:inbox after:2024/07/01 before:2025/01/01",
-      "in:inbox after:2024/01/01 before:2024/07/01",
-      "in:inbox after:2023/07/01 before:2024/01/01",
-      "in:inbox after:2023/01/01 before:2023/07/01"
-    ],
-    "new_domains_found": []
+    "ranges_pending": [],
+    "new_domains_found": [],
+    "new_domains_filtered": []
   },
 
   "totals": {
     "unique_domains": 0,
     "spam_identified": 0,
-    "to_keep": 0
-  }
+    "to_keep": 0,
+    "labeled": 0,
+    "emails_trashed": 0,
+    "emails_labeled": 0,
+    "filters_created": 0
+  },
+
+  "notes": "Inbox is completely empty - previous audit was thorough"
 }

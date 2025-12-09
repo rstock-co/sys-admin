@@ -91,8 +91,10 @@ All persistent data stored in `data/` directory:
 |------|---------|
 | `registry.json` | Last run timestamp (first key for fast access) |
 | `legitimate-entities.json` | Trusted senders for "real notifications" |
-| `routing-rules.json` | Label routing rules by sender |
 | `exceptions.json` | Newsletters/senders to keep (not spam) |
+| `automatic-routing.md` | Documents filters that skip inbox (source of truth is Gmail) |
+| `inbox-audit-progress.json` | Resume state for `/inbox-audit` |
+| `inbox-audit-results.md` | Findings from inbox audit |
 
 ## Default Account
 
@@ -257,7 +259,7 @@ Add to calendar? [Yes/No] Which calendar? [Primary/Work/...]
 - Recurring senders that belong in specific folders
 - Categories of emails (receipts, newsletters, alerts)
 
-**Source:** Check against `data/routing-rules.json`
+**Source:** Check against `data/automatic-routing.md`
 
 **Output format:**
 ```markdown
@@ -275,7 +277,7 @@ Add to calendar? [Yes/No] Which calendar? [Primary/Work/...]
 **Actions:**
 - Create labels if they don't exist
 - Apply labels to messages
-- Update routing-rules.json
+- Update automatic-routing.md
 - Create filters for future emails
 
 ---
@@ -462,17 +464,9 @@ Edit `data/legitimate-entities.json`:
 
 ### Adding Routing Rule
 
-Edit `data/routing-rules.json`:
-
-```json
-{
-  "rules": {
-    "Finance/Banking": ["@td.com", "@scotiabank.com"],
-    "Shopping/Orders": ["auto-confirm@amazon.ca"],
-    "Development/GitHub": ["@github.com"]
-  }
-}
-```
+When creating a new routing filter:
+1. Create the Gmail filter via MCP
+2. Update `data/automatic-routing.md` to document it
 
 ### Adding Exception (Keep Newsletter)
 
