@@ -277,25 +277,41 @@ Always consider these constraints when making suggestions.
 
 ## Email Management
 
-**CRITICAL:** Whenever the user mentions "email" or asks you to do anything email-related (search, delete, read, organize, etc.), you **MUST** invoke the `email-management` skill FIRST.
+**CRITICAL:** For any email-related tasks, use the **Email Wizard**.
 
-**Examples of email-related requests:**
-- "Delete all emails from LinkedIn"
-- "Clean up my inbox"
-- "Find emails from sender X"
-- "Move spam to trash"
-- "Export emails as markdown"
+### Quick Access
 
-**How to invoke:**
-Use the Skill tool with `skill: "email-management"` before attempting any email operations.
+| Command | Description |
+|---------|-------------|
+| `/email-wizard` | Full inbox scan, categorization, and cleanup |
+| `/email-wizard --spam-only` | Just spam detection and filtering |
+| `/email-wizard rebeca.stock@gmail.com` | Run for specific account |
 
-**Why:** The email-management skill contains critical documentation about:
-- Which tools to use (Himalaya CLI vs Google Workspace MCP)
-- Message ID incompatibilities between tools
-- Correct folder names for Gmail
-- Batch operation patterns that actually work
+### How to Invoke
 
-**Never** attempt email operations directly with MCP tools without first loading the skill.
+Use the Skill tool with `skill: "email-wizard"` before attempting any email operations.
+
+### What the Wizard Does
+
+1. **Tracks runs** - Only processes emails since last run
+2. **Categorizes emails** into 5 sections:
+   - Real mail requiring response (with suggested replies)
+   - Real notifications from trusted entities
+   - Calendar events to add
+   - Routing/labeling suggestions
+   - Spam for filtering/deletion
+3. **Maintains persistent data** in `.claude/skills/email-wizard/data/`:
+   - `registry.json` - Last run timestamp
+   - `legitimate-entities.json` - Trusted senders
+   - `routing-rules.json` - Label routing
+   - `exceptions.json` - Newsletters to keep
+
+### Tool Selection
+
+- **Google Workspace MCP**: Search, read, filters, send
+- **Himalaya CLI**: Fast bulk operations (different message IDs!)
+
+**Default account:** `richard.stock@gmail.com` unless specified.
 
 ---
 
@@ -493,4 +509,4 @@ paru -S <aur-pkg>            # Install AUR package
 
 ---
 
-**Last Updated:** 2025-11-30
+**Last Updated:** 2025-12-09

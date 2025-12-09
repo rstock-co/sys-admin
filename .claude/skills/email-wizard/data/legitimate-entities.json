@@ -1,0 +1,10 @@
+{
+  "_description": "Entities whose 'real notifications' you want to receive. Key is entity name, value is list of email addresses/domains that send legitimate notifications (not marketing).",
+  "_example": {
+    "Amazon": {
+      "keep": ["auto-confirm@amazon.ca", "shipment-tracking@amazon.ca"],
+      "block": ["store-news@amazon.ca", "marketing@amazon.ca"]
+    }
+  },
+  "entities": {}
+}
