@@ -81,6 +81,9 @@ Custom workaround for animated border gradients using a bash script (`~/.config/
 
 ### Code Editor
 - **VS Code** (`code` package for OSS version)
+- **Config:** `~/.config/code-flags.conf`
+- **GPU disabled:** `--disable-gpu` flag required to prevent system lag on Arc B580
+- **Why:** Electron's GPU acceleration conflicts with Intel Arc B580 Wayland driver, causing mouse lag and system stuttering. CPU rendering has negligible impact on Ryzen 9 7950X.
 
 ### File Manager
 - **Dolphin** - NOT currently installed (keybind `Super + E` configured but won't work until installed)
@@ -231,6 +234,7 @@ Use pnpm for all projects (proven, stable, massive performance gains). Keep npm 
 | Terminal | Alacritty over Kitty | Lower memory usage for parallel Claude Code sessions |
 | Node.js | Direct install over NVM | Single version needed, no shell overhead |
 | VRR | Disabled on center monitor | Personal preference |
+| VS Code GPU | Disabled | Arc B580 + Electron GPU acceleration = system lag |
 
 ---
 
