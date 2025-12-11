@@ -123,6 +123,7 @@ wpctl set-default <ID>
 | `~/.local/share/pywhispercpp/models/` | Whisper model files |
 | `~/.local/share/hyprwhspr/venv/` | Python virtual environment |
 | `/etc/udev/rules.d/80-uinput.rules` | ydotool permissions |
+| `/etc/modules-load.d/uinput.conf` | Load uinput module at boot |
 
 ---
 
