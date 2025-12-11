@@ -71,3 +71,41 @@ sudo udevadm trigger /dev/uinput
 cat /etc/udev/rules.d/80-uinput.rules
 # Should contain: KERNEL=="uinput", GROUP="input", MODE="0660"
 ```
+
+---
+
+## Auto-Enter Not Working
+
+**Symptom:** Text pastes but Enter is not pressed automatically.
+
+### Check the service
+
+```bash
+systemctl --user status hyprwhspr-auto-enter
+```
+
+If not running:
+
+```bash
+systemctl --user restart hyprwhspr-auto-enter
+```
+
+### Check logs
+
+```bash
+journalctl --user -u hyprwhspr-auto-enter --since "5 min ago"
+```
+
+Should show "Transcription complete" and "Enter sent" after each dictation.
+
+### Verify ydotool works
+
+```bash
+ydotool key 28:1 28:0  # Should press Enter
+```
+
+### Re-enable if disabled
+
+```bash
+systemctl --user enable --now hyprwhspr-auto-enter
+```

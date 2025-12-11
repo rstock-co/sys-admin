@@ -15,6 +15,7 @@
 | Paste Mode | ctrl_shift (terminal-compatible) |
 | Audio Feedback | Enabled (custom chimes in ~/.config/hyprwhspr/sounds/) |
 | Waybar Integration | Disabled |
+| Auto-Enter | Enabled (custom wrapper service) |
 
 **Config file:** `~/.config/hyprwhspr/config.json`
 **Model location:** `~/.local/share/pywhispercpp/models/ggml-base.en.bin`
@@ -29,9 +30,52 @@
 2. Tap **Caps Lock** (sound = recording started)
 3. Speak clearly into your Fifine microphone
 4. Tap **Caps Lock** again (sound = transcribing)
-5. Text appears at cursor position
+5. Text appears at cursor position and **Enter is pressed automatically**
 
 **Note:** Caps Lock is remapped via VIA to send F13 on tap, Left Alt on hold. You retain Alt functionality by holding the key.
+
+---
+
+## Auto-Enter Feature
+
+Automatically presses Enter after transcription completes, so dictated text is submitted immediately (useful for Claude Code input).
+
+### How It Works
+
+1. A wrapper service (`hyprwhspr-auto-enter`) monitors the hyprwhspr journal
+2. When it sees `Progress: 100%` (transcription complete), it waits 0.25s for the paste to finish
+3. Then sends Enter via `ydotool key 28:1 28:0`
+
+### Components
+
+| File | Purpose |
+|------|---------|
+| `~/.local/bin/hyprwhspr-auto-enter` | Wrapper script |
+| `~/.config/systemd/user/hyprwhspr-auto-enter.service` | Systemd user service |
+
+### Disable Auto-Enter
+
+If you don't want Enter pressed automatically:
+
+```bash
+systemctl --user disable --now hyprwhspr-auto-enter
+```
+
+### Re-enable Auto-Enter
+
+```bash
+systemctl --user enable --now hyprwhspr-auto-enter
+```
+
+### Adjust Timing
+
+Edit the delay in `~/.local/bin/hyprwhspr-auto-enter`:
+
+```bash
+DELAY_AFTER_PASTE=0.25  # seconds to wait after transcription before Enter
+```
+
+Then restart: `systemctl --user restart hyprwhspr-auto-enter`
 
 ---
 
@@ -124,6 +168,8 @@ wpctl set-default <ID>
 | `~/.local/share/hyprwhspr/venv/` | Python virtual environment |
 | `/etc/udev/rules.d/80-uinput.rules` | ydotool permissions |
 | `/etc/modules-load.d/uinput.conf` | Load uinput module at boot |
+| `~/.local/bin/hyprwhspr-auto-enter` | Auto-Enter wrapper script |
+| `~/.config/systemd/user/hyprwhspr-auto-enter.service` | Auto-Enter systemd service |
 
 ---
 
@@ -144,4 +190,10 @@ hyprwhspr setup
 
 # Check current default microphone
 wpctl status | grep -A5 "Sources:"
+
+# Check auto-enter service
+systemctl --user status hyprwhspr-auto-enter
+
+# View auto-enter logs
+journalctl --user -u hyprwhspr-auto-enter -f
 ```
