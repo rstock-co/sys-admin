@@ -2,7 +2,9 @@
 bun-bin
 claude-code
 google-chrome
+hyprwhspr
 paru
+python-sounddevice
 rofi-themes-collection-git
 spicetify-cli
 vercel

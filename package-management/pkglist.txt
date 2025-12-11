@@ -23,13 +23,16 @@ google-chrome
 grim
 himalaya
 hyprland
+hyprwhspr
 intel-gpu-tools
 jq
 less
+libnotify
 libva-utils
 linux
 linux-firmware
 mesa-utils
+mpv
 neovim
 networkmanager
 npm
@@ -59,6 +62,7 @@ qt6-wayland
 rofi
 rofi-themes-collection-git
 slurp
+sound-theme-freedesktop
 spicetify-cli
 spotify-launcher
 starship
@@ -129,6 +133,7 @@ wireplumber
 wl-clipboard
 xdg-desktop-portal-gtk
 xdg-desktop-portal-hyprland
+ydotool
 yt-dlp
 zoom
 zsh

@@ -7,37 +7,33 @@
 ## ✅ Installed Packages
 
 ### Shell & CLI Tools
-- [x] `bat` - Modern cat with syntax highlighting
 - [x] `eza` - Modern ls replacement with icons
 - [x] `fzf` - Fuzzy finder
 - [x] `jq` - JSON processor
 - [x] `starship` - Modern shell prompt
 - [x] `zsh` - Modern shell
 - [x] `glow` - Markdown renderer for terminal
+- [x] `ripgrep` - Fast grep replacement (10-100x faster)
 
 ### Development Tools
 - [x] `uv` - Fast Python package installer
 - [x] `rust` - Rust toolchain
-- [x] `clang` - Modern compiler
 - [x] `git` - Version control
 - [x] `github-cli` - GitHub CLI (`gh`)
-- [x] `docker` - Container platform
 - [x] `pnpm` - Fast Node.js package manager
 - [x] `bun-bin` (AUR) - All-in-one JavaScript runtime (10-100x faster)
-- [x] `nodejs` - Node.js runtime
 - [x] `npm` - Node package manager
 - [x] `neovim` - Terminal editor
 - [x] `openssh` - SSH client/server
 - [x] `python` - Python 3.13.7
 - [x] `python-pip` - Python package installer
+- [x] `python-sounddevice` (AUR) - Python bindings for PortAudio
 - [x] `claude-code` (AUR) - Claude Code CLI agent
 - [x] `vercel` (AUR) - Vercel CLI for deployments
 
 ### System Tools
 - [x] `alacritty` - GPU-accelerated terminal
-- [x] `reflector` - Arch mirror management
-- [x] `paru-bin` - Modern AUR helper
-- [x] `zram-generator` - Memory compression
+- [x] `paru` (AUR) - Modern AUR helper
 - [x] `unzip` - Archive extraction
 - [x] `btop` - Modern resource monitor with GPU support
 - [x] `nvtop` - GPU monitoring for Arc B580
@@ -50,29 +46,32 @@
 - [x] `usbutils` - USB device utilities
 
 ### Audio & Video
-- [x] `pipewire` - Modern audio server
-- [x] `pipewire-alsa` - ALSA compatibility
+- [x] `pipewire-alsa` - ALSA compatibility (pulls pipewire)
 - [x] `pipewire-pulse` - PulseAudio replacement
 - [x] `pipewire-jack` - JACK compatibility
 - [x] `wireplumber` - PipeWire session manager
+- [x] `sound-theme-freedesktop` - System sound theme
 - [x] `v4l-utils` - Video4Linux utilities
 - [x] `ffmpeg` - Video/audio processing
 - [x] `yt-dlp` - Video/audio downloader (YouTube, Vimeo, etc.)
+- [x] `mpv` - Video player
 
 ### Window Manager & Desktop
 - [x] `hyprland` - Wayland compositor
+- [x] `hyprwhspr` (AUR) - Whisper voice input for Hyprland
 - [x] `rofi` - App launcher (Wayland version)
-- [x] `sddm` - Display manager
+- [x] `rofi-themes-collection-git` (AUR) - Rofi theme collection
 - [x] `qt5-wayland` - Qt5 Wayland platform plugin
 - [x] `qt6-wayland` - Qt6 Wayland platform plugin
 - [x] `xdg-desktop-portal-hyprland` - Hyprland-specific portal
 - [x] `xdg-desktop-portal-gtk` - GTK portal for file dialogs
+- [x] `ydotool` - Generic dotool-like tool for Wayland
+- [x] `libnotify` - Notification library
 
 ### Fonts
 - [x] `ttf-jetbrains-mono-nerd` - JetBrains Mono Nerd Font
 - [x] `ttf-hack-nerd` - Hack Nerd Font
-- [x] `noto-fonts-emoji` - Emoji support
-- [x] 67 other Nerd Fonts packages
+- [x] 65 other Nerd Fonts packages (otf-* and ttf-*-nerd)
 
 ### Screenshot Tools
 - [x] `grim` - Screenshot tool for Wayland
@@ -80,7 +79,6 @@
 - [x] `wl-clipboard` - Wayland clipboard utilities
 
 ### Utilities
-- [x] `via` (AUR) - QMK/VIA keyboard configurator
 - [x] `evtest` - Input device event testing tool
 
 ### Network & Connectivity
@@ -114,7 +112,7 @@
 - [ ] `procs` - Modern ps replacement
 
 ### Shell & CLI Tools (High Priority)
-- [ ] `ripgrep` - Fast grep replacement (10-100x faster)
+- [ ] `bat` - Modern cat with syntax highlighting
 - [ ] `fd` - Fast find replacement (5-10x faster)
 - [ ] `zoxide` - Smart cd command with learning
 - [ ] `atuin` - Enhanced shell history with sync
@@ -205,8 +203,9 @@
 - [x] `paru-debug` - Debug symbols, not needed
 
 ### Candidates for Removal
-- [ ] `htop` - Will replace with `btop` once installed
+- [ ] `htop` - btop is now installed, can remove htop
 - [ ] Check: `iwd`, `wireless_tools`, `wpa_supplicant` - May be redundant (NetworkManager handles this)
+- [ ] `via` - VIA keyboard configurator (if no longer using YUNZII AL98 customization)
 - [ ] Verify: Old X11 tools if fully migrated to Wayland
 
 ---
