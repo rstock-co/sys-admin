@@ -1,33 +1,118 @@
 # hyprwhspr Troubleshooting
 
-## Service Not Working After Reboot
+## Quick Fix (Try This First)
 
-**Symptom:** Caps Lock doesn't trigger recording, services failed.
+**Symptom:** Transcription completes (Progress: 100%) but text doesn't appear, OR nothing happens when pressing Caps Lock.
+
+**Fix:** Restart all services in order:
+
+```bash
+systemctl --user restart ydotool hyprwhspr hyprwhspr-auto-enter
+```
+
+This fixes 90% of issues after reboot or when things get stuck.
+
+---
+
+## Step-by-Step Troubleshooting
+
+If the quick fix didn't work, follow these steps **in order**:
+
+### Step 1: Check services are running
+
+```bash
+systemctl --user status ydotool hyprwhspr hyprwhspr-auto-enter
+```
+
+All three should show `active (running)`. If any failed, proceed to Step 2.
+
+### Step 2: Check uinput module
+
+```bash
+lsmod | grep uinput
+```
+
+If no output, the module isn't loaded:
+
+```bash
+sudo modprobe uinput
+sudo udevadm trigger /dev/uinput
+systemctl --user restart ydotool hyprwhspr hyprwhspr-auto-enter
+```
+
+### Step 3: Check uinput permissions
+
+```bash
+ls -la /dev/uinput
+```
+
+Should show `crw-rw---- root input`. If not:
+
+```bash
+sudo udevadm control --reload-rules
+sudo udevadm trigger /dev/uinput
+systemctl --user restart ydotool hyprwhspr hyprwhspr-auto-enter
+```
+
+### Step 4: Test clipboard + paste manually
+
+```bash
+echo "test" | wl-copy && sleep 0.2 && ydotool key 29:1 42:1 47:1 47:0 42:0 29:0
+```
+
+If "test" appears in your focused window, the paste mechanism works. Problem is in hyprwhspr transcription.
+
+### Step 5: Check what's on clipboard after transcription
+
+Do a transcription, then immediately:
+
+```bash
+wl-paste
+```
+
+- If transcribed text appears → paste keystroke not reaching app
+- If old/wrong text appears → transcription not reaching clipboard
+
+---
+
+## Specific Issues
+
+### Caps Lock doesn't trigger recording (services failed)
 
 **Root cause:** `uinput` kernel module not loaded.
 
-### Quick Fix
-
 ```bash
-# Load the module
 sudo modprobe uinput
-
-# Trigger udev rules
 sudo udevadm trigger /dev/uinput
-
-# Restart services
 systemctl --user restart ydotool hyprwhspr
-
-# Verify
-systemctl --user status ydotool hyprwhspr
 ```
 
-### Permanent Fix
-
-Ensure uinput loads at boot:
+**Permanent fix** (load at boot):
 
 ```bash
 echo "uinput" | sudo tee /etc/modules-load.d/uinput.conf
+```
+
+### Transcription completes but text doesn't appear
+
+Services may be in a bad state. Restart:
+
+```bash
+systemctl --user restart hyprwhspr
+```
+
+### Permission issues (`/dev/uinput` wrong permissions)
+
+```bash
+sudo udevadm control --reload-rules
+sudo udevadm trigger /dev/uinput
+```
+
+Verify udev rule exists:
+
+```bash
+cat /etc/udev/rules.d/80-uinput.rules
+# Should contain: KERNEL=="uinput", GROUP="input", MODE="0660"
 ```
 
 ---
