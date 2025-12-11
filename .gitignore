@@ -1,0 +1,9 @@
+# Local secrets (API keys)
+.env.local
+.env
+*.env
+
+# Editor files
+*.swp
+*.swo
+*~

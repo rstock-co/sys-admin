@@ -16,6 +16,7 @@
 | Audio Feedback | Enabled (custom chimes in ~/.config/hyprwhspr/sounds/) |
 | Waybar Integration | Disabled |
 | Auto-Enter | Enabled (custom wrapper service) |
+| Improve Mode | Available (toggle with Super+Alt+I) |
 
 **Config file:** `~/.config/hyprwhspr/config.json`
 **Model location:** `~/.local/share/pywhispercpp/models/ggml-base.en.bin`
@@ -76,6 +77,152 @@ DELAY_AFTER_PASTE=0.25  # seconds to wait after transcription before Enter
 ```
 
 Then restart: `systemctl --user restart hyprwhspr-auto-enter`
+
+---
+
+## Improve Mode (AI Text Cleanup)
+
+Improve Mode sends your dictation through an LLM (via OpenRouter) to clean up verbal garbage before submitting. This removes filler words, hedging phrases, false starts, and other speech artifacts while preserving your intended message.
+
+### How It Works
+
+1. **Toggle ON:** Press `Super+Alt+I` (ascending chime plays)
+2. **Dictate:** Use Caps Lock as normal
+3. **Processing flow:**
+   - hyprwhspr transcribes and pastes your raw dictation
+   - Auto-enter script detects transcription complete
+   - Script grabs text from clipboard, sends to OpenRouter API
+   - LLM cleans up the text (removes fillers, hedging, false starts)
+   - Script clears the input field with Ctrl+U
+   - Script pastes the improved text
+   - Script presses Enter
+4. **Toggle OFF:** Press `Super+Alt+I` again (descending chime plays)
+
+### What Gets Cleaned Up
+
+The LLM removes:
+- **Fillers:** um, uh, like, you know, basically, I mean, kind of, sort of, actually, literally
+- **Hedging openers:** "yeah so", "I think maybe", "I'm not sure but", "so basically"
+- **Redundant hedging:** "potentially maybe" → "maybe", "possibly perhaps" → "perhaps"
+- **False starts:** "I was going to— I went to the store" → "I went to the store"
+- **Repeated words:** "the the" → "the"
+
+It also fixes punctuation while preserving your core message.
+
+### Example
+
+**You say:** "Yeah, so I'm not sure, but I'm thinking I could maybe make a system for Claude Code that would improve my text-to-speech prompts."
+
+**Result:** "I want to make a system that can work with Claude Code to clean up my text-to-speech prompts."
+
+### Components
+
+| File | Purpose |
+|------|---------|
+| `~/.local/bin/hyprwhspr-improve-toggle` | Toggle script (bound to Super+Alt+I) |
+| `~/.local/bin/hyprwhspr-auto-enter` | Main script (includes improve mode logic) |
+| `~/.config/hyprwhspr/improve_mode` | Flag file (contains "true" or "false") |
+| `~/.config/hyprwhspr/improve-mode.json` | Model configuration |
+| `~/agents/sys-admin/.env.local` | OpenRouter API key |
+
+### Configuration
+
+**Model selection:** Edit `~/.config/hyprwhspr/improve-mode.json`:
+
+```json
+{
+  "active_model": "google/gemini-2.0-flash-001",
+  "models": {
+    "free": [
+      { "id": "meta-llama/llama-3.3-70b-instruct:free", "name": "Llama 3.3 70B", "active": false },
+      { "id": "google/gemini-2.0-flash-exp:free", "name": "Gemini 2.0 Flash (1M ctx)", "active": false }
+    ],
+    "paid": [
+      { "id": "google/gemini-2.0-flash-001", "name": "Gemini 2.0 Flash", "active": true }
+    ]
+  }
+}
+```
+
+Change `active_model` to switch models. Free models may have rate limits. Paid models (Gemini 2.0 Flash) are fast and cheap for short dictations.
+
+**API Key:** Stored in `~/agents/sys-admin/.env.local`:
+
+```bash
+OPENROUTER_API_KEY=sk-or-v1-xxxxx
+```
+
+### Prompt Customization
+
+The cleanup prompt is in `~/.local/bin/hyprwhspr-auto-enter`:
+
+```bash
+CLEANUP_PROMPT='Clean this dictation. Remove:
+- Fillers: um, uh, like, you know, basically, I mean, kind of, sort of, actually, literally
+- Hedging openers: "yeah so", "I think maybe", "I am not sure but", "so basically"
+- Redundant hedging: "potentially maybe" → "maybe", "possibly perhaps" → "perhaps"
+- False starts and repeated words
+
+Fix punctuation. Preserve the core message but cut verbal fluff. Return cleaned text only.'
+```
+
+Edit this prompt to adjust cleanup behavior. Keep it concise - free models may struggle with long prompts.
+
+### Latency
+
+- **Without improve mode:** ~1-3s (local Whisper transcription only)
+- **With improve mode:** ~4-6s (adds OpenRouter API call)
+
+The API call adds ~2-3 seconds. This is acceptable for most use cases but noticeable.
+
+### Troubleshooting Improve Mode
+
+**Check if improve mode is on:**
+```bash
+cat ~/.config/hyprwhspr/improve_mode
+# Returns "true" or "false"
+```
+
+**View improve mode logs:**
+```bash
+journalctl --user -u hyprwhspr-auto-enter -f
+```
+
+Look for:
+- `Improve mode ON - waiting for paste then cleaning up...`
+- `Original: <your raw dictation>`
+- `Improved: <cleaned up version>`
+- `Clearing input...`
+
+**Text duplicating (both original and improved appear):**
+The Ctrl+U clear isn't working. This can happen intermittently. Restart the service:
+```bash
+systemctl --user restart hyprwhspr-auto-enter
+```
+
+**API errors:**
+Check the logs for error messages. Common issues:
+- Rate limiting on free models (try a different model)
+- Invalid API key (check `~/agents/sys-admin/.env.local`)
+- Network issues
+
+**No sound on toggle:**
+Sounds are played via `pw-play` at volume 5.0. Check:
+```bash
+pw-play --volume=5.0 /usr/share/sounds/freedesktop/stereo/service-login.oga
+```
+
+### Keybind Reference
+
+| Key | Action |
+|-----|--------|
+| `Super+Alt+I` | Toggle improve mode on/off |
+| `Caps Lock` | Start/stop dictation (unchanged) |
+
+The keybind is defined in `~/.config/hypr/hyprland.conf`:
+```
+bind = $mainMod ALT, I, exec, ~/.local/bin/hyprwhspr-improve-toggle # @hotkey: Toggle Voice Improve Mode
+```
 
 ---
 
@@ -163,13 +310,17 @@ wpctl set-default <ID>
 
 | Path | Purpose |
 |------|---------|
-| `~/.config/hyprwhspr/config.json` | Main configuration |
+| `~/.config/hyprwhspr/config.json` | Main hyprwhspr configuration |
+| `~/.config/hyprwhspr/improve_mode` | Improve mode flag (true/false) |
+| `~/.config/hyprwhspr/improve-mode.json` | Improve mode model configuration |
+| `~/.local/bin/hyprwhspr-auto-enter` | Auto-enter + improve mode script |
+| `~/.local/bin/hyprwhspr-improve-toggle` | Toggle improve mode on/off |
+| `~/.config/systemd/user/hyprwhspr-auto-enter.service` | Auto-enter systemd service |
+| `~/agents/sys-admin/.env.local` | OpenRouter API key |
 | `~/.local/share/pywhispercpp/models/` | Whisper model files |
 | `~/.local/share/hyprwhspr/venv/` | Python virtual environment |
 | `/etc/udev/rules.d/80-uinput.rules` | ydotool permissions |
 | `/etc/modules-load.d/uinput.conf` | Load uinput module at boot |
-| `~/.local/bin/hyprwhspr-auto-enter` | Auto-Enter wrapper script |
-| `~/.config/systemd/user/hyprwhspr-auto-enter.service` | Auto-Enter systemd service |
 
 ---
 
@@ -194,6 +345,18 @@ wpctl status | grep -A5 "Sources:"
 # Check auto-enter service
 systemctl --user status hyprwhspr-auto-enter
 
-# View auto-enter logs
+# View auto-enter logs (includes improve mode)
 journalctl --user -u hyprwhspr-auto-enter -f
+
+# Check improve mode status
+cat ~/.config/hyprwhspr/improve_mode
+
+# Toggle improve mode manually (or use Super+Alt+I)
+~/.local/bin/hyprwhspr-improve-toggle
+
+# Check current improve mode model
+jq '.active_model' ~/.config/hyprwhspr/improve-mode.json
+
+# Restart auto-enter after script changes
+systemctl --user restart hyprwhspr-auto-enter
 ```
