@@ -13,12 +13,13 @@
 | Model | base.en (141MB, English-only) |
 | Hotkey | Caps Lock (sends F13 via VIA remap) |
 | Paste Mode | ctrl_shift (terminal-compatible) |
-| Audio Feedback | Enabled (freedesktop device sounds) |
+| Audio Feedback | Enabled (custom chimes in ~/.config/hyprwhspr/sounds/) |
 | Waybar Integration | Disabled |
 
 **Config file:** `~/.config/hyprwhspr/config.json`
 **Model location:** `~/.local/share/pywhispercpp/models/ggml-base.en.bin`
 **Service:** `systemctl --user status hyprwhspr`
+**Custom sounds:** `~/.config/hyprwhspr/sounds/hyprwhspr-1.mp3` (start), `hyprwhspr-2.mp3` (stop)
 
 ---
 
