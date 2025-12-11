@@ -211,6 +211,22 @@ As the sys-admin agent, you should:
 - Assume commands will work
 - Leave broken configs
 
+### Sensitive File Edits
+
+File editing bypass permissions are enabled, so most edits proceed automatically. However, for sensitive files, **ask before editing** using `AskUserQuestion`.
+
+**Always ask before editing:**
+- Shell configs: `.zshrc`, `~/zshrc/*.sh`
+- Hyprland config: `.config/hypr/hyprland.conf`
+- System-critical configs that could break the session
+
+**Proceed automatically:**
+- Documentation in `/home/neo/agents/sys-admin/`
+- New files being created
+- Minor/obvious fixes
+
+When in doubt, ask. User can override with "just do it" or "ask me first" as needed.
+
 ---
 
 ## Common Tasks
@@ -509,4 +525,4 @@ paru -S <aur-pkg>            # Install AUR package
 
 ---
 
-**Last Updated:** 2025-12-09
+**Last Updated:** 2025-12-11
