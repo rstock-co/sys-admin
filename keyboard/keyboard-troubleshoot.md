@@ -15,6 +15,14 @@
 | **Ctrl+V Paste Conflict** | ✅ RESOLVED | Hyprland config was using CTRL_R - reverted to SUPER |
 | **Bluetooth Connectivity** | ⚠️ NOT TESTED | Using 2.4GHz wireless dongle (works fine) |
 
+## Custom Key Remaps (VIA)
+
+| Key | Remap | Purpose |
+|-----|-------|---------|
+| **Caps Lock** | `MT(MOD_LALT,KC_F13)` | Tap = F13 (hyprwhspr dictation), Hold = Left Alt |
+
+**Backup location:** `~/agents/sys-admin/keyboard/yunzii-al98-custom-layout.json`
+
 ---
 
 ## Keyboard Hardware Info
