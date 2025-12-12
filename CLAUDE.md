@@ -48,10 +48,7 @@
 - `SYSTEM_SETUP.md` - System configuration decisions
 - `SYSTEM_SPECS.md` - Hardware specifications
 - `bare-git-dotfiles-method.md` - Dotfiles method docs
-- `audio/` - Audio setup and configuration docs
-- `keyboard/` - Keyboard manuals and layouts
-- `display/` - Display/monitor specs
-- `voice/` - Voice dictation (hyprwhspr) configuration
+- `config/` - **Subsystem configuration docs** (single source of truth)
 
 ---
 
@@ -124,21 +121,26 @@ This is the **single source of truth** for system configuration decisions.
 - Document **decisions and rationale**, not just what's installed
 - Future-you should understand WHY things are configured this way
 
-### Troubleshooting Skill
+### Subsystem Configuration
 
-Troubleshooting docs are bundled in the `troubleshooting` skill at `.claude/skills/troubleshooting/`.
+All subsystem configs live in `config/` with a central index.
 
 **Structure:**
-- `skill.md` - Skill instructions
-- `docs/` - One doc per service (hyprwhspr.md, keyboard.md, audio.md, display.md)
+```
+config/
+├── INDEX.md              # Central registry of all subsystems
+├── voice/hyprwhspr.md    # Voice dictation config
+├── display/monitors.md   # Triple monitor setup
+├── audio/speakers.md     # Creative Pebble Pro config
+└── keyboard/yunzii-al98.md  # YUNZII AL98 config
+```
 
 **How to use:**
-1. User reports something broken
-2. Invoke the troubleshooting skill
-3. Read the relevant doc from `docs/`
-4. Start with Quick Fix section
-5. Follow step-by-step if quick fix fails
-6. Update the doc with new findings
+1. Check `config/INDEX.md` for subsystem overview
+2. Read the specific config doc for details
+3. Each doc has: Quick Fix, Current Setup, System Paths, Troubleshooting
+
+**Troubleshooting:** Use `/troubleshoot <subsystem>` or invoke the troubleshooting skill. It references config docs and runs quick fixes first.
 
 ---
 
@@ -488,4 +490,4 @@ paru -S <aur-pkg>            # Install AUR package
 
 ---
 
-**Last Updated:** 2025-12-11
+**Last Updated:** 2025-12-12
