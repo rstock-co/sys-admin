@@ -15,7 +15,7 @@ Match the user's description to a subsystem, then read its doc and run the quick
 | **voice** | hyprwhspr, dictation, speech-to-text, stt, caps lock | `docs/hyprwhspr.md` | `fix-voice` |
 | **keyboard** | keys, keybinds, hotkeys, YUNZII, AL98, VIA | `docs/keyboard.md` | - |
 | **audio** | sound, speakers, volume, pipewire, wireplumber | `docs/audio.md` | `systemctl --user restart pipewire wireplumber` |
-| **display** | monitor, screen, resolution, 120hz, hdmi, displayport | `docs/display.md` | `hyprctl reload` |
+| **display** | monitor, screen, resolution, 120hz, hdmi, displayport, tv black | `docs/display.md` | `wake-tv` (TV black) or `hyprctl reload` |
 
 ## Workflow
 
