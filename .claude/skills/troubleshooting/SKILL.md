@@ -1,5 +1,5 @@
 ---
-description: Troubleshoot system services. Use when user reports something isn't working (voice, keyboard, audio, display).
+description: Troubleshoot system services. Use when user reports something isn't working (voice, keyboard, audio, display, gpu).
 ---
 
 # Troubleshooting Skill
@@ -18,6 +18,7 @@ Match the user's description to a subsystem, then run the quick fix.
 | **keyboard** | keys, keybinds, hotkeys, YUNZII, AL98, VIA | `config/keyboard/yunzii-al98.md` | `Fn + Spacebar` (factory reset) |
 | **audio** | sound, speakers, volume, pipewire, wireplumber | `config/audio/speakers.md` | `systemctl --user restart pipewire wireplumber` |
 | **display** | monitor, screen, resolution, 120hz, hdmi, displayport, tv black | `config/display/monitors.md` | `wake-tv` (TV black) or `hyprctl reload` |
+| **gpu** | graphics, intel arc, b580, xe driver, vulkan, opengl | `config/gpu/arc-b580.md` | `lsmod | grep xe` (check driver loaded) |
 
 ## Workflow
 
