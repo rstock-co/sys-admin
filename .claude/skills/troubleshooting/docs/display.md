@@ -106,3 +106,81 @@ If you accidentally connect TV to native HDMI:
 1. It will work but max out at 60Hz
 2. Switch to a DisplayPort output with adapter cable
 3. Update hyprland.conf to use the new port name (e.g., DP-2)
+
+---
+
+## Historical Troubleshooting Reference
+
+### Issue: Native HDMI stuck at 60Hz (Nov 2025)
+
+**What we tried:**
+- Decoded TV EDID - confirmed 120Hz advertised correctly (VIC 118)
+- Kernel parameter `video=HDMI-A-3:3840x2160@120` - didn't work
+- Updated Hyprland config port from HDMI-A-5 to HDMI-A-3
+- Force mode via `hyprctl keyword monitor` - still 60Hz
+
+**Root cause:** Intel xe driver not parsing HDMI 2.1 modes correctly
+
+**Solution:** Switched to DisplayPort-to-HDMI cable (bypasses driver HDMI issues)
+
+### Issue: PCIe x1 bottleneck (Nov 2025)
+
+**What we tried:**
+- BIOS update to 2.A91 (AGESA PI 1.2.0.3g)
+- Enabled Above 4G Decoding and Re-Size BAR
+- CMOS reset via button (15 sec) - insufficient
+- Checked PCIe link: `cat /sys/bus/pci/devices/0000:03:00.0/current_link_width`
+
+**Diagnosis commands:**
+```bash
+cat /sys/bus/pci/devices/0000:03:00.0/current_link_width   # Should be 16
+cat /sys/bus/pci/devices/0000:03:00.0/current_link_speed   # Should be 16.0 GT/s
+```
+
+**Note:** PCIe issue was separate from display issue - DP-to-HDMI worked regardless
+
+### Issue: Monitor layout wrong after port change (Nov 2025)
+
+**What we tried:**
+- Wallpaper upside down on portrait monitors
+- Mouse movement going to wrong monitor
+
+**Solution:** Updated hyprland.conf positions and transforms:
+- DP-3 (physical left) → position 0x0, transform 1
+- DP-2 (physical center) → position 2160x840
+- DP-1 (physical right) → position 6000x0, transform 3
+
+### BIOS settings reference (MSI MAG X870E)
+
+If PCIe issues return:
+```
+Settings → Advanced → PCI Subsystem Settings
+  → Above 4G Decoding: Enabled
+  → Re-Size BAR Support: Enabled
+
+Settings → Advanced → AMD CBS → NBIO Common Options → GFX Configuration
+  → GFX0 Gen Switch: Gen 5 or Auto
+  → Bifurcation: Disabled
+```
+
+### EDID extraction (if needed again)
+
+```bash
+sudo pacman -S v4l-utils
+cat /sys/class/drm/card0/card0-DP-2/edid > ~/edid-custom/tcl.bin
+edid-decode ~/edid-custom/tcl.bin
+```
+
+### Kernel parameter forcing (if needed again)
+
+Edit `/boot/loader/entries/arch.conf`:
+```
+options root=/dev/nvme0n1p2 rw video=DP-2:3840x2160@120
+```
+
+### Recovery if all displays fail
+
+1. Plug monitor into motherboard HDMI port
+2. Boot on integrated graphics
+3. Fix config files
+4. Reconnect to GPU
