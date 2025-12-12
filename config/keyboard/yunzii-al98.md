@@ -30,7 +30,7 @@ Long press Fn + Spacebar (backlight flashes white 3x)
 |-----|-------|---------|
 | Caps Lock | `MT(MOD_LALT,KC_F13)` | Tap=F13 (dictation), Hold=Left Alt |
 
-**Backup:** `~/agents/sys-admin/keyboard/yunzii-al98-custom-layout.json`
+**Backup:** `yunzii-al98-custom-layout.json` (same folder)
 
 ---
 
@@ -41,7 +41,7 @@ Long press Fn + Spacebar (backlight flashes white 3x)
 | `/etc/udev/rules.d/50-yunzii-al98.rules` | USB permissions for VIA |
 | `~/.config/hypr/hyprland.conf` | Keybinds (line 244: `$mainMod = SUPER`) |
 | `~/Downloads/YUNZII_AL98_QMK_V0100_20250225/*.json` | Keyboard definition for VIA |
-| `~/agents/sys-admin/keyboard/yunzii-al98-custom-layout.json` | Custom keybind backup |
+| `config/keyboard/yunzii-al98-custom-layout.json` | Custom keybind backup |
 
 ---
 
@@ -62,7 +62,7 @@ Long press Fn + Spacebar (backlight flashes white 3x)
 **Backup keybinds (IMPORTANT):**
 Factory reset erases custom keybinds!
 1. SAVE+LOAD tab → "Save current layout"
-2. Store in `~/agents/sys-admin/keyboard/`
+2. Store in `config/keyboard/`
 
 **Restore after reset:**
 1. Connect to VIA (load definition JSON first)

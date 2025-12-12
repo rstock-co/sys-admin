@@ -109,7 +109,7 @@ hyprctl monitors
 
 ```bash
 gpu-check  # Alias for health check script
-# Or: /home/neo/agents/sys-admin/gpu/scripts/gpu-health-check.sh
+# Or: /home/neo/agents/sys-admin/scripts/gpu-health-check.sh
 ```
 
 ---
@@ -178,4 +178,4 @@ Settings → Advanced → AMD CBS → NBIO Common Options → GFX Configuration
 
 ## Reference Docs
 
-Detailed specs and test results: `gpu/arc-b580-specs-and-testing.md`
+Detailed specs and test results: `arc-b580-specs-and-testing.md` (same folder)
