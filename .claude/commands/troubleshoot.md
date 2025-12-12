@@ -1,7 +1,6 @@
 ---
 description: Troubleshoot a system service
 argument-hint: [service-name]
-skill: troubleshooting
 ---
 
-User is having issues with: **{{arg1}}**
+Invoke the `troubleshooting` skill to help the user with: **$ARGUMENTS**
