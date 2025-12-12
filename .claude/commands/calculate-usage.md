@@ -1,5 +1,5 @@
 ---
-argument-hint: <percent-used> <time-MST>
+argument-hint: [percent-used] [time-MST]
 description: Calculate if Claude Code usage is ahead or behind schedule
 ---
 
@@ -72,62 +72,10 @@ variance_days = floor(variance_in_hours / 24)
 variance_hours = variance_in_hours % 24
 ```
 
-## Output Format
+## Output
 
-```
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
- CLAUDE CODE USAGE TRACKER
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Just output the variance as a single line:
 
- Current Usage:    {actual}%
- Expected Usage:   {expected}%
- Variance:         {+/-variance}%
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
- STATUS: {AHEAD / ON TRACK / BEHIND}
-
- {If AHEAD}
- You're {days}d {hours}h AHEAD of schedule
- At this pace, you'll hit 100% by {day} {time}
-
- {If BEHIND}
- You're {days}d {hours}h BEHIND schedule
- You have extra budget headroom
-
- {If ON TRACK}
- Usage is aligned with billing cycle
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
- Cycle Progress:   {hours_elapsed}h of 168h ({percent_through}%)
- Time (MST):       {day_name} {time}
- Next Reset:       Monday 12:00 PM MST
- Hours Until Reset: {hours_remaining}h
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-```
-
-## Quick Mental Math Reference
-
-For the user's reference when not running the command:
-
-| Time Since Reset    | Expected Usage |
-|---------------------|----------------|
-| Mon 12:00 PM (0h)   | 0%             |
-| Mon 6:00 PM (6h)    | ~4%            |
-| Tue 12:00 PM (24h)  | ~14%           |
-| Wed 12:00 PM (48h)  | ~29%           |
-| Thu 12:00 PM (72h)  | ~43%           |
-| Fri 12:00 PM (96h)  | ~57%           |
-| Sat 12:00 PM (120h) | ~71%           |
-| Sun 12:00 PM (144h) | ~86%           |
-| Mon 12:00 PM (168h) | 100% (reset)   |
-
-**Quick rule:** Each full day ≈ 14.3% of budget
-
-## Notes
-
-- MST = UTC-7 (Mountain Standard Time, no daylight saving)
-- Reset occurs every Monday at 12:00 PM (noon) MST
-- Calculation assumes linear usage distribution is ideal
+- `+12% ahead` (using faster than expected)
+- `-8% behind` (have headroom)
+- `On track` (within ±2%)
