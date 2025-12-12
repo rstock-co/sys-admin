@@ -31,16 +31,26 @@ Extract from `$ARGUMENTS`:
 
 ### 2. Determine Billing Cycle Position
 
-**Assumptions:**
-- Billing cycle is monthly, starting on the 1st
-- Current date: Use today's date
-- Month length: Use actual days in current month
+**Billing cycle:**
+- Resets every **Monday at 12:00 PM (noon) MST**
+- Total cycle length: **168 hours** (7 days)
 
-**Calculate:**
+**Calculate hours elapsed since last reset:**
 ```
-days_elapsed = current_day + (current_hour / 24)
-days_in_month = total days in current month
-expected_percent = (days_elapsed / days_in_month) * 100
+# Find hours since last Monday 12:00 PM MST
+current_day_of_week = 0 (Mon) to 6 (Sun)
+hours_since_monday_midnight = (current_day_of_week * 24) + current_hour
+
+# Adjust for noon reset (subtract 12 hours, handle wrap-around)
+if current_day == Monday AND current_hour < 12:
+    # Before reset - we're in previous week's cycle
+    hours_elapsed = 168 - (12 - current_hour)
+else:
+    hours_elapsed = hours_since_monday_midnight - 12
+    if hours_elapsed < 0:
+        hours_elapsed += 168
+
+expected_percent = (hours_elapsed / 168) * 100
 ```
 
 ### 3. Calculate Variance
@@ -55,9 +65,11 @@ variance = actual_usage - expected_percent
 
 ### 4. Calculate Time Equivalent
 
-Convert variance to days/hours:
+Convert variance to hours:
 ```
-variance_in_days = (variance / 100) * days_in_month
+variance_in_hours = (variance / 100) * 168
+variance_days = floor(variance_in_hours / 24)
+variance_hours = variance_in_hours % 24
 ```
 
 ## Output Format
@@ -69,7 +81,7 @@ variance_in_days = (variance / 100) * days_in_month
 
  Current Usage:    {actual}%
  Expected Usage:   {expected}%
- Variance:         {variance}%
+ Variance:         {+/-variance}%
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -77,7 +89,7 @@ variance_in_days = (variance / 100) * days_in_month
 
  {If AHEAD}
  You're {days}d {hours}h AHEAD of schedule
- At this pace, you'll hit 100% by {date}
+ At this pace, you'll hit 100% by {day} {time}
 
  {If BEHIND}
  You're {days}d {hours}h BEHIND schedule
@@ -88,9 +100,10 @@ variance_in_days = (variance / 100) * days_in_month
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
- Billing Cycle: Day {current_day} of {days_in_month}
- Time (MST):    {time}
- Days Left:     {days_remaining}
+ Cycle Progress:   {hours_elapsed}h of 168h ({percent_through}%)
+ Time (MST):       {day_name} {time}
+ Next Reset:       Monday 12:00 PM MST
+ Hours Until Reset: {hours_remaining}h
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 ```
@@ -99,18 +112,22 @@ variance_in_days = (variance / 100) * days_in_month
 
 For the user's reference when not running the command:
 
-| Day of Month | Expected Usage |
-|--------------|----------------|
-| 1            | ~3%            |
-| 5            | ~16%           |
-| 10           | ~33%           |
-| 15           | ~50%           |
-| 20           | ~66%           |
-| 25           | ~83%           |
-| 30           | ~100%          |
+| Time Since Reset    | Expected Usage |
+|---------------------|----------------|
+| Mon 12:00 PM (0h)   | 0%             |
+| Mon 6:00 PM (6h)    | ~4%            |
+| Tue 12:00 PM (24h)  | ~14%           |
+| Wed 12:00 PM (48h)  | ~29%           |
+| Thu 12:00 PM (72h)  | ~43%           |
+| Fri 12:00 PM (96h)  | ~57%           |
+| Sat 12:00 PM (120h) | ~71%           |
+| Sun 12:00 PM (144h) | ~86%           |
+| Mon 12:00 PM (168h) | 100% (reset)   |
+
+**Quick rule:** Each full day ≈ 14.3% of budget
 
 ## Notes
 
-- MST = UTC-7 (no daylight saving adjustment)
-- If billing cycle starts on a different day, user should specify
+- MST = UTC-7 (Mountain Standard Time, no daylight saving)
+- Reset occurs every Monday at 12:00 PM (noon) MST
 - Calculation assumes linear usage distribution is ideal
