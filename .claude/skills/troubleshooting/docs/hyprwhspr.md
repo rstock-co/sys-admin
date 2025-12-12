@@ -2,21 +2,21 @@
 
 ## Quick Fix (Try This First)
 
-**Symptom:** Transcription completes (Progress: 100%) but text doesn't appear, OR nothing happens when pressing Caps Lock.
+**Symptom:** Transcription completes (you hear the chimes) but text doesn't appear, OR nothing happens when pressing Caps Lock.
 
-**Fix:** Restart all services in order:
+**Fix:** Run the alias:
 
 ```bash
-systemctl --user restart ydotool hyprwhspr hyprwhspr-auto-enter
+fix-voice
 ```
 
-This fixes 90% of issues after reboot or when things get stuck.
+This restarts all voice services and fixes 90% of issues. Only proceed to Step-by-Step if this doesn't work.
 
 ---
 
 ## Step-by-Step Troubleshooting
 
-If the quick fix didn't work, follow these steps **in order**:
+If `fix-voice` didn't work, follow these steps **in order**:
 
 ### Step 1: Check services are running
 
