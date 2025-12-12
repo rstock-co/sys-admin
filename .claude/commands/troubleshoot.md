@@ -1,5 +1,6 @@
 ---
 description: Continue troubleshooting from documentation folder
+argument-hint: [subsystem-type]
 ---
 
 You are resuming a troubleshooting session for the **{{arg1}}** subsystem.

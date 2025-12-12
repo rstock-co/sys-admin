@@ -1,5 +1,5 @@
 ---
-argument-hint: "[--fresh] [--phase=1|2|3]"
+argument-hint: [--fresh] [--phase=1|2|3]
 description: Deep audit of inbox to identify and filter all spam
 ---
 
