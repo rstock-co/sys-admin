@@ -80,8 +80,31 @@ dotfiles commit -m "Update package lists"
 **Quick tools:**
 - `ea` - Edit aliases (VS Code)
 - `sa` - Source aliases
-- `va` - View aliases (fzf)
+- `va` - View aliases (fzf) - shows: alias, mnemonic, module, command
 - `vh` - View hotkeys (fzf)
+
+### Alias Format
+
+Every alias must have a comment with mnemonic:
+
+```bash
+# <alias> - <short mnemonic>
+alias <alias>='<command>'
+```
+
+**Example:**
+```bash
+# ls - list files
+alias ls='eza -a --color=always'
+
+# pg-start - postgres start
+alias pg-start='$POSTGRES_PREFIX/bin/pg_ctl...'
+```
+
+**Rules:**
+- Mnemonic should be 2-3 words max
+- No parenthetical explanations like "(with icons)"
+- `va` parses these to display in fzf
 
 ---
 
