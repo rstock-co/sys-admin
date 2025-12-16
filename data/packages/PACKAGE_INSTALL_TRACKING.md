@@ -30,6 +30,7 @@
 - [x] `python-sounddevice` (AUR) - Python bindings for PortAudio
 - [x] `claude-code` (AUR) - Claude Code CLI agent
 - [x] `vercel` (AUR) - Vercel CLI for deployments
+- [x] `google-cloud-cli` (AUR) - Google Cloud SDK CLI tools
 
 ### System Tools
 - [x] `alacritty` - GPU-accelerated terminal
@@ -44,6 +45,8 @@
 - [x] `base-devel` - Development meta package (make, gcc, etc.)
 - [x] `wget` - File download utility
 - [x] `usbutils` - USB device utilities
+- [x] `pass` - Unix password manager (GPG-based)
+- [x] `thunar` - GTK file manager
 
 ### Audio & Video
 - [x] `pipewire-alsa` - ALSA compatibility (pulls pipewire)
