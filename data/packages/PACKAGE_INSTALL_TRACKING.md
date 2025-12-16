@@ -14,6 +14,8 @@
 - [x] `zsh` - Modern shell
 - [x] `glow` - Markdown renderer for terminal
 - [x] `ripgrep` - Fast grep replacement (10-100x faster)
+- [x] `bat` - Modern cat with syntax highlighting
+- [x] `fd` - Fast find replacement (5-10x faster)
 
 ### Development Tools
 - [x] `uv` - Fast Python package installer
@@ -115,8 +117,6 @@
 - [ ] `procs` - Modern ps replacement
 
 ### Shell & CLI Tools (High Priority)
-- [ ] `bat` - Modern cat with syntax highlighting
-- [ ] `fd` - Fast find replacement (5-10x faster)
 - [ ] `zoxide` - Smart cd command with learning
 - [ ] `atuin` - Enhanced shell history with sync
 - [ ] `dust` - Modern du replacement

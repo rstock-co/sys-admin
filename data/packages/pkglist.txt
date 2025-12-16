@@ -2,6 +2,7 @@
 alacritty
 base
 base-devel
+bat
 bluetui
 bluez
 bluez-utils
@@ -13,6 +14,7 @@ dosfstools
 ethtool
 evtest
 eza
+fd
 ffmpeg
 fzf
 git
