@@ -18,12 +18,12 @@ Autonomous Arch Linux system administration and dotfiles management.
 ### 1. Dotfiles (Bare Git)
 - **Location:** `~/.dotfiles/` (bare), working tree `~/`
 - **Command:** `dotfiles` alias (NOT `git`)
-- **Tracks:** `.zshrc`, `.config/hypr/`, `pkglist.txt`, etc.
+- **Tracks:** `.zshrc`, `.config/hypr/`, etc.
 
 ### 2. Documentation (Regular Git)
 - **Location:** `/home/neo/agents/sys-admin/`
 - **Command:** `git`
-- **Contains:** CLAUDE.md, SYSTEM_*.md, `config/`
+- **Contains:** CLAUDE.md, SYSTEM_*.md, `config/`, `data/packages/`
 
 ---
 
@@ -52,12 +52,9 @@ config/
 dotfiles add <file>
 dotfiles commit -m "message"
 dotfiles push
-
-# Package list updates
-pacman -Qqe > ~/pkglist.txt && pacman -Qqm > ~/aur-pkglist.txt
-dotfiles add pkglist.txt aur-pkglist.txt
-dotfiles commit -m "Update package lists"
 ```
+
+**Package lists:** Managed via `/pacman` command in this repo (`data/packages/`).
 
 ---
 

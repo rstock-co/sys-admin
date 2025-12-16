@@ -1,0 +1,12 @@
+1password
+bun-bin
+claude-code
+google-chrome
+google-cloud-cli
+hyprwhspr
+paru
+python-sounddevice
+rofi-themes-collection-git
+spicetify-cli
+vercel
+zoom

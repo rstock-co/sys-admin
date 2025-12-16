@@ -6,22 +6,22 @@ You are the sys-admin agent reviewing package installation status.
 
 1. **Regenerate package lists from actual system state:**
    ```bash
-   pacman -Qqe > ~/agents/sys-admin/package-management/pkglist.txt
-   pacman -Qqm > ~/agents/sys-admin/package-management/aur-pkglist.txt
-   ls -1 /usr/lib/node_modules/ | while read pkg; do pacman -Qo "/usr/lib/node_modules/$pkg" >/dev/null 2>&1 || echo "$pkg"; done > ~/agents/sys-admin/package-management/npm/npm-global.txt
+   pacman -Qqe > ~/agents/sys-admin/data/packages/pkglist.txt
+   pacman -Qqm > ~/agents/sys-admin/data/packages/aur-pkglist.txt
+   ls -1 /usr/lib/node_modules/ | while read pkg; do pacman -Qo "/usr/lib/node_modules/$pkg" >/dev/null 2>&1 || echo "$pkg"; done > ~/agents/sys-admin/data/packages/npm-global.txt
    ```
    This ensures the lists reflect what's ACTUALLY installed right now.
 
    **How npm detection works:** Lists packages in `/usr/lib/node_modules/` that are NOT owned by any pacman package. System packages (npm, pnpm, node-gyp, etc.) are owned by pacman and automatically excluded.
 
 2. **Read package lists:**
-   - `@package-management/pkglist.txt` - Official repo packages (explicit)
-   - `@package-management/aur-pkglist.txt` - AUR packages
-   - `@package-management/npm/npm-global.txt` - Global npm packages
+   - `@data/packages/pkglist.txt` - Official repo packages (explicit)
+   - `@data/packages/aur-pkglist.txt` - AUR packages
+   - `@data/packages/npm-global.txt` - Global npm packages
 
 3. **Read tracking files:**
-   - `@package-management/PACKAGE_INSTALL_TRACKING.md`
-   - `@package-management/npm/NPM_INSTALL_TRACKING.md`
+   - `@data/packages/PACKAGE_INSTALL_TRACKING.md`
+   - `@data/packages/NPM_INSTALL_TRACKING.md`
 
 4. **Cross-reference and update (System Packages):**
    - Compare actual installed packages against the "✅ Installed Packages" section
@@ -50,7 +50,7 @@ You are the sys-admin agent reviewing package installation status.
    - If package lists were regenerated and differ from what's tracked:
    ```bash
    cd ~/agents/sys-admin
-   git add package-management/pkglist.txt package-management/aur-pkglist.txt package-management/npm/npm-global.txt
+   git add data/packages/pkglist.txt data/packages/aur-pkglist.txt data/packages/npm-global.txt
    git commit -m "Update package lists to reflect current system state"
    git push
    ```
@@ -84,18 +84,18 @@ INSTALL COMMANDS:
 
 # System - Official repos
 sudo pacman -S package1 package2
-pacman -Qqe > ~/agents/sys-admin/package-management/pkglist.txt
-cd ~/agents/sys-admin && git add package-management/pkglist.txt && git commit -m "Install packages" && git push
+pacman -Qqe > ~/agents/sys-admin/data/packages/pkglist.txt
+cd ~/agents/sys-admin && git add data/packages/pkglist.txt && git commit -m "Install packages" && git push
 
 # System - AUR
 paru -S aur-package1
-pacman -Qqm > ~/agents/sys-admin/package-management/aur-pkglist.txt
-cd ~/agents/sys-admin && git add package-management/aur-pkglist.txt && git commit -m "Install AUR packages" && git push
+pacman -Qqm > ~/agents/sys-admin/data/packages/aur-pkglist.txt
+cd ~/agents/sys-admin && git add data/packages/aur-pkglist.txt && git commit -m "Install AUR packages" && git push
 
 # NPM - Global
 npm install -g package1 package2
-ls -1 /usr/lib/node_modules/ | while read pkg; do pacman -Qo "/usr/lib/node_modules/$pkg" >/dev/null 2>&1 || echo "$pkg"; done > ~/agents/sys-admin/package-management/npm/npm-global.txt
-cd ~/agents/sys-admin && git add package-management/npm/npm-global.txt && git commit -m "Install npm: package1, package2" && git push
+ls -1 /usr/lib/node_modules/ | while read pkg; do pacman -Qo "/usr/lib/node_modules/$pkg" >/dev/null 2>&1 || echo "$pkg"; done > ~/agents/sys-admin/data/packages/npm-global.txt
+cd ~/agents/sys-admin && git add data/packages/npm-global.txt && git commit -m "Install npm: package1, package2" && git push
 ```
 
 Be concise and actionable.

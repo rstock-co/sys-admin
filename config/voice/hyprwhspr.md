@@ -20,7 +20,7 @@ Restarts all voice services. Fixes 90% of issues.
 | Paste Mode | ctrl_shift (terminal-compatible) |
 | Audio Feedback | Custom chimes |
 | Auto-Enter | Enabled |
-| Voice Modes | Clarify (Super+Alt+I), Enhance (Super+Alt+E) |
+| Voice Modes | Clarify (Super+Alt+C), Enhance (Super+Alt+E) |
 
 ---
 
@@ -54,7 +54,7 @@ Restarts all voice services. Fixes 90% of issues.
 
 | Mode | Hotkey | Purpose |
 |------|--------|---------|
-| **Clarify** | Super+Alt+I | Remove fillers, hedging, false starts |
+| **Clarify** | Super+Alt+C | Remove fillers, hedging, false starts |
 | **Enhance** | Super+Alt+E | Make prompt clearer and more actionable |
 
 Modes are mutually exclusive. Toggle on/off with same hotkey.
@@ -208,3 +208,21 @@ API key (`~/agents/sys-admin/.env.local`):
 ```bash
 OPENROUTER_API_KEY=sk-or-v1-xxxxx
 ```
+
+---
+
+## Audio Volume Settings
+
+**Two different audio systems:**
+
+| Sound | Tool | Config | Volume |
+|-------|------|--------|--------|
+| Caps Lock (start/stop) | hyprwhspr internal | `~/.config/hyprwhspr/config.json` | `20.0` (multiplier) |
+| Clarify/Enhance toggle | `paplay` | `~/.local/bin/hyprwhspr-mode-toggle` | `65536` (100%) |
+
+**Why paplay?** `pw-play` routes through application streams (affected by Spotify volume). `paplay` routes through system mixer (follows main speaker volume like caps lock sounds).
+
+**paplay volume scale:**
+- 65536 = 100%
+- 131072 = 200%
+- 32768 = 50%

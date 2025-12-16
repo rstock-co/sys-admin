@@ -34,6 +34,14 @@ Central registry of all system subsystems. Each subsystem has one source of trut
 
 ---
 
+## Known Issues
+
+| Issue | Since | Status | Workaround |
+|-------|-------|--------|------------|
+| **paru broken** | 2025-12-16 | Waiting for upstream fix | Use `sudo pacman -Syu` directly. The `alpm` Rust crate needs update for new libalpm API. |
+
+---
+
 ## Related Files
 
 - **CLAUDE.md** - Agent instructions (references this index)
