@@ -162,6 +162,19 @@ git remote set-url origin git@github.com:<user>/<repo>.git
 
 ---
 
+## CLI Tools
+
+**Use modern replacements:**
+
+| Instead of | Use |
+|------------|-----|
+| `grep` | `rg` (ripgrep) |
+| `find` | `fd` |
+| `cat` | `bat` |
+| `ls` | `eza` |
+
+---
+
 ## Quick Reference
 
 ### Dotfiles
