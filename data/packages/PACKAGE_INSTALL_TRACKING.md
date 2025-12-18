@@ -104,6 +104,7 @@
 - [x] `spicetify-cli` (AUR) - Spotify customization
 - [x] `zoom` (AUR) - Video conferencing
 - [x] `1password` (AUR) - Password manager
+- [x] `pinta` (AUR) - Simple image editor
 
 ### Linux Kernel & Firmware
 - [x] `linux` - Linux kernel (6.17.9-arch1-1)
