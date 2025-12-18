@@ -13,9 +13,9 @@
 - [x] `starship` - Modern shell prompt
 - [x] `zsh` - Modern shell
 - [x] `glow` - Markdown renderer for terminal
-- [x] `ripgrep` - Fast grep replacement (10-100x faster)
+- [x] `ripgrep` - Fast grep replacement (rg command)
 - [x] `bat` - Modern cat with syntax highlighting
-- [x] `fd` - Fast find replacement (5-10x faster)
+- [x] `fd` - Fast find replacement
 
 ### Development Tools
 - [x] `uv` - Fast Python package installer
@@ -85,6 +85,7 @@
 
 ### Utilities
 - [x] `evtest` - Input device event testing tool
+- [x] `swayimg` - Image viewer for Wayland
 
 ### Network & Connectivity
 - [x] `networkmanager` - Network connection manager
@@ -203,7 +204,9 @@
 - [x] `gnome-keyring` - Replaced by 1Password
 - [x] `chromium` - Replaced by Google Chrome
 - [x] `polkit-gnome` - Legacy package, not needed
-- [x] `paru-debug` - Debug symbols, not needed
+
+### Still Installed (Consider Removing)
+- [ ] `paru-debug` - Debug symbols (158MB), not needed for normal use
 
 ### Candidates for Removal
 - [ ] `htop` - btop is now installed, can remove htop

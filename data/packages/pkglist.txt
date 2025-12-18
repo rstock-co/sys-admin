@@ -54,7 +54,9 @@ otf-monaspace-nerd
 otf-opendyslexic-nerd
 otf-overpass-nerd
 paru
+paru-debug
 pass
+pinta
 pipewire-alsa
 pipewire-jack
 pipewire-pulse
@@ -71,6 +73,7 @@ spicetify-cli
 spotify-launcher
 starship
 sudo
+swayimg
 thunar
 ttf-0xproto-nerd
 ttf-3270-nerd
