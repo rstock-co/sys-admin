@@ -1,11 +1,13 @@
 ---
 description: Deep research a specific Claude Code release version
-argument-hint: [version]
+argument-hint: [version] [optional: focus area or question]
 ---
 
 # Deep Research: Claude Code v$ARGUMENTS
 
 Execute this workflow step-by-step to research and document Claude Code version **$ARGUMENTS**.
+
+**User Focus:** If a focus area or question was provided after the version number, prioritize researching that aspect in depth. Tailor the deep dive sections and Symbiont analysis to address the user's specific interest.
 
 ---
 
@@ -67,6 +69,12 @@ Fetch information from official and community sources:
    WebSearch("Claude Code [feature] reddit OR hackernews 2025")
    ```
 
+6. **If user provided a focus area**, do targeted research:
+   - Search for that specific topic in official docs
+   - Find tutorials/guides specific to that feature
+   - Look for edge cases, limitations, and best practices
+   - Search for how it interacts with other features
+
 ---
 
 ## Step 3: Analyze Symbiont Relevance
@@ -90,10 +98,15 @@ Assign relevance: 🚀 Critical | ✨ High | 🔧 Medium
 
 Write a comprehensive research file to:
 ```
-~/agents/sys-admin/data/claude-code/research/$ARGUMENTS.md
+~/agents/sys-admin/data/claude-code/research/$ARGUMENTS/index.md
 ```
 
-Use this structure:
+If the user provided a focus area, create an additional deep-dive file:
+```
+~/agents/sys-admin/data/claude-code/research/$ARGUMENTS/[focus-topic].md
+```
+
+Use this structure for index.md:
 
 ```markdown
 # Claude Code v$ARGUMENTS - Deep Research
