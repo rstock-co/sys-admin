@@ -1,0 +1,54 @@
+{
+  "last_scan": "2025-12-29T15:00:00Z",
+  "last_version": "2.0.74",
+  "earliest_version": "2.0.31",
+  "scan_range": {
+    "from": "2025-11-01",
+    "to": "2025-12-29"
+  },
+  "pending_actions": [
+    {
+      "version": "2.0.74",
+      "title": "LSP tool for code intelligence",
+      "impact": "HIGH",
+      "documented": true,
+      "docs_to_update": ["primitives/tools-reference.md"]
+    },
+    {
+      "version": "2.0.72",
+      "title": "Claude in Chrome (Beta)",
+      "impact": "HIGH",
+      "documented": true,
+      "docs_to_update": []
+    },
+    {
+      "version": "2.0.64",
+      "title": ".claude/rules/ directory support",
+      "impact": "HIGH",
+      "documented": true,
+      "docs_to_update": ["usage/configuration/memory.md"]
+    },
+    {
+      "version": "2.0.59",
+      "title": "--agent CLI flag for custom agents",
+      "impact": "HIGH",
+      "documented": true,
+      "docs_to_update": ["primitives/sub-agents.md"]
+    },
+    {
+      "version": "2.0.45",
+      "title": "Azure AI Foundry + PermissionRequest hook",
+      "impact": "HIGH",
+      "documented": true,
+      "docs_to_update": ["primitives/hooks-reference.md"]
+    },
+    {
+      "version": "2.0.42",
+      "title": "Plan subagent + agent resume + model selection",
+      "impact": "HIGH",
+      "documented": true,
+      "docs_to_update": ["primitives/sub-agents.md"]
+    }
+  ],
+  "notes": "Full scan covering Nov 1 - Dec 29, 2025. 39 releases documented (v2.0.31 - v2.0.74)."
+}
