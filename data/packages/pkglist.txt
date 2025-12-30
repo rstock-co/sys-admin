@@ -10,6 +10,7 @@ btop
 bun-bin
 claude-code
 code
+ddcutil
 dosfstools
 ethtool
 evtest
@@ -17,6 +18,7 @@ eza
 fd
 ffmpeg
 fzf
+gimp
 git
 github-cli
 glmark2
@@ -26,7 +28,9 @@ google-cloud-cli
 grim
 himalaya
 hyprland
+hyprpaper
 hyprwhspr
+imagemagick
 intel-gpu-tools
 jq
 less
@@ -38,8 +42,10 @@ mesa-utils
 mpv
 neovim
 networkmanager
+noto-fonts-emoji
 npm
 nvtop
+okular
 openssh
 otf-aurulent-nerd
 otf-codenewroman-nerd
@@ -56,7 +62,6 @@ otf-overpass-nerd
 paru
 paru-debug
 pass
-pinta
 pipewire-alsa
 pipewire-jack
 pipewire-pulse

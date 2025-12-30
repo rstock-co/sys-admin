@@ -63,6 +63,7 @@
 
 ### Window Manager & Desktop
 - [x] `hyprland` - Wayland compositor
+- [x] `hyprpaper` - Hyprland wallpaper utility
 - [x] `hyprwhspr` (AUR) - Whisper voice input for Hyprland
 - [x] `rofi` - App launcher (Wayland version)
 - [x] `rofi-themes-collection-git` (AUR) - Rofi theme collection
@@ -86,6 +87,16 @@
 ### Utilities
 - [x] `evtest` - Input device event testing tool
 - [x] `swayimg` - Image viewer for Wayland
+- [x] `imagemagick` - Image manipulation tools
+- [x] `ddcutil` - Monitor control via DDC/CI
+- [x] `noto-fonts-emoji` - Google Noto emoji fonts
+
+### GPU & Performance
+- [x] `intel-gpu-tools` - Intel GPU debugging tools
+- [x] `vulkan-tools` - Vulkan utilities (vulkaninfo)
+- [x] `libva-utils` - VA-API utilities for hardware acceleration
+- [x] `mesa-utils` - Mesa utilities (glxinfo, glxgears)
+- [x] `glmark2` - OpenGL benchmark
 
 ### Network & Connectivity
 - [x] `networkmanager` - Network connection manager
@@ -104,7 +115,8 @@
 - [x] `spicetify-cli` (AUR) - Spotify customization
 - [x] `zoom` (AUR) - Video conferencing
 - [x] `1password` (AUR) - Password manager
-- [x] `pinta` (AUR) - Simple image editor
+- [x] `gimp` - GNU Image Manipulation Program
+- [x] `okular` - Document viewer (PDF, etc.)
 
 ### Linux Kernel & Firmware
 - [x] `linux` - Linux kernel (6.17.9-arch1-1)
@@ -152,11 +164,6 @@
 - [ ] `fastfetch` - Fast system info display
 
 ### GPU & Performance (High Priority)
-- [x] `intel-gpu-tools` - Intel GPU debugging tools
-- [x] `vulkan-tools` - Vulkan utilities (vulkaninfo)
-- [x] `libva-utils` - VA-API utilities for hardware acceleration
-- [x] `mesa-utils` - Mesa utilities (glxinfo, glxgears)
-- [x] `glmark2` - OpenGL benchmark
 - [ ] `intel-compute-runtime` - OpenCL/Level Zero for Intel GPU compute
 - [ ] `level-zero-loader` - Level Zero API loader
 - [ ] `ocl-icd` - OpenCL ICD loader

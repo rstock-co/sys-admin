@@ -6,7 +6,6 @@ google-cloud-cli
 hyprwhspr
 paru
 paru-debug
-pinta
 python-sounddevice
 rofi-themes-collection-git
 spicetify-cli
