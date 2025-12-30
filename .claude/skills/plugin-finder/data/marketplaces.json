@@ -1,0 +1,141 @@
+{
+  "name": "claude-plugin-marketplaces",
+  "description": "Registry of sources for discovering Claude Code plugins",
+  "lastUpdated": "2025-12-29",
+  "marketplaces": [
+    {
+      "name": "claude-plugins-official",
+      "displayName": "Anthropic Official Marketplace",
+      "type": "official",
+      "url": "https://github.com/anthropics/claude-plugins-official",
+      "description": "Anthropic-managed directory of high quality Claude Code Plugins",
+      "pluginCount": 33,
+      "categories": ["lsp", "workflow", "mcp", "hooks", "commands", "agents", "skills"],
+      "installPrefix": "@claude-plugins-official",
+      "stars": 1057,
+      "lastChecked": "2025-12-29",
+      "lastPush": "2025-12-26",
+      "status": "active",
+      "notes": "Primary source - curated by Anthropic"
+    },
+    {
+      "name": "mcp-servers",
+      "displayName": "MCP Servers Repository",
+      "type": "official",
+      "url": "https://github.com/modelcontextprotocol/servers",
+      "description": "Official Model Context Protocol servers - reference implementations and community servers",
+      "pluginCount": null,
+      "categories": ["mcp"],
+      "installPrefix": null,
+      "stars": 75203,
+      "lastChecked": "2025-12-29",
+      "lastPush": "2025-12-19",
+      "status": "active",
+      "notes": "MCP servers that can be used with Claude Code via mcp.json config"
+    },
+    {
+      "name": "awesome-mcp-servers",
+      "displayName": "Awesome MCP Servers",
+      "type": "awesome-list",
+      "url": "https://github.com/punkpeye/awesome-mcp-servers",
+      "description": "A collection of MCP servers - largest community list",
+      "pluginCount": null,
+      "categories": ["mcp"],
+      "installPrefix": null,
+      "stars": 77787,
+      "lastChecked": "2025-12-29",
+      "lastPush": "2025-12-27",
+      "status": "active",
+      "notes": "Most comprehensive MCP server list - 77k+ stars"
+    },
+    {
+      "name": "claude-code-plugins-plus-skills",
+      "displayName": "Claude Code Plugins Plus Skills",
+      "type": "community",
+      "url": "https://github.com/jeremylongshore/claude-code-plugins-plus-skills",
+      "description": "Hundreds of Claude Code plugins with embedded AI skills. Interactive Jupyter tutorials.",
+      "pluginCount": 239,
+      "categories": ["skills", "commands", "agents", "hooks"],
+      "installPrefix": null,
+      "stars": 833,
+      "lastChecked": "2025-12-29",
+      "lastPush": "2025-12-29",
+      "status": "active",
+      "notes": "First marketplace with Agent Skills v1.2.0 - very active"
+    },
+    {
+      "name": "awesome-claude-code-plugins",
+      "displayName": "Awesome Claude Code Plugins (ccplugins)",
+      "type": "awesome-list",
+      "url": "https://github.com/ccplugins/awesome-claude-code-plugins",
+      "description": "Curated list of slash commands, subagents, MCP servers, and hooks for Claude Code",
+      "pluginCount": null,
+      "categories": ["commands", "agents", "mcp", "hooks"],
+      "installPrefix": null,
+      "stars": 255,
+      "lastChecked": "2025-12-29",
+      "lastPush": "2025-10-14",
+      "status": "stale",
+      "notes": "Community curated - not updated since Oct 2025"
+    },
+    {
+      "name": "awesome-claude-code-jqueryscript",
+      "displayName": "Awesome Claude Code (jqueryscript)",
+      "type": "awesome-list",
+      "url": "https://github.com/jqueryscript/awesome-claude-code",
+      "description": "Curated list of tools, IDE integrations, frameworks, and resources for Claude Code",
+      "pluginCount": null,
+      "categories": ["tools", "integrations", "frameworks"],
+      "installPrefix": null,
+      "stars": 87,
+      "lastChecked": "2025-12-29",
+      "lastPush": "2025-12-28",
+      "status": "active",
+      "notes": "Broader scope - includes IDE integrations and frameworks"
+    },
+    {
+      "name": "awesome-claude-plugins-quemsah",
+      "displayName": "Claude Plugins Hub (quemsah)",
+      "type": "community",
+      "url": "https://github.com/quemsah/awesome-claude-plugins",
+      "description": "Automated collection of Claude Code plugin adoption metrics using n8n workflows",
+      "pluginCount": 243,
+      "categories": ["commands", "agents", "skills"],
+      "installPrefix": null,
+      "stars": 30,
+      "lastChecked": "2025-12-29",
+      "lastPush": "2025-12-29",
+      "status": "active",
+      "notes": "100% compliant with Anthropic 2025 Skills schema - auto-updated"
+    },
+    {
+      "name": "kivilaid-plugin-marketplace",
+      "displayName": "Plugin Marketplace (kivilaid)",
+      "type": "community",
+      "url": "https://github.com/kivilaid/plugin-marketplace",
+      "description": "Comprehensive Claude Code plugin marketplace with 87 plugins from 10+ sources",
+      "pluginCount": 87,
+      "categories": ["commands", "agents", "skills", "hooks"],
+      "installPrefix": null,
+      "stars": 8,
+      "lastChecked": "2025-12-29",
+      "lastPush": "2025-11-15",
+      "status": "stale",
+      "notes": "Aggregator from multiple sources"
+    }
+  ],
+  "schema": {
+    "types": {
+      "official": "Anthropic or MCP-maintained sources",
+      "vendor": "First-party vendor plugin collections",
+      "community": "Community-maintained plugin repos",
+      "awesome-list": "Curated awesome-lists on GitHub"
+    },
+    "statuses": {
+      "active": "Regular updates within last month",
+      "maintained": "Periodic updates, stable",
+      "stale": "No updates in 2+ months",
+      "archived": "No longer maintained"
+    }
+  }
+}
