@@ -12,12 +12,19 @@ You are the sys-admin agent reviewing package installation status.
    ```
    This ensures the lists reflect what's ACTUALLY installed right now.
 
+   **Also regenerate fonts.txt** (nerd fonts from meta-package):
+   ```bash
+   pacman -Qqe | grep -E '^(otf|ttf)-.*-nerd' > ~/agents/sys-admin/data/packages/fonts.txt
+   ```
+
    **How npm detection works:** Lists packages in `/usr/lib/node_modules/` that are NOT owned by any pacman package. System packages (npm, pnpm, node-gyp, etc.) are owned by pacman and automatically excluded.
 
 2. **Read package lists:**
    - `@data/packages/pkglist.txt` - Official repo packages (explicit)
    - `@data/packages/aur-pkglist.txt` - AUR packages
    - `@data/packages/npm-global.txt` - Global npm packages
+   - `@data/packages/fonts.txt` - Nerd fonts (from meta-package)
+   - `@data/packages/packages-categorized.md` - Categorized view
 
 3. **Read tracking files:**
    - `@data/packages/PACKAGE_INSTALL_TRACKING.md`
@@ -46,11 +53,27 @@ You are the sys-admin agent reviewing package installation status.
    - If you found installed packages missing from tracking, update the files
    - Commit changes to git with descriptive message
 
-8. **Commit updated package lists to sys-admin repo:**
+8. **Update packages-categorized.md:**
+   - Compare `pkglist.txt` against `packages-categorized.md`
+   - Add any new packages to the appropriate category
+   - Remove any packages that are no longer installed
+   - Categories and their meanings:
+     - `[SYSTEM] Critical System` - Cannot remove (base, kernel, sudo)
+     - `[SYSTEM] Hardware & Drivers` - Device support
+     - `[SYSTEM] Networking & Audio` - Core services
+     - `[CORE] Desktop Environment` - Hyprland/Wayland stack
+     - `[CORE] Terminal & Shell` - Terminal, shell, prompt
+     - `[APP] Applications` - User-facing apps
+     - `[DEV] Development Tools` - Languages, package managers, CLIs
+     - `[UTIL] CLI Enhancements` - Modern CLI replacements
+     - `[UTIL] Media & Files` - File processing tools
+   - Fonts go in `fonts.txt`, not categorized.md
+
+9. **Commit updated package lists to sys-admin repo:**
    - If package lists were regenerated and differ from what's tracked:
    ```bash
    cd ~/agents/sys-admin
-   git add data/packages/pkglist.txt data/packages/aur-pkglist.txt data/packages/npm-global.txt
+   git add data/packages/
    git commit -m "Update package lists to reflect current system state"
    git push
    ```
