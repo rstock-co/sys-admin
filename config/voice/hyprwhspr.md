@@ -107,6 +107,22 @@ wl-paste
 
 ### Specific Issues
 
+**After `pacman -Syu` (Python upgrade breaks venv):**
+
+The hyprwhspr venv at `~/.local/share/hyprwhspr/venv/` breaks when Python is upgraded (e.g., 3.13 → 3.14).
+
+Symptoms:
+- `ImportError: No module named 'sounddevice'`
+- Service crash-loops
+
+Fix:
+```bash
+rm -rf ~/.local/share/hyprwhspr/venv
+python -m venv ~/.local/share/hyprwhspr/venv
+~/.local/share/hyprwhspr/venv/bin/pip install -r /usr/lib/hyprwhspr/requirements.txt
+fix-voice
+```
+
 **Caps Lock doesn't trigger:** uinput module not loaded
 ```bash
 sudo modprobe uinput
