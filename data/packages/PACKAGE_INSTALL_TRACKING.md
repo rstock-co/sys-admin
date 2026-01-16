@@ -19,7 +19,6 @@
 
 ### Development Tools
 - [x] `uv` - Fast Python package installer
-- [x] `rust` - Rust toolchain
 - [x] `git` - Version control
 - [x] `github-cli` - GitHub CLI (`gh`)
 - [x] `pnpm` - Fast Node.js package manager
@@ -29,10 +28,17 @@
 - [x] `openssh` - SSH client/server
 - [x] `python` - Python 3.13.7
 - [x] `python-pip` - Python package installer
+- [x] `python-pipx` - Install Python apps in isolated environments
 - [x] `python-sounddevice` (AUR) - Python bindings for PortAudio
+- [x] `python-pulsectl` (AUR) - Python PulseAudio bindings
+- [x] `python-weasyprint` - HTML/CSS to PDF converter
+- [x] `python-youtube-transcript-api` (AUR) - YouTube transcript fetching
+- [x] `fvm` (AUR) - Flutter version manager
 - [x] `claude-code` (AUR) - Claude Code CLI agent
 - [x] `vercel` (AUR) - Vercel CLI for deployments
+- [x] `stripe-cli` (AUR) - Stripe CLI for payment testing
 - [x] `google-cloud-cli` (AUR) - Google Cloud SDK CLI tools
+- [x] `cloudflared` - Cloudflare Tunnel client
 
 ### System Tools
 - [x] `alacritty` - GPU-accelerated terminal
@@ -117,6 +123,10 @@
 - [x] `1password` (AUR) - Password manager
 - [x] `gimp` - GNU Image Manipulation Program
 - [x] `okular` - Document viewer (PDF, etc.)
+- [x] `discord` - Voice/text chat app
+- [x] `android-studio` (AUR) - Android IDE
+- [x] `localsend` (AUR) - Cross-platform file sharing (AirDrop alternative)
+- [x] `waybar` - Wayland status bar with system tray
 
 ### Linux Kernel & Firmware
 - [x] `linux` - Linux kernel (6.17.9-arch1-1)

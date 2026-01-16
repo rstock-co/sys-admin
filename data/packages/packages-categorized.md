@@ -56,6 +56,7 @@ Hyprland and Wayland stack.
 
 - `hyprland` - Wayland compositor
 - `hyprpaper` - Wallpaper daemon
+- `waybar` - Status bar with system tray
 - `xdg-desktop-portal-gtk` - GTK portal
 - `xdg-desktop-portal-hyprland` - Hyprland portal
 - `qt5-wayland` - Qt5 Wayland support
@@ -79,9 +80,12 @@ Hyprland and Wayland stack.
 User-facing applications.
 
 - `1password` - Password manager
+- `android-studio` - Android IDE
 - `code` - VS Code
-- `google-chrome` - Browser
+- `discord` - Voice/text chat
 - `gimp` - Image editor
+- `google-chrome` - Browser
+- `localsend` - Cross-platform file sharing
 - `mpv` - Video player
 - `okular` - PDF viewer
 - `spotify-launcher` - Spotify
@@ -101,12 +105,18 @@ User-facing applications.
 - `neovim` - Text editor
 - `python` - Python runtime
 - `python-pip` - Python packages
+- `python-pipx` - Isolated Python apps
+- `python-weasyprint` - HTML to PDF
+- `python-youtube-transcript-api` - YouTube transcripts
 - `npm` - Node package manager
 - `pnpm` - Fast npm alternative
 - `bun-bin` - JavaScript runtime
+- `fvm` - Flutter version manager
 - `uv` - Python package manager
 - `google-cloud-cli` - GCP tools
 - `vercel` - Vercel CLI
+- `stripe-cli` - Stripe CLI
+- `cloudflared` - Cloudflare tunnels
 - `claude-code` - Claude Code CLI
 
 ## [DEV] Build & Debug
