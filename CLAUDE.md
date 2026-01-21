@@ -124,14 +124,37 @@ bind = $mainMod, Return, exec, alacritty # @hotkey: Open Terminal
 
 ## Email Management
 
-Use **Email Wizard** for all email tasks:
+### Quick Search (`se`)
+
+Search emails across all accounts using fzf + Himalaya:
+
+```bash
+se [-d days] [-s] [-a account] [-h]
+
+Flags:
+  -d <days>    Days to search back (default: 14)
+  -s           Search Sent folder instead of Inbox
+  -a <account> Limit to one account (main, rstock-co, rebeca)
+  -h           Show help
+
+Examples:
+  se              # Search inbox, last 14 days
+  se -s -d 30     # Search sent, last 30 days
+  se -a main      # Search only main account
+```
+
+**Accounts:** `main` (richard.stock), `rstock-co`, `rebeca` (rebeca.stock)
+
+**Contacts:** `~/.config/contacts.txt` - add with `cadd "Name" "email"`
+
+**Natural language:** Use `/email-search` to describe what you want in plain English.
+
+### Email Wizard
 
 | Command | Description |
 |---------|-------------|
 | `/email-wizard` | Full inbox scan and cleanup |
 | `/email-wizard --spam-only` | Just spam filtering |
-
-**Default account:** `richard.stock@gmail.com`
 
 ---
 
