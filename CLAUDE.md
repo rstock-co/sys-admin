@@ -77,6 +77,7 @@ dotfiles push
 **Quick tools:**
 - `p` - Project switcher (fzf)
 - `pc` - Project switcher + launch Claude
+- `pcv` - Project switcher + launch Claude + VS Code (right monitor)
 - `ea` - Edit aliases (VS Code)
 - `sa` - Source aliases
 - `va` - View aliases (fzf) - shows: alias, mnemonic, module, command
