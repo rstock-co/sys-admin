@@ -151,9 +151,11 @@ v4l-utils
 vercel
 vulkan-tools
 waybar
+wf-recorder
 wget
 wireplumber
 wl-clipboard
+wtype
 xdg-desktop-portal-gtk
 xdg-desktop-portal-hyprland
 ydotool

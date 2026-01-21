@@ -78,6 +78,8 @@
 - [x] `xdg-desktop-portal-hyprland` - Hyprland-specific portal
 - [x] `xdg-desktop-portal-gtk` - GTK portal for file dialogs
 - [x] `ydotool` - Generic dotool-like tool for Wayland
+- [x] `wtype` - Wayland text typing (virtual keyboard)
+- [x] `wf-recorder` - Wayland screen recording
 - [x] `libnotify` - Notification library
 
 ### Fonts

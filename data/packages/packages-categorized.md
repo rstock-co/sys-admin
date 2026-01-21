@@ -68,6 +68,8 @@ Hyprland and Wayland stack.
 - `rofi-themes-collection-git` - Rofi themes
 - `libnotify` - Notification library
 - `ydotool` - Input automation
+- `wtype` - Wayland text typing
+- `wf-recorder` - Screen recording
 
 ## [CORE] Terminal & Shell
 
