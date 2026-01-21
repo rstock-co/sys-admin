@@ -122,35 +122,13 @@ bind = $mainMod, Return, exec, alacritty # @hotkey: Open Terminal
 
 ---
 
-## Email Management
+## Email Search
 
-### Quick Search (`sec`)
-
-Search emails using Himalaya:
-
-```bash
-sec [-d days] [-s] [-a account] <contact|all>
-
-Arguments:
-  <contact>    Contact name from contacts.txt (case-insensitive)
-  all          Search all emails without contact filter
-
-Flags:
-  -d <days>    Days to search back (default: 14)
-  -s           Search Sent folder instead of Inbox
-  -a <account> Limit to one account (main, rstock-co, rebeca)
+**When user asks to search emails in natural language → run `/search-email <their prompt>`**
 
 Examples:
-  sec "Mike Bullen"           # Search inbox for contact, 14 days
-  sec -s -d 30 all            # All sent emails, 30 days
-  sec -a main -d 7 "GIS"      # Search GIS in main account, 7 days
-```
-
-**Accounts:** `main` (richard.stock@gmail.com), `rstock-co` (rstock.co@gmail.com), `rebeca` (rebeca.stock@gmail.com)
-
-**Contacts:** `~/.config/contacts.txt` - add with `cadd "Name" "email"`
-
-**Natural language:** Use `/email-search` to describe what you want in plain English.
+- "Find emails from Mike in the last 30 days" → `/search-email Find emails from Mike in the last 30 days`
+- "Check my sent folder for messages to GIS" → `/search-email Check my sent folder for messages to GIS`
 
 ### Email Wizard
 
