@@ -78,6 +78,8 @@ dotfiles push
 - `p` - Project switcher (fzf)
 - `pc` - Project switcher + launch Claude
 - `pcv` - Project switcher + launch Claude + VS Code (right monitor)
+- `se` - Search emails from contact (fzf + Himalaya)
+- `cadd` - Add contact to search list
 - `ea` - Edit aliases (VS Code)
 - `sa` - Source aliases
 - `va` - View aliases (fzf) - shows: alias, mnemonic, module, command
