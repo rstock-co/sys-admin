@@ -53,6 +53,8 @@ Contacts are stored in `~/.config/contacts.txt`. Format:
 
 ## Account Names
 
-- `main` - richard.stock@gmail.com
-- `rstock-co` - rstock.co@gmail.com
-- `rebeca` - rebeca.stock@gmail.com
+| Account | Email |
+|---------|-------|
+| `main` | richard.stock@gmail.com |
+| `rstock-co` | rstock.co@gmail.com |
+| `rebeca` | rebeca.stock@gmail.com |

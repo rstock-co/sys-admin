@@ -143,7 +143,7 @@ Examples:
   se -a main      # Search only main account
 ```
 
-**Accounts:** `main` (richard.stock), `rstock-co`, `rebeca` (rebeca.stock)
+**Accounts:** `main` (richard.stock@gmail.com), `rstock-co` (rstock.co@gmail.com), `rebeca` (rebeca.stock@gmail.com)
 
 **Contacts:** `~/.config/contacts.txt` - add with `cadd "Name" "email"`
 
