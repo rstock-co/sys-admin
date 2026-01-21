@@ -21,7 +21,7 @@ Autonomous Arch Linux system administration and dotfiles management.
 - **Tracks:** `.zshrc`, `.config/hypr/`, etc.
 
 ### 2. Documentation (Regular Git)
-- **Location:** `/home/neo/agents/sys-admin/`
+- **Location:** `/home/neo/agents/admin/system/`
 - **Command:** `git`
 - **Contains:** CLAUDE.md, SYSTEM_*.md, `config/`, `data/packages/`
 
@@ -66,7 +66,7 @@ dotfiles push
 |--------|---------|
 | `core.sh` | PATH, env, history |
 | `dotfiles.sh` | Bare git alias |
-| `nav.sh` | eza, navigation |
+| `nav.sh` | eza, navigation, project switcher |
 | `pkg.sh` | pnpm, bun, npm |
 | `pacman.sh` | pacman, paru |
 | `agents.sh` | Agent shortcuts |
@@ -75,6 +75,8 @@ dotfiles push
 | `alias-management.sh` | `ea`, `sa`, `va`, `vh` |
 
 **Quick tools:**
+- `p` - Project switcher (fzf)
+- `pc` - Project switcher + launch Claude
 - `ea` - Edit aliases (VS Code)
 - `sa` - Source aliases
 - `va` - View aliases (fzf) - shows: alias, mnemonic, module, command
