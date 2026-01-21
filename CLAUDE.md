@@ -78,7 +78,7 @@ dotfiles push
 - `p` - Project switcher (fzf)
 - `pc` - Project switcher + launch Claude
 - `pcv` - Project switcher + launch Claude + VS Code (right monitor)
-- `se` - Search emails from contact (fzf + Himalaya)
+- `sec` - Search emails from contact (Himalaya)
 - `cadd` - Add contact to search list
 - `ea` - Edit aliases (VS Code)
 - `sa` - Source aliases
@@ -124,23 +124,26 @@ bind = $mainMod, Return, exec, alacritty # @hotkey: Open Terminal
 
 ## Email Management
 
-### Quick Search (`se`)
+### Quick Search (`sec`)
 
-Search emails across all accounts using fzf + Himalaya:
+Search emails using Himalaya:
 
 ```bash
-se [-d days] [-s] [-a account] [-h]
+sec [-d days] [-s] [-a account] <contact|all>
+
+Arguments:
+  <contact>    Contact name from contacts.txt (case-insensitive)
+  all          Search all emails without contact filter
 
 Flags:
   -d <days>    Days to search back (default: 14)
   -s           Search Sent folder instead of Inbox
   -a <account> Limit to one account (main, rstock-co, rebeca)
-  -h           Show help
 
 Examples:
-  se              # Search inbox, last 14 days
-  se -s -d 30     # Search sent, last 30 days
-  se -a main      # Search only main account
+  sec "Mike Bullen"           # Search inbox for contact, 14 days
+  sec -s -d 30 all            # All sent emails, 30 days
+  sec -a main -d 7 "GIS"      # Search GIS in main account, 7 days
 ```
 
 **Accounts:** `main` (richard.stock@gmail.com), `rstock-co` (rstock.co@gmail.com), `rebeca` (rebeca.stock@gmail.com)
