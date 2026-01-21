@@ -46,8 +46,63 @@ To see available contacts: `grep -v '^#' ~/.config/contacts.txt | cut -d: -f1`
    - **Time range?** → add `-d <days>`
 4. Run the command using Bash tool (contact name comes LAST)
 5. Results table shows: DATE | ACCOUNT | FROM | SUBJECT | ID
-6. **To read an email:** `himalaya message read -a <account> -f <folder> <id>`
+6. **Offer to read emails** - Ask the user which email(s) they want to read
+7. **Read requested emails** using: `himalaya message read -a <account> -f <folder> <id>`
    - Use INBOX for regular searches, `[Gmail]/Sent Mail` for `-s` searches
+   - Format output using the Email Report Format below
+
+## Email Report Format
+
+When displaying a read email, use this exact format:
+
+```
+╔══════════════════════════════════════════════════════════════════════════════╗
+║                              EMAIL CONTENT                                   ║
+╚══════════════════════════════════════════════════════════════════════════════╝
+
+From:    [sender name and email]
+To:      [recipient name and email]
+Date:    [formatted date]
+Subject: [subject line]
+
+────────────────────────────────────────────────────────────────────────────────
+
+[Email body - clean up signature images/cruft, keep the actual message content]
+
+╔══════════════════════════════════════════════════════════════════════════════╗
+║                              AI SUMMARY                                      ║
+╚══════════════════════════════════════════════════════════════════════════════╝
+
+[2-4 sentence summary of what the email is about, key points, and any action items]
+
+╔══════════════════════════════════════════════════════════════════════════════╗
+║                            ACTION ITEMS                                      ║
+╚══════════════════════════════════════════════════════════════════════════════╝
+
+[List any tasks the user needs to complete based on the email. If none, omit this section entirely.]
+
+• [Action item 1]
+• [Action item 2]
+
+╔══════════════════════════════════════════════════════════════════════════════╗
+║                      ACTIONS CLAUDE CAN TAKE                                 ║
+╚══════════════════════════════════════════════════════════════════════════════╝
+
+[Suggest actions I can help with using Himalaya. Only include relevant options:]
+
+• Draft a reply - I'll write a response for your review before sending
+• Forward to someone - Specify who and I'll prepare the forward
+• Archive/move this email - Move to a specific folder
+• Search related emails - Find other emails in this thread or from this sender
+```
+
+**Formatting rules:**
+- Strip out image placeholders like `[cid:image...]` and `<#part type=image...>`
+- Clean up excessive signature repetition in reply chains
+- Keep the most recent message prominent, summarize older thread context if needed
+- Date format: `January 8, 2026` (not raw format)
+- **Action Items section:** Only show if the email contains actual tasks for the user (meetings to confirm, documents to send, decisions to make). Omit entirely if it's just informational.
+- **Actions Claude Can Take:** Only list options that make sense for this specific email. Don't list all 4 options every time.
 
 ## Examples of Natural Language → Command
 

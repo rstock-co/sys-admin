@@ -13,6 +13,7 @@ Central registry of all system subsystems. Each subsystem has one source of trut
 | **audio** | Working | [audio/speakers.md](audio/speakers.md) | PipeWire (no config needed) | `systemctl --user restart pipewire wireplumber` |
 | **keyboard** | Working | [keyboard/yunzii-al98.md](keyboard/yunzii-al98.md) | `~/.config/hypr/hyprland.conf`, VIA app | - |
 | **gpu** | Working (workarounds) | [gpu/arc-b580.md](gpu/arc-b580.md) | xe driver, BIOS settings | See doc (driver issues) |
+| **recording** | Working | [recording/screen-recording.md](recording/screen-recording.md) | `~/.config/swayimg/config` | `rec-tv`, `frames` |
 
 ---
 
