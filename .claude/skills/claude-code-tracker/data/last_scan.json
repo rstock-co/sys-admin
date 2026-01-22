@@ -1,54 +1,49 @@
 {
-  "last_scan": "2025-12-29T15:00:00Z",
-  "last_version": "2.0.74",
+  "last_scan": "2026-01-21T12:00:00Z",
+  "last_version": "2.1.15",
   "earliest_version": "2.0.31",
   "scan_range": {
     "from": "2025-11-01",
-    "to": "2025-12-29"
+    "to": "2026-01-21"
   },
   "pending_actions": [
     {
-      "version": "2.0.74",
-      "title": "LSP tool for code intelligence",
-      "impact": "HIGH",
+      "version": "2.1.9",
+      "title": "PreToolUse additionalContext - context injection hooks",
+      "impact": "CRITICAL",
       "documented": true,
-      "docs_to_update": ["primitives/tools-reference.md"]
+      "docs_to_update": ["primitives/hooks-reference.md"],
+      "action": "Build PreToolUse hooks for symbiont-db context injection"
     },
     {
-      "version": "2.0.72",
-      "title": "Claude in Chrome (Beta)",
+      "version": "2.1.0",
+      "title": "Skill hot-reload + context:fork",
+      "impact": "CRITICAL",
+      "documented": true,
+      "docs_to_update": ["primitives/skills.md"],
+      "action": "Migrate Dual Sovereignty to context:fork skills"
+    },
+    {
+      "version": "2.1.14",
+      "title": "Memory leak fixes + context window 98%",
       "impact": "HIGH",
       "documented": true,
       "docs_to_update": []
     },
     {
-      "version": "2.0.64",
-      "title": ".claude/rules/ directory support",
-      "impact": "HIGH",
-      "documented": true,
-      "docs_to_update": ["usage/configuration/memory.md"]
-    },
-    {
-      "version": "2.0.59",
-      "title": "--agent CLI flag for custom agents",
-      "impact": "HIGH",
-      "documented": true,
-      "docs_to_update": ["primitives/sub-agents.md"]
-    },
-    {
-      "version": "2.0.45",
-      "title": "Azure AI Foundry + PermissionRequest hook",
+      "version": "2.1.10",
+      "title": "Setup hook event",
       "impact": "HIGH",
       "documented": true,
       "docs_to_update": ["primitives/hooks-reference.md"]
     },
     {
-      "version": "2.0.42",
-      "title": "Plan subagent + agent resume + model selection",
+      "version": "2.1.6",
+      "title": "Nested skill discovery",
       "impact": "HIGH",
       "documented": true,
-      "docs_to_update": ["primitives/sub-agents.md"]
+      "docs_to_update": []
     }
   ],
-  "notes": "Full scan covering Nov 1 - Dec 29, 2025. 39 releases documented (v2.0.31 - v2.0.74)."
+  "notes": "Scan covering Nov 1, 2025 - Jan 21, 2026. 54 releases documented (v2.0.31 - v2.1.15). Major finds: PreToolUse additionalContext (v2.1.9) and context:fork (v2.1.0) are game-changers for Symbiont."
 }

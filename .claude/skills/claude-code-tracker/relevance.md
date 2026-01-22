@@ -23,6 +23,13 @@ Personalized changelog filtered through [context.md](context.md).
 
 | Version | Date | Relevance | Why It Matters to Symbiont |
 |---------|------|-----------|----------------------------|
+| 2.1.14 | Jan 20 | ✨ | Memory leak fixes for parallel subagents, context window fix |
+| 2.1.10 | Jan 17 | ✨ | Setup hook event - new lifecycle hook for repo initialization |
+| 2.1.9 | Jan 16 | 🚀 | PreToolUse additionalContext - inject context into tool calls |
+| 2.1.7 | Jan 14 | 🔧 | Customizable keybindings.json for terminal workflow |
+| 2.1.6 | Jan 13 | ✨ | Nested skill discovery from .claude/skills subdirectories |
+| 2.1.3 | Jan 9 | ✨ | Unified commands/skills model |
+| 2.1.0 | Jan 9 | 🚀 | Skill hot-reload, context:fork for subagents |
 | 2.0.74 | Dec 19 | 🔧 | Alacritty terminal setup, LSP for code navigation |
 | 2.0.73 | Dec 19 | 🔧 | Kill ring paste cycling across sessions |
 | 2.0.72 | Dec 18 | 🔧 | Chrome automation - potential expansion path |
@@ -48,6 +55,72 @@ Personalized changelog filtered through [context.md](context.md).
 ---
 
 ## 🚀 Critical - Architecture Foundations
+
+### 🚀 v2.1.9 - January 16, 2026
+
+**What Changed**: PreToolUse hooks can return `additionalContext`. Added `${CLAUDE_SESSION_ID}` for skills.
+
+**Symbiont Impact**:
+This is a game-changer for the pulse system and cross-agent awareness.
+
+**PreToolUse additionalContext:**
+Hooks can now INJECT context before any tool executes. For Symbiont, this means:
+
+1. **Context priming from PostgreSQL** - Before a specialist reads a file, inject relevant soul_core or eternal_memory data
+2. **Cross-agent awareness** - Inject recent activity from Queen's Ledger before operations
+3. **Pattern alerting** - If a specialist is about to touch something related to a known wound/vow, inject that context
+
+Example use case:
+```javascript
+// PreToolUse hook for health-coach
+// Before reading meal logs, inject recent sleep data
+if (tool === "Read" && path.includes("meals")) {
+  return { additionalContext: await getRecentSleepData() }
+}
+```
+
+**Session ID for Skills:**
+Skills can now reference `${CLAUDE_SESSION_ID}`. Each specialist session has a unique ID - use this to:
+- Log which specialist is active to Queen's Ledger
+- Key MCP operations by session for tracking
+- Coordinate between skills within the same specialist
+
+**Action**: Build PreToolUse hooks that inject symbiont-db context. This could replace some of the vector priming currently done at session start.
+
+---
+
+### 🚀 v2.1.0 - January 9, 2026
+
+**What Changed**: Automatic skill hot-reload. `context: fork` for skill sub-agents.
+
+**Symbiont Impact**:
+Two features that directly enhance the SGTA ecosystem:
+
+**Skill Hot-Reload:**
+Edit a skill, it's immediately available. For Symbiont development this means:
+- Iterate on shared skills in `core/skills/` without restarting specialists
+- Test skill changes instantly across all specialists (via symlinks)
+- Faster SGTA factory development - prototype skills in real-time
+
+**context: fork for Skills:**
+Skills can spawn sub-agents in a forked context. The sub-agent gets conversation history but operates independently. This is critical for:
+
+1. **Dual Sovereignty invocations** - When Mycelia consults destiny-architect or essence-guardian, use `context: fork` so the sovereign sees full context but doesn't pollute Mycelia's session
+2. **Research without context pollution** - A specialist can spawn a research sub-agent that explores deeply without filling up the main 200k window
+3. **Experimental operations** - Try something risky in a fork, discard if it fails
+
+```yaml
+# Skill for Dual Sovereignty
+---
+name: consult-sovereign
+context: fork
+---
+You are destiny-architect. Given the full context above, evaluate...
+```
+
+**Action**: Migrate Dual Sovereignty invocations to use `context: fork` skills instead of raw subagent calls. This preserves context awareness while keeping main session clean.
+
+---
 
 ### 🔧 v2.0.59 - December 4
 
@@ -120,6 +193,84 @@ Your entire specialist architecture depends on `output-style.md` files. This res
 ---
 
 ## ✨ High - Significant Workflow Impact
+
+### ✨ v2.1.14 - January 20, 2026
+
+**What Changed**: Memory leak fixes for parallel subagents and long-running sessions. Context window blocking fix (was ~65%, now ~98%).
+
+**Symbiont Impact**:
+**Memory Leak Fixes:**
+Critical for god-tier specialists that run long sessions. The memory leak with parallel subagents was likely causing degradation when Mycelia dispatched multiple research tasks. Long specialist sessions should now be stable.
+
+**Context Window Fix:**
+The context window was only being used to ~65% before blocking. Now it uses ~98%. For a 200k context window:
+- Before: ~130k usable
+- After: ~196k usable
+
+This is a 50% increase in effective context. God-tier specialists can handle significantly larger tasks before compaction.
+
+---
+
+### ✨ v2.1.10 - January 17, 2026
+
+**What Changed**: New "Setup" hook event for repository setup operations.
+
+**Symbiont Impact**:
+A new lifecycle hook that fires during repository setup. For Symbiont:
+
+1. **Auto-configure new specialists** - When a new specialist folder is created, Setup hook could:
+   - Initialize symlinks to core/
+   - Create default CLAUDE.md from template
+   - Register specialist in Queen's Ledger
+
+2. **Development environment setup** - When cloning Symbiont repo:
+   - Auto-install dependencies
+   - Configure MCP servers
+   - Initialize PostgreSQL connection
+
+This complements SubagentStart (fires when specialist spawns) with Setup (fires during initial configuration).
+
+---
+
+### ✨ v2.1.6 - January 13, 2026
+
+**What Changed**: Automatic skill discovery from nested `.claude/skills` directories.
+
+**Symbiont Impact**:
+The `core/skills/` directory can now have subdirectories for organization:
+
+```
+core/skills/
+├── memory/
+│   ├── query-soul/
+│   ├── log-insight/
+│   └── search-eternal/
+├── coordination/
+│   ├── pulse-emit/
+│   ├── ledger-update/
+│   └── sovereign-consult/
+└── factory/
+    └── create-sgta/
+```
+
+All these skills are automatically discovered and available to any specialist that symlinks to `core/`. Better organization without manual registration.
+
+---
+
+### ✨ v2.1.3 - January 9, 2026
+
+**What Changed**: Merged slash commands and skills into unified model.
+
+**Symbiont Impact**:
+Conceptual simplification. Every slash command is now a skill, and every skill is a slash command. This means:
+
+1. **Consistent invocation** - `/create-sgta` and custom skills work identically
+2. **Shared infrastructure** - Skills get all the features of built-in commands
+3. **Better discoverability** - All capabilities show in one place
+
+For Symbiont, this validates the skill-centric architecture. Building functionality as skills is the right approach.
+
+---
 
 ### ✨ v2.0.64 - December 10
 
@@ -242,6 +393,20 @@ Prompt suggestions speed up common patterns in each specialist's domain.
 
 ## 🔧 Medium - Quality of Life
 
+### 🔧 v2.1.7 - January 14, 2026
+
+**What Changed**: Customizable keyboard shortcuts via `~/.claude/keybindings.json`.
+
+**Symbiont Impact**:
+You run multiple Claude Code sessions in parallel across Alacritty terminals. Custom keybindings let you:
+- Avoid conflicts between Claude Code shortcuts and Hyprland/Alacritty bindings
+- Create consistent shortcuts across all specialist sessions
+- Optimize for your terminal-heavy workflow
+
+The keybindings file is user-level (`~/.claude/`), so all specialists inherit the same configuration.
+
+---
+
 ### 🔧 v2.0.74 - December 19
 
 **What Changed**: LSP tool for code intelligence. `/terminal-setup` supports Alacritty.
@@ -336,6 +501,12 @@ Bug fix that prevents tool name collisions when specialists use symbiont-db MCP 
 
 | Version | Date | Reason |
 |---------|------|--------|
+| v2.1.15 | Jan 21 | npm deprecation, React perf, MCP stdio fix - infrastructure |
+| v2.1.12 | Jan 17 | Message rendering bug - minor fix |
+| v2.1.11 | Jan 17 | MCP HTTP/SSE fix - not using HTTP transport |
+| v2.1.5 | Jan 12 | TMPDIR env var - minor |
+| v2.1.4 | Jan 10 | Background tasks env var - minor |
+| v2.1.2 | Jan 9 | Security fix, iTerm hyperlinks, winget - not your platforms |
 | v2.0.71 | Dec 16 | Prompt suggestion toggle, glob permission fix - minor |
 | v2.0.68 | Dec 12 | CJK/IME fix, enterprise settings - not your use case |
 | v2.0.66 | Dec 11 | Hotfix - no details |
@@ -360,16 +531,20 @@ Bug fix that prevents tool name collisions when specialists use symbiont-db MCP 
 ## Summary: What Symbiont Needs to Watch
 
 **CRITICAL features to leverage:**
-1. ~~**Custom agents (v2.0.59)**~~ - EVALUATED: Not for SGTAs (ignores CLAUDE.md). Keep folder-based.
-2. **Output styles (v2.0.41, v2.0.32)** - Package specialist voices as plugins
-3. **Agent permissionMode (v2.0.43)** - Per-specialist permission levels
-4. **SubagentStart hook (v2.0.43)** - Intercept specialist spawning for Queen's Ledger
+1. **PreToolUse additionalContext (v2.1.9)** - NEW: Inject context before tool calls. Build hooks that prime specialists with symbiont-db data.
+2. **Skill hot-reload + context:fork (v2.1.0)** - NEW: Iterate skills instantly. Use forked context for Dual Sovereignty.
+3. ~~**Custom agents (v2.0.59)**~~ - EVALUATED: Not for SGTAs (ignores CLAUDE.md). Keep folder-based.
+4. **Output styles (v2.0.41, v2.0.32)** - Package specialist voices as plugins
+5. **Agent permissionMode (v2.0.43)** - Per-specialist permission levels
+6. **SubagentStart hook (v2.0.43)** - Intercept specialist spawning for Queen's Ledger
 
 **HIGH features already in use:**
 - Background execution (v2.0.60, v2.0.64) - Interactive parallelism (Ctrl+B)
 - MCP wildcards (v2.0.70) - symbiont-db permissions
 - PermissionRequest hooks (v2.0.45) - Automation and audit
 - Named sessions (v2.0.64) - Specialist persistence
+- Context window ~98% usage (v2.1.14) - Full 200k available to god-tier specialists
+- Nested skill discovery (v2.1.6) - Organize core/skills/ in subdirectories
 
 **Potential architecture changes to evaluate:**
 - ~~Migrate specialists to `--agent` pattern~~ - REJECTED: loses modularity
@@ -377,8 +552,10 @@ Bug fix that prevents tool name collisions when specialists use symbiont-db MCP 
 - Package output styles as plugins vs local files
 - Consider Desktop app for session management vs Alacritty hotkeys
 - Headless mode for overnight daemon (not Ctrl+B async)
+- **NEW:** PreToolUse hooks for context injection (v2.1.9) - could enhance vector priming
+- **NEW:** context:fork skills for Dual Sovereignty (v2.1.0) - cleaner sovereign invocations
 
 ---
 
-*Last updated: 2025-12-29*
+*Last updated: 2026-01-21*
 *Filter criteria: [context.md](context.md)*

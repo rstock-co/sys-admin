@@ -16,6 +16,19 @@ Internal changelog with plain-language explanations of Claude Code releases.
 
 | Version | Date | Tier | Summary |
 |---------|------|------|---------|
+| 2.1.15 | Jan 21 | 🔧 | npm deprecation notice, React Compiler perf, MCP stdio fix |
+| 2.1.14 | Jan 20 | ✨ | History autocomplete, plugin pinning, context window fix (65%→98%) |
+| 2.1.12 | Jan 17 | 🐛 | Message rendering bug fix |
+| 2.1.11 | Jan 17 | 🔧 | MCP HTTP/SSE connection fix |
+| 2.1.10 | Jan 17 | ✨ | New "Setup" hook event, OAuth copy shortcut |
+| 2.1.9 | Jan 16 | 🚀 | PreToolUse additionalContext, plansDirectory, session URL attribution |
+| 2.1.7 | Jan 14 | ✨ | Customizable keybindings.json, showTurnDuration, MCP auto mode |
+| 2.1.6 | Jan 13 | ✨ | Nested skill discovery, /config search, /stats date filtering |
+| 2.1.5 | Jan 12 | 🐛 | CLAUDE_CODE_TMPDIR env var |
+| 2.1.4 | Jan 10 | 🔧 | CLAUDE_CODE_DISABLE_BACKGROUND_TASKS env var |
+| 2.1.3 | Jan 9 | ✨ | Unified slash commands + skills model, release channel toggle |
+| 2.1.2 | Jan 9 | 🔧 | Security fix, memory leak fix, clickable hyperlinks |
+| 2.1.0 | Jan 9 | 🚀 | Skill hot-reload, context:fork, Vim motions, /plan command |
 | 2.0.76 | Dec 22 | 🐛 | No prompt changes, likely infrastructure fixes |
 | 2.0.75 | Dec 20 | 🔧 | Prompt cleanup (-183 tokens), removed redundant Task tool guidance |
 | 2.0.74 | Dec 19 | 🚀 | LSP tool for code intelligence (go-to-def, references, hover) |
@@ -61,6 +74,219 @@ Internal changelog with plain-language explanations of Claude Code releases.
 ---
 
 <!-- New releases are added below this line -->
+
+## 🔧 v2.1.15 - January 21, 2026
+
+### What Changed
+Added deprecation notification for npm installations. Improved UI rendering performance with React Compiler. Fixed "Context left until auto-compact" warning persistence. Fixed MCP stdio server timeout causing UI freezes.
+
+### What It Means
+Performance and stability improvements. React Compiler adoption means faster UI rendering. MCP stdio fix prevents UI hangs when MCP servers are slow to respond.
+
+---
+
+## ✨ v2.1.14 - January 20, 2026
+
+### What Changed
+History-based autocomplete in bash mode with Tab completion. Search functionality for installed plugins list. Plugin pinning to specific git commit SHAs. Fixed context window blocking calculation (was ~65%, now ~98%). Memory leak fixes for parallel subagents and long-running sessions.
+
+### What It Means
+**Context Window Fix:**
+A significant regression fix. The context window was only being used to ~65% capacity before blocking - now it properly uses ~98%. This means longer conversations before hitting limits.
+
+**Memory Leak Fixes:**
+Critical for long-running sessions and parallel subagents. Sessions that previously crashed or degraded over time should be stable now.
+
+**Plugin Pinning:**
+Pin plugins to specific git SHAs for reproducibility. Prevents surprise breaks when plugin authors push updates.
+
+---
+
+## 🐛 v2.1.12 - January 17, 2026
+
+Fixed message rendering bug.
+
+---
+
+## 🔧 v2.1.11 - January 17, 2026
+
+### What Changed
+Fixed excessive MCP connection requests for HTTP/SSE transports.
+
+### What It Means
+MCP servers using HTTP/SSE (rather than stdio) no longer get spammed with reconnection attempts. Reduces network overhead and server load.
+
+---
+
+## ✨ v2.1.10 - January 17, 2026
+
+### What Changed
+New "Setup" hook event for repository setup operations. Keyboard shortcut 'c' to copy OAuth URL during login. Fixed crash with heredocs containing JavaScript template literals. Improved startup keystroke capture and file suggestions.
+
+### What It Means
+**Setup Hook:**
+A new hook event that fires during repository setup operations. Use cases:
+- Auto-configure project settings on first clone
+- Install dependencies automatically
+- Set up development environment
+
+This expands the hooks system with another lifecycle event to intercept.
+
+---
+
+## 🚀 v2.1.9 - January 16, 2026
+
+### What Changed
+Added `auto:N` syntax for MCP tool search auto-enable threshold. Added `plansDirectory` setting for customizing plan file storage. Added external editor support (Ctrl+G) in AskUserQuestion. Session URL attribution to commits and PRs from web sessions. PreToolUse hooks can return `additionalContext`. Added `${CLAUDE_SESSION_ID}` string substitution for skills.
+
+### What It Means
+**PreToolUse additionalContext:**
+This is a significant hooks enhancement. PreToolUse hooks can now inject additional context that gets included in the tool execution. Use cases:
+- Inject relevant documentation before file reads
+- Add context from external systems before operations
+- Enrich tool calls with metadata
+
+**MCP auto:N Threshold:**
+Configure how many MCP tools must match before auto-enabling: `auto:3` means only auto-enable if 3+ tools match the pattern.
+
+**Session ID Substitution:**
+Skills can reference `${CLAUDE_SESSION_ID}` for session-aware behavior - useful for logging, coordination between skills, and persistent storage keyed by session.
+
+**plansDirectory:**
+Store plan files in a custom location instead of the default. Useful for keeping plans in version control or a shared location.
+
+### How to Use It
+```javascript
+// PreToolUse hook returning additionalContext
+{
+  "hooks": {
+    "PreToolUse": [{
+      "command": "my-context-injector",
+      "timeout": 5000
+    }]
+  }
+}
+// Hook script can return: { "additionalContext": "Extra info for Claude" }
+```
+
+---
+
+## ✨ v2.1.7 - January 14, 2026
+
+### What Changed
+Customizable keyboard shortcuts via `~/.claude/keybindings.json`. `showTurnDuration` setting to hide turn duration messages. Feedback option on permission prompts. Inline agent response display in task notifications. Security fix for wildcard permission rules matching compound commands. MCP tool search auto mode enabled by default.
+
+### What It Means
+**Customizable Keybindings:**
+Finally! Create `~/.claude/keybindings.json` to remap keyboard shortcuts. Useful for:
+- Avoiding conflicts with terminal emulator shortcuts
+- Matching your muscle memory from other tools
+- Custom workflows
+
+**MCP Auto Mode Default:**
+MCP tool search now defaults to auto mode - Claude automatically finds and uses relevant MCP tools without explicit enabling. Reduces friction when working with MCP servers.
+
+---
+
+## ✨ v2.1.6 - January 13, 2026
+
+### What Changed
+Search functionality for `/config` command. Updates section in `/doctor` showing auto-update channel. Date range filtering in `/stats` (7/30/All time). Automatic skill discovery from nested `.claude/skills` directories. Fixed permission bypass via shell line continuation. Fixed false "File has been unexpectedly modified" errors.
+
+### What It Means
+**Nested Skill Discovery:**
+Skills in subdirectories of `.claude/skills/` are now automatically discovered. Organize skills by category:
+```
+.claude/skills/
+├── code-quality/
+│   ├── lint/
+│   └── review/
+├── git/
+│   ├── commit/
+│   └── pr/
+└── research/
+```
+
+**Stats Date Filtering:**
+View usage stats for last 7 days, 30 days, or all time. Better cost tracking.
+
+---
+
+## 🐛 v2.1.5 - January 12, 2026
+
+Added `CLAUDE_CODE_TMPDIR` environment variable to override temp directory location.
+
+---
+
+## 🔧 v2.1.4 - January 10, 2026
+
+### What Changed
+Added `CLAUDE_CODE_DISABLE_BACKGROUND_TASKS` environment variable. Fixed "Help improve Claude" setting fetch with OAuth retry logic.
+
+### What It Means
+Disable background tasks entirely via environment variable. Useful for debugging or resource-constrained environments.
+
+---
+
+## ✨ v2.1.3 - January 9, 2026
+
+### What Changed
+Merged slash commands and skills into unified model. Release channel toggle in `/config`. Detection of unreachable permission rules with warnings. Fixed plan files persisting across `/clear` commands. Fixed duplicate skill detection on filesystems with large inodes.
+
+### What It Means
+**Unified Commands + Skills:**
+Slash commands and skills are now the same thing under the hood. A skill IS a slash command. This simplifies the mental model - everything is a skill, some are built-in, some are custom.
+
+**Unreachable Permission Warnings:**
+Claude Code now warns if you have permission rules that can never trigger (e.g., a deny rule after a broader allow rule). Helps debug permission configurations.
+
+---
+
+## 🔧 v2.1.2 - January 9, 2026
+
+### What Changed
+Source path metadata for dragged images. Clickable file path hyperlinks (OSC 8) for iTerm. Windows Package Manager (winget) installation support. Shift+Tab shortcut in plan mode. Command injection security vulnerability fix. Memory leak fix for tree-sitter parse trees.
+
+### What It Means
+Security and stability fixes. The tree-sitter memory leak fix improves performance when working with large codebases over extended sessions.
+
+---
+
+## 🚀 v2.1.0 - January 9, 2026
+
+### What Changed
+Automatic skill hot-reload. `context: fork` support for skill sub-agents. `language` setting for response language customization. Shift+Enter works out-of-box in iTerm2, WezTerm, Ghostty, Kitty. Extensive Vim motions support (`;`, `,`, `y`, `p`, `>>`, `<<`, `J`). `/plan` command shortcut. Wildcard pattern matching for Bash tool permissions. Unified Ctrl+B backgrounding for bash and agents.
+
+### What It Means
+**Skill Hot-Reload:**
+Edit a skill file and it's immediately available - no restart required. This dramatically speeds up skill development iteration. Change your skill, test it instantly.
+
+**context: fork for Skills:**
+Skills can now spawn sub-agents in a forked context. The sub-agent gets a copy of the current conversation state but operates independently. Perfect for:
+- Research that shouldn't pollute main context
+- Experimental operations that might fail
+- Parallel exploration paths
+
+**Vim Motions:**
+Comprehensive Vim navigation now works in the input. `;` and `,` repeat finds, `y` yanks, `p` pastes, `>>` and `<<` indent, `J` joins lines. Power users rejoice.
+
+**Unified Ctrl+B:**
+Both bash commands AND agents can be backgrounded with Ctrl+B. Consistent UX for async operations.
+
+**/plan Command:**
+Quick shortcut to enter plan mode. Equivalent to starting a message that triggers planning.
+
+### How to Use It
+```yaml
+# Skill with forked context
+---
+name: research-topic
+context: fork
+---
+Research this topic thoroughly without affecting main conversation.
+```
+
+---
 
 ## 🐛 v2.0.76 - December 22, 2025
 
