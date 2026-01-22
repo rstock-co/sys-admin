@@ -46,10 +46,66 @@ To see available contacts: `grep -v '^#' ~/.config/contacts.txt | cut -d: -f1`
    - **Time range?** → add `-d <days>`
 4. Run the command using Bash tool (contact name comes LAST)
 5. Results table shows: DATE | ACCOUNT | FROM | SUBJECT | ID
-6. **Offer to read emails** - Ask the user which email(s) they want to read
+6. **Use AskUserQuestion tool** to let user select which email(s) to read (see Email Selection UI below)
 7. **Read requested emails** using: `himalaya message read -a <account> -f <folder> <id>`
    - Use INBOX for regular searches, `[Gmail]/Sent Mail` for `-s` searches
    - Format output using the Email Report Format below
+
+## Email Selection UI
+
+After displaying search results, use the **AskUserQuestion tool** to let the user select emails interactively.
+
+### Rules
+
+- **Max 3 emails per question** (reserve 1 slot for pagination)
+- Each option label: `[DATE] SUBJECT` (truncate subject if needed)
+- Each option description: `From: SENDER`
+- Enable `multiSelect: true` so user can pick multiple emails
+- Header: `"Read email"`
+
+### Pagination (more than 3 results)
+
+When results exceed 3 emails, add pagination options:
+
+| Results | Options shown |
+|---------|---------------|
+| 1-3 | Show all emails, no pagination |
+| 4-6 | Show emails 1-3 + "More results (4-6)" |
+| 7-9 | Show emails 1-3 + "More results (4-9)" |
+| 10+ | Show emails 1-3 + "More results (4-10+)" |
+
+When user selects "More results":
+- Show next batch of 3 emails + "More results" if needed
+- Add "Back to previous" option to go back
+
+### Example AskUserQuestion call
+
+```json
+{
+  "questions": [{
+    "question": "Which email(s) would you like to read?",
+    "header": "Read email",
+    "multiSelect": true,
+    "options": [
+      {
+        "label": "[Jan 14] Re: Employment Proposal",
+        "description": "From: Mike Bullin"
+      },
+      {
+        "label": "[Jan 08] RE: Employment Proposal",
+        "description": "From: Mike Bullin"
+      }
+    ]
+  }]
+}
+```
+
+### If user types custom input
+
+The AskUserQuestion tool always allows "Other" for custom input. Handle these cases:
+- User types an email ID directly → read that email
+- User types "all" → read all emails in current view
+- User types "none" or "cancel" → end the search
 
 ## Email Report Format
 
