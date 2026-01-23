@@ -19,18 +19,18 @@ Fresh Arch Linux install → fully replicated environment.
 11. Reboot *(you type your password at login)*
 12. Install git + base-devel + github-cli + paru + claude-code on real system
 13. `gh auth login` *(you punch a code into your phone)*
-14. Clone dotfiles via HTTPS (no SSH key needed yet)
-15. dotfiles checkout (gets Hyprland config + voice scripts)
-16. Install voice-priority packages: hyprland, hyprwhspr, ydotool, wl-clipboard, pipewire, wireplumber
-17. Load uinput, start Hyprland, `fix-voice`
-18. **Voice online — talk to Claude from here on**
-19. *Via voice:* Generate SSH key, add to GitHub
-20. *Via voice:* Clone sys-admin repo (Claude gets full context)
+14. Clone sys-admin repo via HTTPS (Claude gets full context immediately)
+15. Clone dotfiles via HTTPS (no SSH key needed)
+16. dotfiles checkout (gets Hyprland config + voice scripts)
+17. Install voice-priority packages: hyprland, hyprwhspr, ydotool, wl-clipboard, pipewire, wireplumber
+18. Load uinput, start Hyprland, `fix-voice`
+19. **Voice online — talk to Claude from here on**
+20. *Via voice:* Generate SSH key, add to GitHub
 21. *Via voice:* Install remaining packages from both lists
 22. *Via voice:* Switch shell to zsh, source config
 23. Sign into apps (1Password, Chrome, Spotify)
 
-**You do 5 things with your hands:** boot USB, connect internet, paste API key, type login password after reboot, punch GitHub device code into phone. Voice comes online at step 18 — everything after that is spoken.
+**You do 5 things with your hands:** boot USB, connect internet, paste API key, type login password after reboot, punch GitHub device code into phone. Voice comes online at step 19 — everything after that is spoken.
 
 ---
 
@@ -199,6 +199,13 @@ cd ~
 gh auth login
 ```
 
+### Clone sys-admin repo (Claude gets full context)
+
+```bash
+mkdir -p ~/agents/admin
+gh repo clone rstock-co/sys-admin ~/agents/admin/system
+```
+
 ### Clone and checkout dotfiles (via HTTPS, no SSH key needed)
 
 ```bash
@@ -249,13 +256,6 @@ fix-voice
 ```bash
 ssh-keygen -t ed25519 -C "your-email"
 gh ssh-key add ~/.ssh/id_ed25519.pub --title "archbox"
-```
-
-### Clone sys-admin repo (Claude gets full context)
-
-```bash
-mkdir -p ~/agents/admin
-git clone git@github.com:rstock-co/sys-admin.git ~/agents/admin/system
 ```
 
 ### Install remaining packages
