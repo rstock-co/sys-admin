@@ -1,3 +1,5 @@
+**TODO: Make this repo public (`gh repo edit rstock-co/sys-admin --visibility public --accept-visibility-change-consequences`) so Claude can curl this file from the live ISO.**
+
 # New Machine Setup
 
 Fresh Arch Linux install → fully replicated environment.
@@ -60,6 +62,11 @@ npm i -g @anthropic-ai/claude-code
 ```bash
 export ANTHROPIC_API_KEY=sk-ant-...
 claude
+```
+
+Tell Claude:
+```
+fetch https://raw.githubusercontent.com/rstock-co/sys-admin/main/new-machine-setup.md and follow it
 ```
 
 ---
