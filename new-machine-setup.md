@@ -21,12 +21,14 @@ Fresh Arch Linux install → fully replicated environment.
 13. `gh auth login` *(you punch a code into your phone)*
 14. Generate SSH key, add to GitHub
 15. Clone sys-admin repo (Claude has full context now)
-16. Clone dotfiles + checkout
+16. Clone dotfiles + checkout (brings in Hyprland config, voice scripts, shell modules)
 17. Install all packages from both lists
 18. Switch shell to zsh, source config
-19. Sign into apps (1Password, Chrome, Spotify)
+19. Load uinput module, start Hyprland
+20. **`fix-voice` — voice online, stop typing**
+21. Sign into apps (1Password, Chrome, Spotify)
 
-**You do 5 things with your hands:** boot USB, connect internet, paste API key, type login password after reboot, punch GitHub device code into phone. Claude does the rest.
+**You do 5 things with your hands:** boot USB, connect internet, paste API key, type login password after reboot, punch GitHub device code into phone. Voice comes online at step 20 — talk to Claude from that point on.
 
 ---
 
@@ -238,6 +240,25 @@ paru -S --needed - < ~/agents/admin/system/data/packages/aur-pkglist.txt
 chsh -s /usr/bin/zsh
 source ~/.zshrc
 ```
+
+### Get voice online (priority)
+
+```bash
+sudo modprobe uinput
+echo "uinput" | sudo tee /etc/modules-load.d/uinput.conf
+```
+
+Start Hyprland (from TTY):
+```bash
+Hyprland
+```
+
+Open a terminal (Super+Return), then:
+```bash
+fix-voice
+```
+
+Voice is now online. Talk to Claude from here on.
 
 ---
 
