@@ -19,16 +19,18 @@ Fresh Arch Linux install → fully replicated environment.
 11. Reboot *(you type your password at login)*
 12. Install git + base-devel + github-cli + paru + claude-code on real system
 13. `gh auth login` *(you punch a code into your phone)*
-14. Generate SSH key, add to GitHub
-15. Clone sys-admin repo (Claude has full context now)
-16. Clone dotfiles + checkout (brings in Hyprland config, voice scripts, shell modules)
-17. Install all packages from both lists
-18. Switch shell to zsh, source config
-19. Load uinput module, start Hyprland
-20. **`fix-voice` — voice online, stop typing**
-21. Sign into apps (1Password, Chrome, Spotify)
+14. Clone dotfiles via HTTPS (no SSH key needed yet)
+15. dotfiles checkout (gets Hyprland config + voice scripts)
+16. Install voice-priority packages: hyprland, hyprwhspr, ydotool, wl-clipboard, pipewire, wireplumber
+17. Load uinput, start Hyprland, `fix-voice`
+18. **Voice online — talk to Claude from here on**
+19. *Via voice:* Generate SSH key, add to GitHub
+20. *Via voice:* Clone sys-admin repo (Claude gets full context)
+21. *Via voice:* Install remaining packages from both lists
+22. *Via voice:* Switch shell to zsh, source config
+23. Sign into apps (1Password, Chrome, Spotify)
 
-**You do 5 things with your hands:** boot USB, connect internet, paste API key, type login password after reboot, punch GitHub device code into phone. Voice comes online at step 20 — talk to Claude from that point on.
+**You do 5 things with your hands:** boot USB, connect internet, paste API key, type login password after reboot, punch GitHub device code into phone. Voice comes online at step 18 — everything after that is spoken.
 
 ---
 
@@ -197,24 +199,10 @@ cd ~
 gh auth login
 ```
 
-### SSH key
+### Clone and checkout dotfiles (via HTTPS, no SSH key needed)
 
 ```bash
-ssh-keygen -t ed25519 -C "your-email"
-gh ssh-key add ~/.ssh/id_ed25519.pub --title "archbox"
-```
-
-### Clone sys-admin repo (Claude gets full context)
-
-```bash
-mkdir -p ~/agents/admin
-git clone git@github.com:rstock-co/sys-admin.git ~/agents/admin/system
-```
-
-### Clone and checkout dotfiles
-
-```bash
-git clone --bare git@github.com:rstock-co/dotfiles.git $HOME/.dotfiles
+gh repo clone rstock-co/dotfiles -- --bare $HOME/.dotfiles
 alias dotfiles='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
 dotfiles checkout
 dotfiles config --local status.showUntrackedFiles no
@@ -227,21 +215,13 @@ dotfiles checkout 2>&1 | grep -E "\s+\." | awk '{print $1}' | xargs -I{} mv {} ~
 dotfiles checkout
 ```
 
-### Install all packages
+### Install voice-priority packages
 
 ```bash
-sudo pacman -S --needed - < ~/agents/admin/system/data/packages/pkglist.txt
-paru -S --needed - < ~/agents/admin/system/data/packages/aur-pkglist.txt
+paru -S hyprland hyprwhspr ydotool wl-clipboard pipewire wireplumber
 ```
 
-### Switch shell to zsh
-
-```bash
-chsh -s /usr/bin/zsh
-source ~/.zshrc
-```
-
-### Get voice online (priority)
+### Get voice online
 
 ```bash
 sudo modprobe uinput
@@ -258,7 +238,39 @@ Open a terminal (Super+Return), then:
 fix-voice
 ```
 
-Voice is now online. Talk to Claude from here on.
+**Voice is now online. Talk to Claude from here on.**
+
+---
+
+## Part 3: Remaining Setup (via voice)
+
+### SSH key
+
+```bash
+ssh-keygen -t ed25519 -C "your-email"
+gh ssh-key add ~/.ssh/id_ed25519.pub --title "archbox"
+```
+
+### Clone sys-admin repo (Claude gets full context)
+
+```bash
+mkdir -p ~/agents/admin
+git clone git@github.com:rstock-co/sys-admin.git ~/agents/admin/system
+```
+
+### Install remaining packages
+
+```bash
+sudo pacman -S --needed - < ~/agents/admin/system/data/packages/pkglist.txt
+paru -S --needed - < ~/agents/admin/system/data/packages/aur-pkglist.txt
+```
+
+### Switch shell to zsh
+
+```bash
+chsh -s /usr/bin/zsh
+source ~/.zshrc
+```
 
 ---
 
