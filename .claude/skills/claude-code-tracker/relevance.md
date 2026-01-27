@@ -23,6 +23,10 @@ Personalized changelog filtered through [context.md](context.md).
 
 | Version | Date | Relevance | Why It Matters to Symbiont |
 |---------|------|-----------|----------------------------|
+| 2.1.20 | Jan 27 | 🚀 | --add-dir CLAUDE.md loading - layer instructions from core/ |
+| 2.1.19 | Jan 23 | 🔧 | VSCode session forking, skills auto-allow without prompts |
+| 2.1.18 | Jan 23 | 🔧 | Enhanced /keybindings with chord sequences |
+| 2.1.16 | Jan 22 | 🚀 | Native task system - agent coordination with dependencies |
 | 2.1.14 | Jan 20 | ✨ | Memory leak fixes for parallel subagents, context window fix |
 | 2.1.10 | Jan 17 | ✨ | Setup hook event - new lifecycle hook for repo initialization |
 | 2.1.9 | Jan 16 | 🚀 | PreToolUse additionalContext - inject context into tool calls |
@@ -55,6 +59,77 @@ Personalized changelog filtered through [context.md](context.md).
 ---
 
 ## 🚀 Critical - Architecture Foundations
+
+### 🚀 v2.1.20 - January 27, 2026
+
+**What Changed**: Support for loading `CLAUDE.md` files from directories via `--add-dir` flag. PR review status indicator. Task deletion capability.
+
+**Symbiont Impact**:
+**--add-dir CLAUDE.md Loading:**
+This is significant for the Symbiont monorepo architecture. Currently, specialists symlink to `core/` for shared primitives. With `--add-dir`, you can explicitly load instructions from multiple directories.
+
+**CRITICAL: Requires environment variable:**
+```bash
+export CLAUDE_CODE_ADDITIONAL_DIRECTORIES_CLAUDE_MD=1
+```
+This is opt-in for backward compatibility. Without the env var, `--add-dir` only provides file access, not instruction loading. Feature is currently undocumented ([GitHub Issue #21138](https://github.com/anthropics/claude-code/issues/21138)).
+
+This could replace or complement the symlink pattern:
+- **Current:** Symlinks in each specialist folder → core/
+- **New option:** Launch with `--add-dir` pointing to core/
+
+**Benefits:**
+1. Cleaner specialist folders (no symlinks needed)
+2. Explicit instruction layering visible in launch command
+3. Multiple instruction sources can be composed at launch time
+4. Better for the SGTA factory - spawn specialists with different instruction layers
+
+**Potential Symbiont usage:**
+```bash
+# spawn-mycelium.sh could become:
+export CLAUDE_CODE_ADDITIONAL_DIRECTORIES_CLAUDE_MD=1
+claude --add-dir ~/symbiont/core/ --cwd ~/symbiont/mycelium/$DIM
+```
+
+**Action**: Test `--add-dir` as alternative to symlink pattern. May simplify specialist folder structure.
+
+---
+
+### 🚀 v2.1.16 - January 22, 2026
+
+**What Changed**: Native task management system with dependency tracking. VSCode plugin management. Remote session browsing.
+
+**Symbiont Impact**:
+**Native Task System:**
+This is the most significant new primitive for agent coordination since background agents. The task system provides:
+
+1. **Dependency Tracking** - Tasks can declare `blockedBy` and `blocks` relationships
+2. **Status Progression** - `pending` → `in_progress` → `completed`
+3. **Agent Coordination** - Sub-agents can claim and complete tasks
+
+**For Symbiont, this enables:**
+
+**Overnight Daemon Coordination:**
+Instead of a single overnight script, break work into tasks with dependencies:
+```
+Task 1: Pull latest sleep data from Oura
+Task 2: Analyze patterns (blockedBy: 1)
+Task 3: Generate morning briefing (blockedBy: 2)
+Task 4: Check for urgent emails
+Task 5: Compile briefing (blockedBy: 3, 4)
+```
+
+**Cross-Specialist Work:**
+Mycelia could create tasks that multiple specialists work on in parallel, with the task system tracking what's done and what's available.
+
+**Limitations to note:**
+- Tasks are session-scoped (don't persist automatically)
+- Need "hydration pattern" (spec files that create tasks) for cross-session work
+- Independent sessions don't share task state
+
+**Action**: Evaluate task system for overnight daemon coordination. Consider hydration pattern for persistent task definitions.
+
+---
 
 ### 🚀 v2.1.9 - January 16, 2026
 
@@ -497,10 +572,33 @@ Bug fix that prevents tool name collisions when specialists use symbiont-db MCP 
 
 ---
 
+### 🔧 v2.1.19 - January 23, 2026
+
+**What Changed**: $0/$1 argument shorthand in skills. VSCode session forking for all users. Skills without extra permissions auto-allow.
+
+**Symbiont Impact**:
+**Skills Auto-Allow:**
+Skills that don't require extra permissions now execute without prompting. For the SGTA factory and shared skills in `core/`, this reduces friction - simple skills just work.
+
+**Argument Shorthand:**
+Cleaner skill definitions using `$0`, `$1` instead of `$ARGUMENTS[0]`. Makes shared skills more readable.
+
+---
+
+### 🔧 v2.1.18 - January 23, 2026
+
+**What Changed**: `/keybindings` command for easy access. Chord sequences. Per-context keybindings.
+
+**Symbiont Impact**:
+Building on v2.1.7's keybindings.json, this adds convenience features. **Chord sequences** (multi-key combos like `Ctrl+K Ctrl+C`) provide more binding options without conflicts with your Hyprland keybindings.
+
+---
+
 ## Skip List (Not Relevant)
 
 | Version | Date | Reason |
 |---------|------|--------|
+| v2.1.17 | Jan 22 | AVX crash fix - hardware-specific patch |
 | v2.1.15 | Jan 21 | npm deprecation, React perf, MCP stdio fix - infrastructure |
 | v2.1.12 | Jan 17 | Message rendering bug - minor fix |
 | v2.1.11 | Jan 17 | MCP HTTP/SSE fix - not using HTTP transport |
@@ -531,12 +629,14 @@ Bug fix that prevents tool name collisions when specialists use symbiont-db MCP 
 ## Summary: What Symbiont Needs to Watch
 
 **CRITICAL features to leverage:**
-1. **PreToolUse additionalContext (v2.1.9)** - NEW: Inject context before tool calls. Build hooks that prime specialists with symbiont-db data.
-2. **Skill hot-reload + context:fork (v2.1.0)** - NEW: Iterate skills instantly. Use forked context for Dual Sovereignty.
-3. ~~**Custom agents (v2.0.59)**~~ - EVALUATED: Not for SGTAs (ignores CLAUDE.md). Keep folder-based.
-4. **Output styles (v2.0.41, v2.0.32)** - Package specialist voices as plugins
-5. **Agent permissionMode (v2.0.43)** - Per-specialist permission levels
-6. **SubagentStart hook (v2.0.43)** - Intercept specialist spawning for Queen's Ledger
+1. **--add-dir CLAUDE.md loading (v2.1.20)** - NEW: Layer instructions without symlinks. Could simplify specialist folder structure.
+2. **Native task system (v2.1.16)** - NEW: Dependency-aware task management. Evaluate for overnight daemon and cross-specialist coordination.
+3. **PreToolUse additionalContext (v2.1.9)** - Inject context before tool calls. Build hooks that prime specialists with symbiont-db data.
+4. **Skill hot-reload + context:fork (v2.1.0)** - Iterate skills instantly. Use forked context for Dual Sovereignty.
+5. ~~**Custom agents (v2.0.59)**~~ - EVALUATED: Not for SGTAs (ignores CLAUDE.md). Keep folder-based.
+6. **Output styles (v2.0.41, v2.0.32)** - Package specialist voices as plugins
+7. **Agent permissionMode (v2.0.43)** - Per-specialist permission levels
+8. **SubagentStart hook (v2.0.43)** - Intercept specialist spawning for Queen's Ledger
 
 **HIGH features already in use:**
 - Background execution (v2.0.60, v2.0.64) - Interactive parallelism (Ctrl+B)
@@ -552,10 +652,12 @@ Bug fix that prevents tool name collisions when specialists use symbiont-db MCP 
 - Package output styles as plugins vs local files
 - Consider Desktop app for session management vs Alacritty hotkeys
 - Headless mode for overnight daemon (not Ctrl+B async)
-- **NEW:** PreToolUse hooks for context injection (v2.1.9) - could enhance vector priming
-- **NEW:** context:fork skills for Dual Sovereignty (v2.1.0) - cleaner sovereign invocations
+- PreToolUse hooks for context injection (v2.1.9) - could enhance vector priming
+- context:fork skills for Dual Sovereignty (v2.1.0) - cleaner sovereign invocations
+- **NEW:** `--add-dir` for specialist instruction loading (v2.1.20) - potential symlink replacement
+- **NEW:** Native task system for agent coordination (v2.1.16) - evaluate for overnight daemon
 
 ---
 
-*Last updated: 2026-01-21*
+*Last updated: 2026-01-27 (v2.1.20 deep research completed)*
 *Filter criteria: [context.md](context.md)*

@@ -26,7 +26,7 @@ Use when:
 
 ```bash
 # Location
-/home/neo/agents/sys-admin/.claude/skills/plugin-finder/search.py
+.claude/skills/plugin-finder/search.py
 
 # Basic usage
 python search.py --tier tier-1              # All tier-1 plugins

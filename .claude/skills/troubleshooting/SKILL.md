@@ -6,7 +6,7 @@ description: Troubleshoot system services. Use when user reports something isn't
 
 You are troubleshooting a system issue. The user will tell you what's broken.
 
-**Config docs location:** `/home/neo/agents/sys-admin/config/`
+**Config docs location:** `config/`
 
 ## Subsystems
 

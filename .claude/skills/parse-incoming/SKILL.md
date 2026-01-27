@@ -6,8 +6,8 @@ description: Process incoming files from LocalSend. Use when user runs /parse-in
 
 Process files received via LocalSend and organize them interactively.
 
-**Incoming folder:** `/home/neo/agents/sys-admin/incoming/`
-**Archive folder:** `/home/neo/agents/sys-admin/archive/`
+**Incoming folder:** `incoming/`
+**Archive folder:** `archive/`
 
 ## Workflow
 
@@ -40,16 +40,16 @@ Based on this repo's structure, suggest:
 
 ```bash
 # List incoming files
-ls -la /home/neo/agents/sys-admin/incoming/
+ls -la incoming/
 
 # Move to destination
-mv /home/neo/agents/sys-admin/incoming/<file> <destination>
+mv incoming/<file> <destination>
 
 # Archive (preserve original name with timestamp)
-mv /home/neo/agents/sys-admin/incoming/<file> /home/neo/agents/sys-admin/archive/
+mv incoming/<file> archive/
 
 # Delete
-rm /home/neo/agents/sys-admin/incoming/<file>
+rm incoming/<file>
 ```
 
 ## Interactive Flow

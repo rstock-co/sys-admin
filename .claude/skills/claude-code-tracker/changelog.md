@@ -16,6 +16,11 @@ Internal changelog with plain-language explanations of Claude Code releases.
 
 | Version | Date | Tier | Summary |
 |---------|------|------|---------|
+| 2.1.20 | Jan 27 | 🚀 | PR review status, --add-dir CLAUDE.md loading, task deletion |
+| 2.1.19 | Jan 23 | ✨ | $0/$1 argument shorthand, VSCode session forking, skills auto-allow |
+| 2.1.18 | Jan 23 | ✨ | /keybindings command, chord sequences, per-context keybindings |
+| 2.1.17 | Jan 22 | 🐛 | AVX instruction support crash fix |
+| 2.1.16 | Jan 22 | 🚀 | Native task system with dependency tracking, VSCode plugin management |
 | 2.1.15 | Jan 21 | 🔧 | npm deprecation notice, React Compiler perf, MCP stdio fix |
 | 2.1.14 | Jan 20 | ✨ | History autocomplete, plugin pinning, context window fix (65%→98%) |
 | 2.1.12 | Jan 17 | 🐛 | Message rendering bug fix |
@@ -74,6 +79,121 @@ Internal changelog with plain-language explanations of Claude Code releases.
 ---
 
 <!-- New releases are added below this line -->
+
+## 🚀 v2.1.20 - January 27, 2026
+
+### What Changed
+PR review status indicator in prompt footer showing branch PR state. Support for loading `CLAUDE.md` files from directories via `--add-dir` flag. Task deletion capability via TaskUpdate tool. Arrow key history navigation in vim normal mode when cursor cannot move further. External editor shortcut (Ctrl+G) added to help menu. Session compaction fixes for resume functionality. Wide character and Unicode handling improvements. Draft prompt preservation when navigating command history. Ghost text flickering eliminated in slash commands. Dynamic task list visibility based on terminal height. Timestamped config backup rotation.
+
+### What It Means
+**PR Review Status in Footer:**
+The prompt footer now shows the PR status of your current branch - whether it's under review, approved, has requested changes, etc. Provides git workflow awareness without leaving the terminal.
+
+**--add-dir CLAUDE.md Loading:**
+Load CLAUDE.md instructions from arbitrary directories, not just the working directory. **Requires environment variable:**
+```bash
+export CLAUDE_CODE_ADDITIONAL_DIRECTORIES_CLAUDE_MD=1
+```
+This is opt-in for backward compatibility. Without the env var, `--add-dir` only provides file access, not instruction loading. Once enabled:
+- Reference shared instructions from a central location
+- Include team-wide standards from a shared folder
+- Layer multiple instruction sets
+
+**Note:** This feature is currently undocumented. See [GitHub Issue #21138](https://github.com/anthropics/claude-code/issues/21138).
+
+**Task Deletion:**
+TaskUpdate tool can now delete tasks, not just update them. Cleaner task management for long sessions.
+
+---
+
+## ✨ v2.1.19 - January 23, 2026
+
+### What Changed
+Environment variable `CLAUDE_CODE_ENABLE_TASKS` allows disabling the new task system temporarily. Shorthand syntax `$0`, `$1` for accessing individual arguments in custom commands. Fixed crashes on processors lacking AVX instruction support. Resolved dangling processes when terminals close unexpectedly. Fixed `/rename` and `/tag` session updates when resuming from different directories. Prompt stash functionality no longer loses pasted text. Skills without extra permissions auto-allow without approval. Changed indexed argument syntax from `$ARGUMENTS.0` to `$ARGUMENTS[0]`. SDK: Added replay of queued commands as `SDKUserMessageReplay` events. VSCode: Enabled session forking and rewind functionality for all users.
+
+### What It Means
+**$0/$1 Argument Shorthand:**
+Custom skills/commands can now use `$0`, `$1`, `$2` shorthand instead of the verbose `$ARGUMENTS[0]` syntax. Cleaner skill definitions.
+
+**VSCode Session Forking:**
+Session forking and rewind (conversation state recovery) is now available to all VSCode users. Previously limited rollout.
+
+**Skills Auto-Allow:**
+Skills that don't require extra permissions now execute without prompting. Reduces friction for simple skills.
+
+---
+
+## ✨ v2.1.18 - January 23, 2026
+
+### What Changed
+Customizable keyboard shortcuts now available via `/keybindings` command. Configure context-specific keybindings and chord sequences for personalized workflow.
+
+### What It Means
+**Enhanced Keybindings:**
+Building on v2.1.7's `keybindings.json`, this adds the `/keybindings` command for easy access and introduces chord sequences (multi-key combos like `Ctrl+K Ctrl+C`). Context-specific means different shortcuts can apply in different modes (normal, insert, command).
+
+### How to Use It
+```bash
+/keybindings        # Open keybindings configuration
+```
+
+### Learn More
+- [Keybindings Documentation](https://code.claude.com/docs/en/keybindings)
+
+---
+
+## 🐛 v2.1.17 - January 22, 2026
+
+Fixed crashes on processors without AVX instruction support. Stability fix for older hardware.
+
+---
+
+## 🚀 v2.1.16 - January 22, 2026
+
+### What Changed
+New task management system with dependency tracking capabilities. VSCode: Native plugin management support added. VSCode: OAuth users can now browse and resume remote Claude sessions. Fixed out-of-memory crashes when resuming sessions with heavy subagent usage. Context warning now properly hides after running `/compact`. Session titles respect user's language setting on resume screen. IDE: Fixed race condition on Windows preventing sidebar from appearing on startup.
+
+### What It Means
+**Native Task System:**
+Claude Code now has first-class task management built into the core. This is a significant evolution from the previous TodoWrite approach:
+
+- **Dependency Tracking**: Tasks can declare `blockedBy` and `blocks` relationships
+- **Status Tracking**: Tasks progress through `pending` → `in_progress` → `completed`
+- **Progress Visualization**: See task status in real-time, identify available work
+- **Agent Coordination**: Assign tasks to sub-agents, track completion across parallel workers
+
+**Key Characteristics:**
+- Session-scoped: Tasks exist within a session (don't persist across sessions by default)
+- Integrated with sub-agents: Agents can create, claim, and complete tasks
+- Replaces ad-hoc todo tracking with structured workflow
+
+**Use Cases:**
+- Complex multi-step implementations with clear dependencies
+- Parallel agent work coordination
+- Progress tracking for long-running tasks
+
+**Limitations:**
+- Tasks don't persist across sessions automatically
+- Need "hydration pattern" (spec files) for cross-session continuity
+
+**VSCode Plugin Management:**
+Native UI for browsing, installing, and managing Claude Code plugins within VSCode.
+
+**Remote Session Browsing:**
+OAuth users can browse and resume their remote Claude.ai sessions from the CLI/VSCode.
+
+### How to Use It
+```bash
+# Tasks are managed via TaskCreate, TaskUpdate, TaskGet, TaskList tools
+# Claude uses these automatically for complex multi-step work
+# Use /tasks to view current task state
+```
+
+### Learn More
+- [Claude Code Tasks Overview](https://medium.com/@joe.njenga/claude-code-tasks-are-here-new-update-turns-claude-code-todos-to-tasks-a0be00e70847)
+- [VentureBeat: Tasks Update](https://venturebeat.com/orchestration/claude-codes-tasks-update-lets-agents-work-longer-and-coordinate-across)
+
+---
 
 ## 🔧 v2.1.15 - January 21, 2026
 

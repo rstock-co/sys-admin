@@ -36,7 +36,7 @@ Use when:
 
 | Location | Purpose |
 |----------|---------|
-| `~/agents/sys-admin/data/claude-code/research/` | Deep-dive research on specific releases |
+| `data/claude-code/research/` | Deep-dive research on specific releases |
 
 ### External Sources (Tier 1 - Official)
 
@@ -122,7 +122,7 @@ Use when:
 **When user asks**: "How does X work?" / "Tell me about feature Y"
 
 1. **Check internal docs first**:
-   - Read `~/agents/sys-admin/data/claude-code/` for existing documentation
+   - Read `data/claude-code/` for existing documentation
    - Check changelog.md for recent context
 
 2. **Search official sources**:
@@ -169,7 +169,7 @@ Use when:
 
 3. **Read existing research** if it exists:
    ```
-   Read ~/agents/sys-admin/data/claude-code/research/{version}.md
+   Read data/claude-code/research/{version}.md
    ```
    If file exists, you may be updating it. If not, you're creating it.
 
@@ -189,7 +189,7 @@ Use when:
    WebFetch("https://claudelog.com/claude-code-changelog/", "Find {version} details")
    ```
 
-6. **Write research file** to `~/agents/sys-admin/data/claude-code/research/`
+6. **Write research file** to `data/claude-code/research/`
 
    **Filename format**: `{version}.md` (e.g., `2-0-54.md`)
 
@@ -235,7 +235,7 @@ Use when:
 **CRITICAL: Check local docs before answering.**
 
 1. **Read changelog.md** - check if we have an entry
-2. **Read research file** if it exists: `~/agents/sys-admin/data/claude-code/research/{version}.md`
+2. **Read research file** if it exists: `data/claude-code/research/{version}.md`
 3. **Read relevance.md** - check personalized notes
 4. **Only then** answer the question, citing what we know
 5. **If insufficient info**, offer to do deep research
@@ -439,7 +439,7 @@ For minor releases:
 
 ## Local Documentation Map
 
-Your Claude Code docs live in `~/agents/sys-admin/data/claude-code/`. When a release mentions certain topics, these are the files that need updating:
+Your Claude Code docs live in `data/claude-code/`. When a release mentions certain topics, these are the files that need updating:
 
 ### Keyword → File Mapping
 

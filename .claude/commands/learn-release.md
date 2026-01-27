@@ -27,7 +27,7 @@ Read these files to gather everything we know about this version:
 
 1. **Research files** (if exist) - Deep dive analysis
    ```
-   ~/agents/sys-admin/data/claude-code/research/{version}/
+   data/claude-code/research/{version}/
    ```
    Read `index.md` and any topic-specific files in this directory.
 

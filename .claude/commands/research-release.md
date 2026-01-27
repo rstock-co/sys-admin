@@ -32,7 +32,7 @@ Read these files to understand Symbiont dependencies and what we already know:
 
 4. **Check for existing research** - See if we've already researched this version
    ```
-   ~/agents/sys-admin/data/claude-code/research/
+   data/claude-code/research/
    ```
 
 ---
@@ -98,12 +98,12 @@ Assign relevance: 🚀 Critical | ✨ High | 🔧 Medium
 
 Write a comprehensive research file to:
 ```
-~/agents/sys-admin/data/claude-code/research/$ARGUMENTS/index.md
+data/claude-code/research/$ARGUMENTS/index.md
 ```
 
 If the user provided a focus area, create an additional deep-dive file:
 ```
-~/agents/sys-admin/data/claude-code/research/$ARGUMENTS/[focus-topic].md
+data/claude-code/research/$ARGUMENTS/[focus-topic].md
 ```
 
 Use this structure for index.md:
