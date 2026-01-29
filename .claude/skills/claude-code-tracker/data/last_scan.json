@@ -1,12 +1,28 @@
 {
-  "last_scan": "2026-01-21T12:00:00Z",
-  "last_version": "2.1.15",
+  "last_scan": "2026-01-27T12:00:00Z",
+  "last_version": "2.1.20",
   "earliest_version": "2.0.31",
   "scan_range": {
     "from": "2025-11-01",
-    "to": "2026-01-21"
+    "to": "2026-01-27"
   },
   "pending_actions": [
+    {
+      "version": "2.1.16",
+      "title": "Native task system with dependency tracking",
+      "impact": "CRITICAL",
+      "documented": true,
+      "docs_to_update": [],
+      "action": "Evaluate task system for Symbiont specialist coordination"
+    },
+    {
+      "version": "2.1.20",
+      "title": "--add-dir CLAUDE.md loading",
+      "impact": "HIGH",
+      "documented": true,
+      "docs_to_update": ["usage/configuration/memory.md"],
+      "action": "Use --add-dir for Symbiont core/ instructions loading"
+    },
     {
       "version": "2.1.9",
       "title": "PreToolUse additionalContext - context injection hooks",
@@ -22,28 +38,7 @@
       "documented": true,
       "docs_to_update": ["primitives/skills.md"],
       "action": "Migrate Dual Sovereignty to context:fork skills"
-    },
-    {
-      "version": "2.1.14",
-      "title": "Memory leak fixes + context window 98%",
-      "impact": "HIGH",
-      "documented": true,
-      "docs_to_update": []
-    },
-    {
-      "version": "2.1.10",
-      "title": "Setup hook event",
-      "impact": "HIGH",
-      "documented": true,
-      "docs_to_update": ["primitives/hooks-reference.md"]
-    },
-    {
-      "version": "2.1.6",
-      "title": "Nested skill discovery",
-      "impact": "HIGH",
-      "documented": true,
-      "docs_to_update": []
     }
   ],
-  "notes": "Scan covering Nov 1, 2025 - Jan 21, 2026. 54 releases documented (v2.0.31 - v2.1.15). Major finds: PreToolUse additionalContext (v2.1.9) and context:fork (v2.1.0) are game-changers for Symbiont."
+  "notes": "Scan covering Nov 1, 2025 - Jan 27, 2026. 59 releases documented (v2.0.31 - v2.1.20). Major finds: Native task system (v2.1.16) and --add-dir (v2.1.20) are relevant for Symbiont architecture."
 }
