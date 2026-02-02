@@ -171,6 +171,33 @@ Subject: [subject line]
 | "find emails to GIS in the last 30 days" | `sec -d 30 "GIS"` |
 | "sent emails to Jason last week" | `sec -s -d 7 "Jason"` |
 
+## Sending Replies
+
+To send a reply programmatically (without opening an editor), use a two-step process:
+
+```bash
+# Generate template and pipe to send
+himalaya template reply -a <account> -f <folder> <id> '<body>' | himalaya message send -a <account>
+```
+
+**Example:**
+```bash
+himalaya template reply -a rebeca -f INBOX 37655 'Hi Nicole,
+
+Thanks for the info!
+
+Quick question - how many of the 14 classes would they be missing by starting now?
+
+Thanks,
+Rebeca' | himalaya message send -a rebeca
+```
+
+**Notes:**
+- `himalaya message reply` requires `$EDITOR` and opens an interactive editor - don't use it
+- The template command generates proper headers (From, To, In-Reply-To, Subject)
+- Single quotes in the body need escaping: `we'"'"'ll` or `we'\''ll`
+- Always draft the email and show it to the user before sending
+
 ## Account Names
 
 | Account | Email |
