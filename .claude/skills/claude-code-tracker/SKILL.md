@@ -26,9 +26,10 @@ Use when:
 
 | File | Purpose |
 |------|---------|
-| [context.md](context.md) | **READ FIRST** - Symbiont context, feature dependencies, relevance scoring |
+| [context.md](context.md) | **READ FIRST** - AEGIS context, feature dependencies, relevance scoring |
 | [tracking-resources.md](tracking-resources.md) | Gold-standard list of authoritative sources |
-| [changelog.md](changelog.md) | Internal changelog with plain-language explanations |
+| [changelog.md](changelog.md) | Quick Reference index (compact) - links to monthly files |
+| [changelog/YYYY-MM.md](changelog/) | Detailed entries split by month (e.g., `2026-02.md`) |
 | [relevance.md](relevance.md) | Personalized changelog filtered by context.md |
 | [data/last_scan.json](data/last_scan.json) | Scan state and pending actions |
 
@@ -64,7 +65,7 @@ Use when:
    ```
    Read context.md
    ```
-   Understand Symbiont dependencies and relevance scoring before scanning.
+   Understand AEGIS dependencies and relevance scoring before scanning.
 
 2. **Read last scan state**:
    ```
@@ -103,16 +104,17 @@ Use when:
 6. **For ✨ Notable releases:**
    Check official changelog for full context. Write 1-2 paragraph entries explaining workflow impact.
 
-8. **Present findings** with impact assessment - highlight Symbiont impact based on context.md
+8. **Present findings** with impact assessment - highlight AEGIS impact based on context.md
 
-9. **Update changelog.md:**
-   - Add row to Quick Reference table (TOP of table, newest first)
-   - Add detailed entry (format based on tier - see Tiered Detail Requirements)
+9. **Update changelog:**
+   - Add row to Quick Reference table in `changelog.md` (TOP of table, newest first, link to monthly file)
+   - Add detailed entry to the current month's file: `changelog/YYYY-MM.md`
+   - If the monthly file doesn't exist, create it with the standard header format
 
 10. **Update relevance.md:**
-    - Filter releases through context.md criteria (Symbiont impact)
+    - Filter releases through context.md criteria (AEGIS impact)
     - Only include RELEVANT and PARTIALLY RELEVANT releases
-    - Annotate WHY each release matters to user's specific setup
+    - Annotate WHY each release matters to AEGIS (workers, commands, rules, hooks, sessions)
     - Format: version, date, relevance level, personalized explanation
 
 11. **Save scan state** to data/last_scan.json
@@ -123,7 +125,7 @@ Use when:
 
 1. **Check internal docs first**:
    - Read `data/claude-code/` for existing documentation
-   - Check changelog.md for recent context
+   - Check `changelog.md` index and relevant monthly file for recent context
 
 2. **Search official sources**:
    ```
@@ -137,7 +139,7 @@ Use when:
 
 4. **Synthesize findings** into actionable guidance
 
-5. **Update changelog.md** if this reveals new understanding
+5. **Update changelog** (index + monthly file) if this reveals new understanding
 
 ### 3. Analyze System Prompt Changes
 
@@ -161,9 +163,9 @@ Use when:
 
 **CRITICAL: Always read existing documentation first, then research externally.**
 
-1. **Read context.md** to understand Symbiont dependencies
+1. **Read context.md** to understand AEGIS dependencies
 
-2. **Read changelog.md entry** for the specified version
+2. **Read the monthly changelog file** for the specified version (use index to find which month)
    - This is your baseline - understand what we already know
    - Note any gaps or questions
 
@@ -217,7 +219,7 @@ Use when:
    {Practical examples, commands, config snippets}
 
    ## Relevance to My Setup
-   {Based on context.md - Symbiont impact and why this matters}
+   {Based on context.md - AEGIS impact and why this matters}
 
    ## Sources
    - [Official Changelog](url)
@@ -234,7 +236,7 @@ Use when:
 
 **CRITICAL: Check local docs before answering.**
 
-1. **Read changelog.md** - check if we have an entry
+1. **Read changelog.md index** - find the version, then read its monthly file
 2. **Read research file** if it exists: `data/claude-code/research/{version}.md`
 3. **Read relevance.md** - check personalized notes
 4. **Only then** answer the question, citing what we know
@@ -242,26 +244,40 @@ Use when:
 
 ## CRITICAL: Complete Coverage Rule
 
-**Every single release MUST be documented in changelog.md.** No exceptions.
+**Every single release MUST be documented.** No exceptions.
 
-- If a version exists, it gets an entry
+- If a version exists, it gets an entry in the monthly file AND a row in the index
 - If sources don't have notes for a version, mark it as `🐛 Patch` with note: "No release notes available - likely hotfix"
 - Never skip versions, even if they seem minor
 - Maintain chronological order (newest first)
 
-## CRITICAL: Quick Reference Table Maintenance
+## CRITICAL: Two-File Update Rule
 
-The changelog.md has a **Quick Reference** table at the top. This MUST be updated for every new release.
+**When adding a new release, update TWO files:**
 
-**When adding a new release:**
-1. Add a row to the Quick Reference table (at the TOP, newest first)
-2. Add the detailed entry below the table
+1. **`changelog.md`** (index) - Add a row to the Quick Reference table (TOP, newest first)
+2. **`changelog/YYYY-MM.md`** (monthly file) - Add the detailed entry
 
-**Table format:**
+If the monthly file doesn't exist yet, create it:
 ```markdown
+# {Month} {Year} Releases
+
+**{N} releases (vX.Y.Z - vA.B.C)**
+
 | Version | Date | Tier | Summary |
 |---------|------|------|---------|
-| 2.0.XX | Mon DD | 🚀 | Brief one-line summary of key change |
+
+---
+
+## {emoji} v{version} - {Month} {Day}, {Year}
+...
+```
+
+**Index table format:**
+```markdown
+| Version | Date | Tier | Summary | File |
+|---------|------|------|---------|------|
+| 2.X.XX | Mon DD | 🚀 | Brief one-line summary | [YYYY-MM](changelog/YYYY-MM.md) |
 ```
 
 **Keep summaries short** - max ~60 characters. The detailed entry has the full explanation.
@@ -507,7 +523,7 @@ For releases that affect local documentation:
 |-----------|--------|
 | Daily | Check @ClaudeCodeLog on X for prompt changes |
 | Weekly | Full changelog scan via this skill |
-| Per-release | Update changelog.md with plain-language summary |
+| Per-release | Update changelog index + monthly file with plain-language summary |
 | Monthly | Deep research on new primitives |
 
 ---
