@@ -21,6 +21,7 @@ Cannot be removed without breaking the system.
 - `linux-firmware` - Hardware firmware
 - `sudo` - Privilege escalation
 - `dosfstools` - FAT filesystem tools (needed for EFI)
+- `exfatprogs` - exFAT filesystem tools
 
 ## [SYSTEM] Hardware & Drivers
 
@@ -35,7 +36,9 @@ Required for hardware functionality.
 - `libva-utils` - Video acceleration utils
 - `v4l-utils` - Video4Linux utilities
 - `evtest` - Input device testing
+- `dmidecode` - DMI/BIOS hardware info
 - `ethtool` - Network driver settings
+- `lshw` - Detailed hardware info
 - `usbutils` - USB utilities
 
 ## [SYSTEM] Networking & Audio
@@ -69,6 +72,7 @@ Hyprland and Wayland stack.
 - `libnotify` - Notification library
 - `ydotool` - Input automation
 - `wtype` - Wayland text typing
+- `tumbler` - Thumbnail service for Thunar
 - `wf-recorder` - Screen recording
 
 ## [CORE] Terminal & Shell
@@ -94,6 +98,7 @@ User-facing applications.
 - `spicetify-cli` - Spotify customization
 - `swayimg` - Image viewer
 - `thunar` - File manager
+- `xournalpp` - PDF annotation/handwriting
 - `zoom` - Video conferencing
 
 ## [APP] Voice & Input
@@ -120,6 +125,12 @@ User-facing applications.
 - `stripe-cli` - Stripe CLI
 - `cloudflared` - Cloudflare tunnels
 - `claude-code` - Claude Code CLI
+- `d2` - Diagram scripting language
+- `gemini-cli` - Google Gemini CLI
+- `git-filter-repo` - Git history rewriting
+- `python-jinja` - Jinja2 template engine
+- `python-psycopg2` - PostgreSQL adapter
+- `pandoc-cli` - Document converter
 
 ## [DEV] Build & Debug
 

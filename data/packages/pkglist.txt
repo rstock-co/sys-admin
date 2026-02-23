@@ -12,18 +12,23 @@ bun-bin
 claude-code
 cloudflared
 code
+d2
 ddcutil
 discord
+dmidecode
 dosfstools
 ethtool
 evtest
+exfatprogs
 eza
 fd
 ffmpeg
 fvm
 fzf
+gemini-cli
 gimp
 git
+git-filter-repo
 github-cli
 glmark2
 glow
@@ -43,6 +48,7 @@ libva-utils
 linux
 linux-firmware
 localsend
+lshw
 mesa-utils
 mpv
 neovim
@@ -64,6 +70,7 @@ otf-hermit-nerd
 otf-monaspace-nerd
 otf-opendyslexic-nerd
 otf-overpass-nerd
+pandoc-cli
 paru
 paru-debug
 pass
@@ -146,6 +153,7 @@ ttf-ubuntu-mono-nerd
 ttf-ubuntu-nerd
 ttf-victor-mono-nerd
 ttf-zed-mono-nerd
+tumbler
 unzip
 usbutils
 uv
@@ -160,6 +168,7 @@ wl-clipboard
 wtype
 xdg-desktop-portal-gtk
 xdg-desktop-portal-hyprland
+xournalpp
 ydotool
 yt-dlp
 zoom

@@ -20,6 +20,7 @@
 ### Development Tools
 - [x] `uv` - Fast Python package installer
 - [x] `git` - Version control
+- [x] `git-filter-repo` - Git history rewriting tool
 - [x] `github-cli` - GitHub CLI (`gh`)
 - [x] `pnpm` - Fast Node.js package manager
 - [x] `bun-bin` (AUR) - All-in-one JavaScript runtime (10-100x faster)
@@ -29,16 +30,21 @@
 - [x] `python` - Python 3.13.7
 - [x] `python-pip` - Python package installer
 - [x] `python-pipx` - Install Python apps in isolated environments
+- [x] `python-jinja` - Jinja2 template engine
+- [x] `python-psycopg2` - PostgreSQL adapter for Python
 - [x] `python-sounddevice` (AUR) - Python bindings for PortAudio
 - [x] `python-pulsectl` (AUR) - Python PulseAudio bindings
 - [x] `python-weasyprint` - HTML/CSS to PDF converter
 - [x] `python-youtube-transcript-api` (AUR) - YouTube transcript fetching
 - [x] `fvm` (AUR) - Flutter version manager
 - [x] `claude-code` (AUR) - Claude Code CLI agent
+- [x] `gemini-cli` (AUR) - Google Gemini CLI
 - [x] `vercel` (AUR) - Vercel CLI for deployments
 - [x] `stripe-cli` (AUR) - Stripe CLI for payment testing
 - [x] `google-cloud-cli` (AUR) - Google Cloud SDK CLI tools
 - [x] `cloudflared` - Cloudflare Tunnel client
+- [x] `d2` - Diagram scripting language
+- [x] `pandoc-cli` - Document converter
 
 ### System Tools
 - [x] `alacritty` - GPU-accelerated terminal
@@ -48,13 +54,17 @@
 - [x] `nvtop` - GPU monitoring for Arc B580
 - [x] `less` - Terminal pager
 - [x] `dosfstools` - FAT filesystem utilities
+- [x] `exfatprogs` - exFAT filesystem utilities
 - [x] `sudo` - Privilege escalation
 - [x] `base` - Arch Linux base meta package
 - [x] `base-devel` - Development meta package (make, gcc, etc.)
 - [x] `wget` - File download utility
 - [x] `usbutils` - USB device utilities
+- [x] `dmidecode` - DMI/BIOS hardware info
+- [x] `lshw` - Detailed hardware info
 - [x] `pass` - Unix password manager (GPG-based)
 - [x] `thunar` - GTK file manager
+- [x] `tumbler` - Thumbnail service for Thunar
 
 ### Audio & Video
 - [x] `pipewire-alsa` - ALSA compatibility (pulls pipewire)
@@ -129,6 +139,7 @@
 - [x] `android-studio` (AUR) - Android IDE
 - [x] `localsend` (AUR) - Cross-platform file sharing (AirDrop alternative)
 - [x] `waybar` - Wayland status bar with system tray
+- [x] `xournalpp` - PDF annotation and handwriting
 
 ### Linux Kernel & Firmware
 - [x] `linux` - Linux kernel (6.17.9-arch1-1)
@@ -171,7 +182,6 @@
 - [ ] `mtr` - Combined traceroute and ping
 
 ### System Information
-- [ ] `lshw` - Detailed hardware info
 - [ ] `hwinfo` - Comprehensive hardware detection
 - [ ] `fastfetch` - Fast system info display
 
